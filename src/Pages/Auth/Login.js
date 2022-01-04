@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../Contexts/AuthContext';
 
 const initialFormValues = {
     username: '',
@@ -13,6 +14,7 @@ const initialFormValues = {
 // }
 
 const Login = (props) => {
+    const { setLoggedIn } = useAuth();
     const navigate = useNavigate()
 
     const [ formValues, setFormValues ] = useState(initialFormValues)
@@ -42,7 +44,9 @@ const Login = (props) => {
             .then(res => {
                 const { user_id, username } = res.data.user
                 localStorage.setItem('token', res.data.token)
-                console.log('success: ', res.data);
+                // console.log('success: ', res.data);
+                setLoggedIn(true);
+                navigate('/dashboard')
             })
             .catch(err => {
                 console.log('err', err);
