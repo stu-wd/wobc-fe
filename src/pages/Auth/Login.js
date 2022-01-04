@@ -42,7 +42,7 @@ const Login = (props) => {
             .then(res => {
                 const { user_id, username } = res.data.user
                 localStorage.setItem('token', res.data.token)
-                console.log('success');
+                console.log('success: ', res.data);
             })
             .catch(err => {
                 console.log('err', err);
