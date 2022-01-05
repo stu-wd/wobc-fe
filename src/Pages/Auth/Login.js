@@ -36,15 +36,13 @@ const Login = (props) => {
     const onLogin = (e) => {
         e.preventDefault()
         const loginAttempt = {
-            username: formValues.username.trim(),
+            username: formValues.username,
             password: formValues.password
         }
 
         axios.post(`http://localhost:3000/api/auth/login`, loginAttempt)
             .then(res => {
-                // const { user_id, username } = res.data.user
                 localStorage.setItem('token', res.data.token)
-                // console.log('success: ', res.data);
                 setLoggedIn(true);
                 setUser(res.data.user)
                 navigate('/dashboard')

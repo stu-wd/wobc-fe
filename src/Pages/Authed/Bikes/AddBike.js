@@ -1,24 +1,12 @@
 import React, { useState } from 'react';
 import { useAuth } from './../../../Contexts/AuthContext';
 import authedAxios from '../../../Utils/authedAxios';
-
-const initialFormValues = {
-    serial: '',
-    future: '',
-    condition: '',
-    type: '',
-    size: '',
-    brand: '',
-    gender: '',
-    kidadult: '',
-    received: '',
-    storage: '',
-}
+import fd from './FormData';
 
 const AddBike = () => {
     const { user } = useAuth()
 
-    const [ formValues, setFormValues ] = useState(initialFormValues)
+    const [ formValues, setFormValues ] = useState(fd.initialFormValues)
     // const [ formErrors, setFormErrors ] = useState(initialFormErrors)
     // const [ disabled, setDisabled ] = useState(true)
 
@@ -35,142 +23,156 @@ const AddBike = () => {
         // })
     }
 
-    // axios [POST] upon submission
     const formSubmit = (e) => {
         e.preventDefault();
         const newBike = { // how could I write a function to do this? -- revisit
             serial: formValues.serial.trim(),
-            future: formValues.future.trim(),
-            condition: formValues.condition.trim(),
-            type: formValues.type.trim(),
-            size: formValues.size.trim(),
-            brand: formValues.brand.trim(),
-            gender: formValues.gender.trim(),
-            kidadult: formValues.kidadult.trim(),
-            received: formValues.received.trim(),
-            storage: formValues.storage.trim(),
+            future: formValues.future,
+            condition: formValues.condition,
+            type: formValues.type,
+            size: formValues.size,
+            brand: formValues.brand,
+            gender: formValues.gender,
+            kidadult: formValues.kidadult,
+            received: formValues.received,
+            storage: formValues.storage,
             user_id: user.user_id
         };
         authedAxios()
         .post(`/bikes/add`, newBike)
         .then(res => {
             console.log('res: ', res.data);
+            setFormValues(fd.initialFormValues)
         })
         .catch(err => {
             console.log('err: ', err)
         })
-        .finally(
-            setFormValues(initialFormValues))
    };
 
    return (
         <div>
-            <form onSubmit = {formSubmit}>
-                <label>
+            <form onSubmit={formSubmit}>
+                <label htmlFor="serial">
                     Serial:
+                </label>
                     <input
-                        type = 'text'
-                        name = 'serial'
-                        onChange = {onChange}
-                        value = {formValues.serial}
+                        type='text'
+                        name='serial'
+                        onChange={onChange}
+                        value={formValues.serial}
                     />
-                </label>
                 
-                <label>
+                <label htmlFor='future'>
                     Future:
-                    <input 
-                        // will be a drop down of available categories
-                        type = 'text'
-                        name = 'future'
-                        onChange = {onChange}
-                        value = {formValues.future}
-                    />
                 </label>
+                    <select name='future' value={formValues.future} onChange={onChange}>
+                        <option value='' disabled hidden></option>
+                        <option value='scrap'>Scrap</option>
+                        <option value='repair'>Repair</option>
+                        <option value='donate'>Donate</option>
+                    </select>
 
                 <label>
-                    condition:
-                    <input
-                        type = 'text'
-                        name = 'condition'
-                        onChange = {onChange}
-                        value = {formValues.condition}
-                    />
+                    Condition:
                 </label>
+                    <select name='condition' value={formValues.condition} onChange={onChange}>
+                        <option value='' disabled hidden></option>
+                        <option value='poor'>Poor</option>
+                        <option value='good'>Good</option>
+                        <option value='excellent'>Excellent</option>
+                    </select>
 
                 <label>
                     Type:
-                    <input
-                        type = 'text'
-                        name = 'type'
-                        onChange = {onChange}
-                        value = {formValues.type}
-                    />
                 </label>
+                    <select name='type' value={formValues.type} onChange={onChange}>
+                        <option value='' disabled hidden></option>
+                        {fd.types.map((type, index) => {
+                            return(
+                                <option key={index} value={`${type}`}>{`${type}`}</option>
+                            )
+                        })}
+                    </select>
 
                 <label>
                     Size:
-                <input
-                    type = 'text'
-                    name = 'size'
-                    onChange = {onChange}
-                    value = {formValues.size}
-                />
                 </label>
+                    <select name='type' value={formValues.type} onChange={onChange}>
+                        <option value='' disabled hidden></option>
+                        {fd.sizes.map((size, index) => {
+                            return(
+                                <option key={index} value={`${size}`}>{`${size}`}</option>
+                            )
+                        })}
+                    </select>
 
                 <label>
                     Brand:
-                <input
-                    type = 'text'
-                    name = 'brand'
-                    onChange = {onChange}
-                    value = {formValues.brand}
-                />
                 </label>
+                    <select name='brand' value={formValues.brand} onChange={onChange}>
+                        <option value='' disabled hidden></option>
+                        {fd.brands.map((brand, index) => {
+                            return(
+                                <option key={index} value={`${brand}`}>{`${brand}`}</option>
+                            )
+                        })}
+                    </select>
 
                 <label>
                     Gender:
-                <input
-                    type = 'text'
-                    name = 'gender'
-                    onChange = {onChange}
-                    value = {formValues.gender}
-                />
                 </label>
+                    <select name='gender' value={formValues.gender} onChange={onChange}>
+                        <option value='' disabled hidden></option>
+                        {fd.genders.map((gender, index) => {
+                            return(
+                                <option key={index} value={`${gender}`}>{`${gender}`}</option>
+                            )
+                        })}
+                    </select>
 
                 <label>
                     Kid/Adult:
-                <input
-                    type = 'text'
-                    name = 'kidadult'
-                    onChange = {onChange}
-                    value = {formValues.kidadult}
-                />
                 </label>
+                    <select name='kidadult' value={formValues.kidadult} onChange={onChange}>
+                        <option value='' disabled hidden></option>
+                        {fd.kidadult.map((ka, index) => {
+                            return(
+                                <option key={index} value={`${ka}`}>{`${ka}`}</option>
+                            )
+                        })}
+                    </select>
 
                 <label>
                     Received:
-                <input
-                    type = 'text'
-                    name = 'received'
-                    onChange = {onChange}
-                    value = {formValues.received}
-                />
                 </label>
+                    <select name='received' value={formValues.received} onChange={onChange}>
+                        <option value='' disabled hidden></option>
+                        {fd.received.map((location, index) => {
+                            return(
+                                <option key={index} value={`${location}`}>{`${location}`}</option>
+                            )
+                        })}
+                    </select>
 
                 <label>
                     Storage:
-                <input
-                    type = 'text'
-                    name = 'storage'
-                    onChange = {onChange}
-                    value = {formValues.storage}
-                />
                 </label>
+                    <select name='storage' value={formValues.storage} onChange={onChange}>
+                        <option value='' disabled hidden></option>
+                        {fd.storage.map((storage, index) => {
+                            return(
+                                <option key={index} value={`${storage}`}>{`${storage}`}</option>
+                            )
+                        })}
+                    </select>
 
-                <button>Add New Class</button>
+                <button>Add New Bike</button>
             </form>
         </div>
     );
+    // return(
+    //     <></>
+    // )
 };
 
 export default AddBike;
