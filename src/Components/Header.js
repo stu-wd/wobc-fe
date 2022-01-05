@@ -12,6 +12,7 @@ const Header = () => {
     ) : (
         <header>
             <Link to='/dashboard'>Dashboard</Link>
+            <Link to='/add'>Add Bike</Link>
             <Link to='/logout'>Logout</Link>
         </header>
     );

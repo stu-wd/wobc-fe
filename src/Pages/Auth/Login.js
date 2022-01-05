@@ -14,7 +14,7 @@ const initialFormValues = {
 // }
 
 const Login = (props) => {
-    const { setLoggedIn } = useAuth();
+    const { setLoggedIn, setUser } = useAuth();
     const navigate = useNavigate()
 
     const [ formValues, setFormValues ] = useState(initialFormValues)
@@ -42,10 +42,11 @@ const Login = (props) => {
 
         axios.post(`http://localhost:3000/api/auth/login`, loginAttempt)
             .then(res => {
-                const { user_id, username } = res.data.user
+                // const { user_id, username } = res.data.user
                 localStorage.setItem('token', res.data.token)
                 // console.log('success: ', res.data);
                 setLoggedIn(true);
+                setUser(res.data.user)
                 navigate('/dashboard')
             })
             .catch(err => {

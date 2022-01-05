@@ -4,10 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const { loggedIn } = useAuth();
-
-
-
+    const { loggedIn, user } = useAuth();
+    
     return loggedIn ? (
         <div>
             Private Routes will work like this     
