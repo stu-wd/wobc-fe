@@ -11,6 +11,11 @@ const FormData = {
         received: '',
         storage: '',
     },
+    futures: [
+        "Scrap",
+        "Repair",
+        "Donate"
+    ],
     brands: [
         "Cannondale",
         "GT",
@@ -24,6 +29,11 @@ const FormData = {
         "Specialized",
         "Trek",
         "Not Listed"
+    ],
+    conditions: [
+        "Poor",
+        "Good",
+        "Excellent"
     ],
     types:[
         "Cruiser",
@@ -62,7 +72,7 @@ const FormData = {
         "Sweat Club",
         "Unknown"
     ],
-    storage:[
+    storages:[
         "Dodds",
         "Lookouts",
         "Red Bank",

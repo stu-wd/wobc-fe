@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth } from '../../Contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import SearchBike from './Bikes/SearchBike';
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -8,7 +9,8 @@ const Dashboard = () => {
     
     return loggedIn ? (
         <div>
-            Private Routes will work like this     
+            Private Routes will work like this
+            <SearchBike />
         </div>
     ) : (
         navigate('/')

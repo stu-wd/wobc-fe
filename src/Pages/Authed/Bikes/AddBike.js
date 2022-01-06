@@ -67,9 +67,11 @@ const AddBike = () => {
                 </label>
                     <select name='future' value={formValues.future} onChange={onChange}>
                         <option value='' disabled hidden></option>
-                        <option value='scrap'>Scrap</option>
-                        <option value='repair'>Repair</option>
-                        <option value='donate'>Donate</option>
+                        {fd.futures.map((future, index) => {
+                            return(
+                                <option key={index} value={`${future}`}>{`${future}`}</option>
+                            )
+                        })}
                     </select>
 
                 <label>
@@ -77,10 +79,13 @@ const AddBike = () => {
                 </label>
                     <select name='condition' value={formValues.condition} onChange={onChange}>
                         <option value='' disabled hidden></option>
-                        <option value='poor'>Poor</option>
-                        <option value='good'>Good</option>
-                        <option value='excellent'>Excellent</option>
+                        {fd.conditions.map((condition, index) => {
+                            return(
+                                <option key={index} value={`${condition}`}>{`${condition}`}</option>
+                            )
+                        })}
                     </select>
+
 
                 <label>
                     Type:
@@ -159,7 +164,7 @@ const AddBike = () => {
                 </label>
                     <select name='storage' value={formValues.storage} onChange={onChange}>
                         <option value='' disabled hidden></option>
-                        {fd.storage.map((storage, index) => {
+                        {fd.storages.map((storage, index) => {
                             return(
                                 <option key={index} value={`${storage}`}>{`${storage}`}</option>
                             )
