@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import authedAxios from '../../../Utils/authedAxios';
+import authedAxios from '../../../../Utils/authedAxios';
 
 const SearchBike = () => {
     const [ search, setSearch ] = useState()

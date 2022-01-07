@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import Header from './Components/Header.js';
-import { useAuth } from './Contexts/AuthContext.js';
+import Header from './Components/Common/Header.js';
+import { useAuth } from './Contexts/auth.context.js';
 import { AuthenticatedRoutes, UnauthenticatedRoutes } from './Routes/routes.index.js';
 
 function App() {

@@ -1,26 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import authedAxios from '../../../Utils/authedAxios';
-import { useAuth } from '../../../Contexts/AuthContext';
+import { useAuth } from '../../../Contexts/auth.context';
+import BikeCard from './BikeCard';
 
 const Bikes = () => {
 
-    const { bikes, setBikes, isLoading, setIsLoading } = useAuth();
-
-    const getBikes = () => {
-        setIsLoading(true)
-        authedAxios()
-            .get('/bikes')
-            .then(resp => {
-                setIsLoading(false)
-                setBikes(resp.data)
-            })
-            .catch(err => console.log(err))
-    }
+    const { bikes, isLoading, getBikes } = useAuth();
 
     useEffect(() => {
         getBikes()
     }, [])
-
+    
     if (isLoading) {
         return(
             <>Fetching bikes for you...</>
@@ -30,14 +19,12 @@ const Bikes = () => {
     return (
         <div>
             {bikes ?
-                bikes.map(bike => {
+                bikes.map((bike, index) => {
                     return(
-                        <>
-                        <h6>{bike.serial}</h6>
-                        </>
+                        <BikeCard key={index} bike={bike}/>
                     )
                 })
-                : <h1>bikes are not in state</h1>
+                : <h1>No bikes to show</h1>
             }
         </div>
     );

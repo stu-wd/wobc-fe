@@ -1,19 +1,21 @@
-import React from 'react';
-import { useAuth } from '../../Contexts/AuthContext';
+import React, { useState } from 'react';
+import { useAuth } from '../../Contexts/auth.context';
 import { useNavigate } from 'react-router-dom';
-import SearchBike from './Bikes/SearchBike';
+import { useUserInfo } from '../../Contexts/user.context';
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const { loggedIn, user } = useAuth();
+    const { user } = useUserInfo();
+
+    console.log(user);
     
-    return loggedIn ? (
+    return (
         <div>
+            <h2>Welcome back {user.username}</h2>
             Private Routes will work like this
-            <SearchBike />
+            {/* <SearchBike /> */}
         </div>
-    ) : (
-        navigate('/')
+    
     )
 };
 

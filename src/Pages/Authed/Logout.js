@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../Contexts/AuthContext';
+import { useAuth } from '../../Contexts/auth.context';
 
 const Logout = (props) => {
     const { setLoggedIn } = useAuth();

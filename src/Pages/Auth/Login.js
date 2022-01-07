@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../Contexts/AuthContext';
+import { useAuth } from '../../Contexts/auth.context';
+import { useUserInfo } from '../../Contexts/user.context';
 
 const initialFormValues = {
     username: '',
@@ -14,8 +15,9 @@ const initialFormValues = {
 // }
 
 const Login = (props) => {
-    const { setLoggedIn, setUser } = useAuth();
-    const navigate = useNavigate()
+    const { setLoggedIn } = useAuth();
+    const { setUser } = useUserInfo();
+    const navigate = useNavigate();
 
     const [ formValues, setFormValues ] = useState(initialFormValues)
     // const [ formErrors, setFormErrors ] = useState(initialFormErrors)
@@ -42,8 +44,9 @@ const Login = (props) => {
 
         axios.post(`http://localhost:3000/api/auth/login`, loginAttempt)
             .then(res => {
+                console.log(res)
                 localStorage.setItem('token', res.data.token)
-                setLoggedIn(true);
+                setLoggedIn(true)
                 setUser(res.data.user)
                 navigate('/dashboard')
             })

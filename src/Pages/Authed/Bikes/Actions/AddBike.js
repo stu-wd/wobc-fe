@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { useAuth } from './../../../Contexts/AuthContext';
-import authedAxios from '../../../Utils/authedAxios';
-import fd from './FormData';
+import authedAxios from '../../../../Utils/authedAxios';
+import { useAuth } from '../../../../Contexts/auth.context';
+import fd from '../FormData';
+import { useUserInfo } from '../../../../Contexts/user.context';
 
 const AddBike = () => {
-    const { user } = useAuth()
+    // const { user } = useAuth()
+    const { user } = useUserInfo()
+    console.log(user);
 
     const [ formValues, setFormValues ] = useState(fd.initialFormValues)
     // const [ formErrors, setFormErrors ] = useState(initialFormErrors)
@@ -24,7 +27,7 @@ const AddBike = () => {
     }
 
     const formSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault()
         const newBike = { // how could I write a function to do this? -- revisit
             serial: formValues.serial.trim(),
             future: formValues.future,
@@ -86,7 +89,6 @@ const AddBike = () => {
                         })}
                     </select>
 
-
                 <label>
                     Type:
                 </label>
@@ -102,7 +104,7 @@ const AddBike = () => {
                 <label>
                     Size:
                 </label>
-                    <select name='type' value={formValues.type} onChange={onChange}>
+                    <select name='size' value={formValues.size} onChange={onChange}>
                         <option value='' disabled hidden></option>
                         {fd.sizes.map((size, index) => {
                             return(
@@ -175,9 +177,6 @@ const AddBike = () => {
             </form>
         </div>
     );
-    // return(
-    //     <></>
-    // )
 };
 
 export default AddBike;
