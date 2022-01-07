@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useAuth } from '../../../Contexts/auth.context';
+import React, { useEffect } from 'react';
+import { useBikes } from './../../../Contexts/bikes.context';
 import BikeCard from './BikeCard';
 
 const Bikes = () => {
 
-    const { bikes, isLoading, getBikes } = useAuth();
+    const { bikes, isLoading, getBikes } = useBikes();
+
+    console.log(bikes, getBikes)
 
     useEffect(() => {
         getBikes()

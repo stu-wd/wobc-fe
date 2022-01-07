@@ -5,27 +5,10 @@ const AuthContext = createContext({});
 
 const AuthProvider = (props) => {
     const [ loggedIn, setLoggedIn ] = useState(false);
-    const [ bikes, setBikes ] = useState();
-    const [ isLoading, setIsLoading ] = useState(false)
-
-    const getBikes = () => {
-        setIsLoading(true)
-        authedAxios()
-            .get('/bikes')
-            .then(resp => {
-                setIsLoading(false)
-                setBikes(resp.data)
-            })
-            .catch(err => console.log(err))
-    }
 
     const authContextValue = {
         loggedIn,
-        setLoggedIn,
-        bikes,
-        setBikes,
-        isLoading,
-        getBikes
+        setLoggedIn
     };
 
     return <AuthContext.Provider value={authContextValue} {...props}/>;
