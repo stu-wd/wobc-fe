@@ -11,7 +11,6 @@ const Header = () => {
             <>
                 <Link to='/dashboard'>Dashboard</Link>
                 <Link to='/add'>Add Bike</Link>
-                <Link to='/bikes'>Bikes</Link>
                 <Link to='/logout'>Logout</Link>
             </>
             :

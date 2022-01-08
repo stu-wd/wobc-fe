@@ -1,19 +1,37 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../Contexts/auth.context';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useUserInfo } from '../../Contexts/user.context';
+import Bikes from './Bikes/Bikes';
+import { useBikes } from '../../Contexts/bikes.context';
+import AddBike from './Bikes/Actions/AddBike'
 
 const Dashboard = () => {
     const navigate = useNavigate();
     const { user } = useUserInfo();
-
-    console.log(user);
+    const { cardView, showBikes, toggleBikes, toggleCardView } = useBikes();
     
     return (
-        <div>
+        <div style={{border: '1px solid black'}}>
             <h2>Welcome back {user.username}</h2>
-            Private Routes will work like this
-            {/* <SearchBike /> */}
+            <button onClick={toggleBikes}>{`${ showBikes ? 'Hide' : 'Show' } Bikes`}</button>
+
+            <div style={{display: 'flex'}}>
+                { 
+                showBikes ?
+                <Bikes />
+                :
+                <></>
+                }
+
+                {
+                    cardView ? 
+                    <AddBike />
+                    :
+                    <></>
+                    
+                }
+            </div>
         </div>
     
     )

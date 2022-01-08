@@ -4,7 +4,7 @@ import BikeCard from './BikeCard';
 
 const Bikes = () => {
 
-    const { bikes, isLoading, getBikes } = useBikes();
+const { bikes, isLoading, getBikes } = useBikes();
 
     console.log(bikes, getBikes)
 
@@ -13,9 +13,11 @@ const Bikes = () => {
     }, [])
     
     if (isLoading) {
-        return(
-            <>Fetching bikes for you...</>
-        )
+        setTimeout(() => {
+            return(
+                <h5>Fetchin' bikes...</h5>
+            )
+        }, 1000)
     }
 
     return (

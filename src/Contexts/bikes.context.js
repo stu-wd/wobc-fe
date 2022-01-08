@@ -6,7 +6,17 @@ const BikesContext = createContext({});
 const BikesProvider = (props) => {
     const [ bikes, setBikes ] = useState()
     const [ isLoading, setIsLoading ] = useState(false)
+    const [ showBikes, setShowBikes ] = useState(false)
+    const [ cardView, setCardView ] = useState(false)
 
+    const toggleBikes = () => {
+        setShowBikes(!showBikes)
+    }
+
+    const toggleCardView = () => {
+        setCardView(!cardView)
+    }
+    
 
     const getBikes = () => {
         setIsLoading(true)
@@ -25,7 +35,12 @@ const BikesProvider = (props) => {
 
     const bikesContextValue = {
         bikes,
-        getBikes
+        isLoading,
+        getBikes,
+        toggleBikes,
+        toggleCardView,
+        showBikes,
+        cardView
     };
 
     return <BikesContext.Provider value={bikesContextValue} {...props}/>;

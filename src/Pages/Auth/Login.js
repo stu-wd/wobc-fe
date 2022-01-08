@@ -44,7 +44,6 @@ const Login = (props) => {
 
         axios.post(`http://localhost:3000/api/auth/login`, loginAttempt)
             .then(res => {
-                console.log(res)
                 localStorage.setItem('token', res.data.token)
                 setLoggedIn(true)
                 setUser(res.data.user)

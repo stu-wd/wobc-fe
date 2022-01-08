@@ -3,11 +3,11 @@ import authedAxios from '../../../../Utils/authedAxios';
 import { useAuth } from '../../../../Contexts/auth.context';
 import fd from '../FormData';
 import { useUserInfo } from '../../../../Contexts/user.context';
+import { Button, Form, Input, Radio, Select, Space } from 'antd'
 
 const AddBike = () => {
     // const { user } = useAuth()
     const { user } = useUserInfo()
-    console.log(user);
 
     const [ formValues, setFormValues ] = useState(fd.initialFormValues)
     // const [ formErrors, setFormErrors ] = useState(initialFormErrors)
@@ -26,8 +26,12 @@ const AddBike = () => {
         // })
     }
 
-    const formSubmit = (e) => {
-        e.preventDefault()
+    const onSearch = (value) => {
+        console.log(value)
+    }
+
+   const addBike = (e) => {
+       e.preventDefault()
         const newBike = { // how could I write a function to do this? -- revisit
             serial: formValues.serial.trim(),
             future: formValues.future,
@@ -41,8 +45,8 @@ const AddBike = () => {
             storage: formValues.storage,
             user_id: user.user_id
         };
-        authedAxios()
-        .post(`/bikes/add`, newBike)
+       authedAxios()
+        .post(`/bikes/add/`, newBike)
         .then(res => {
             console.log('res: ', res.data);
             setFormValues(fd.initialFormValues)
@@ -50,132 +54,121 @@ const AddBike = () => {
         .catch(err => {
             console.log('err: ', err)
         })
-   };
+   }
+
+   const editBike = (e) => {
+       e.preventDefault()
+        const newBike = { // how could I write a function to do this? -- revisit
+            serial: formValues.serial.trim(),
+            future: formValues.future,
+            condition: formValues.condition,
+            type: formValues.type,
+            size: formValues.size,
+            brand: formValues.brand,
+            gender: formValues.gender,
+            kidadult: formValues.kidadult,
+            received: formValues.received,
+            storage: formValues.storage,
+            user_id: user.user_id
+        };
+       authedAxios()
+        .put(`/bikes/edit/`, newBike)
+        .then(res => {
+            console.log('res: ', res.data);
+            setFormValues(fd.initialFormValues)
+        })
+        .catch(err => {
+            console.log('err: ', err)
+        })
+   }
+
+    // const [form] = Form.useForm()
+   
+    const { Search } = Input
+    const { Option } = Select
+
+    const [ componentSize, setComponentSize ] = useState('default');
+
+    const onFormLayoutChange = ({ size }) => {
+        setComponentSize(size)
+    }
+
+    const onFinish = (values) => {
+        console.log(values);
+      };
+
+    // const onReset = () => {
+    //     form.resetFields();
+    // };
+
+
+    const handleSelect = (value) => {
+        console.log(`selected value ${value}`);
+    }
+
 
    return (
         <div>
-            <form onSubmit={formSubmit}>
-                <label htmlFor="serial">
-                    Serial:
-                </label>
-                    <input
-                        type='text'
-                        name='serial'
-                        onChange={onChange}
-                        value={formValues.serial}
-                    />
-                
-                <label htmlFor='future'>
-                    Future:
-                </label>
-                    <select name='future' value={formValues.future} onChange={onChange}>
-                        <option value='' disabled hidden></option>
-                        {fd.futures.map((future, index) => {
-                            return(
-                                <option key={index} value={`${future}`}>{`${future}`}</option>
-                            )
-                        })}
-                    </select>
+            <Space direction='vertical'>
+                <Search placeholder='search serial' onSearch={onSearch} style={{ width: 200 }} />
+            </Space>
 
-                <label>
-                    Condition:
-                </label>
-                    <select name='condition' value={formValues.condition} onChange={onChange}>
-                        <option value='' disabled hidden></option>
-                        {fd.conditions.map((condition, index) => {
-                            return(
-                                <option key={index} value={`${condition}`}>{`${condition}`}</option>
-                            )
-                        })}
-                    </select>
+            <Form
+                // {...layout}
+                // form={form}
+                // layout="horizontal"
+                initialValues={{
+                    size: componentSize,
+                }}
+                onValuesChange={onFormLayoutChange}
+                size={componentSize}
+                onFinish={onFinish}
+                >
 
-                <label>
-                    Type:
-                </label>
-                    <select name='type' value={formValues.type} onChange={onChange}>
-                        <option value='' disabled hidden></option>
-                        {fd.types.map((type, index) => {
-                            return(
-                                <option key={index} value={`${type}`}>{`${type}`}</option>
-                            )
-                        })}
-                    </select>
+            {/* {the size selector} */}
+            {/* <Form.Item label="Go back and make this an interactive thing" name="size">
+                <Radio.Group>
+                <Radio.Button value="small">Small</Radio.Button>
+                <Radio.Button value="default">Default</Radio.Button>
+                <Radio.Button value="large">Large</Radio.Button>
+                </Radio.Group>
+            </Form.Item> */}
 
-                <label>
-                    Size:
-                </label>
-                    <select name='size' value={formValues.size} onChange={onChange}>
-                        <option value='' disabled hidden></option>
-                        {fd.sizes.map((size, index) => {
-                            return(
-                                <option key={index} value={`${size}`}>{`${size}`}</option>
-                            )
-                        })}
-                    </select>
+            <Form.Item label="Serial">
+                <Input name='serial' />
+            </Form.Item>
 
-                <label>
-                    Brand:
-                </label>
-                    <select name='brand' value={formValues.brand} onChange={onChange}>
-                        <option value='' disabled hidden></option>
-                        {fd.brands.map((brand, index) => {
-                            return(
-                                <option key={index} value={`${brand}`}>{`${brand}`}</option>
-                            )
-                        })}
-                    </select>
-
-                <label>
-                    Gender:
-                </label>
-                    <select name='gender' value={formValues.gender} onChange={onChange}>
-                        <option value='' disabled hidden></option>
-                        {fd.genders.map((gender, index) => {
-                            return(
-                                <option key={index} value={`${gender}`}>{`${gender}`}</option>
-                            )
-                        })}
-                    </select>
-
-                <label>
-                    Kid/Adult:
-                </label>
-                    <select name='kidadult' value={formValues.kidadult} onChange={onChange}>
-                        <option value='' disabled hidden></option>
-                        {fd.kidadult.map((ka, index) => {
-                            return(
-                                <option key={index} value={`${ka}`}>{`${ka}`}</option>
-                            )
-                        })}
-                    </select>
-
-                <label>
-                    Received:
-                </label>
-                    <select name='received' value={formValues.received} onChange={onChange}>
-                        <option value='' disabled hidden></option>
-                        {fd.received.map((location, index) => {
-                            return(
-                                <option key={index} value={`${location}`}>{`${location}`}</option>
-                            )
-                        })}
-                    </select>
-
-                <label>
-                    Storage:
-                </label>
-                    <select name='storage' value={formValues.storage} onChange={onChange}>
-                        <option value='' disabled hidden></option>
-                        {fd.storages.map((storage, index) => {
-                            return(
-                                <option key={index} value={`${storage}`}>{`${storage}`}</option>
-                            )
-                        })}
-                    </select>
-
-                <button>Add New Bike</button>
-            </form>
-        </div>
+            {fd.options.map(option => {
+                if (option.name === 'Brand' || option.name === 'Size' || option.name === 'Received')  {
+                    return(
+                        <Form.Item label={option.name}>
+                             <select name={option.name} onChange={handleSelect}>
+                                 {option.choices.map(choice =>{
+                                     return(
+                                        <option value={choice}>{choice}</option>
+                                     )
+                                     })}
+                             </select>
+                         </Form.Item>
+                    )
+                } else {
+                    return(
+                        <Form.Item label={option.name}>
+                             <Radio.Group name={option.name} onChange={onChange}>
+                                     {option.choices.map(choice => {
+                                         return(
+                                             <Radio.Button value={choice}>{choice}
+                                             </Radio.Button>
+                                         )
+                                     })}
+                             </Radio.Group>
+                         </Form.Item>
+                    )
+                }
+            })}
+            
+            </Form>
+            </div>
     );
 };
 
