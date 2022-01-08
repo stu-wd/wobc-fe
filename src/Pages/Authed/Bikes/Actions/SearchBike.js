@@ -1,54 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Input, Select, Space } from 'antd';
 import authedAxios from '../../../../Utils/authedAxios';
 
 const SearchBike = () => {
-    const [ search, setSearch ] = useState()
+    const { Search } = Input
 
-    const onChange = (e) => {
-        const { name, value } = e.target
-        setSearch({
-            ...search,
-            [name]: value
-        })
-    }
-
-    // const formSubmit = e => {
-    //     e.preventDefault()
-    // }
-
-
-    const searchBikes = (e) => {
-        // formSubmit()
-        e.preventDefault()
-        const searchedSerial = {
-            serial: search
-        }
+    const onSearch = (serial) => {
         authedAxios()
-            .post('/bikes/filter', searchedSerial)
-            .then(res => {
-                console.log(res);
+            .get(`/bikes/${serial}`)
+            .then(resp => {
+                console.log(resp.data);
             })
-            .catch(err => {
-                console.log('err: ', err);
-            })
+            .catch(err => console.log(err))
     }
 
     return (
-        <div>
-            <form 
-                onSubmit={searchBikes}
-            >
-                <input
-                    type='text'
-                    name='serial'
-                    onChange={onChange}
-                    // value={search}
-                    />
-
-                <button>Search</button>
-            </form>
-        </div>
-    );
+        <Space direction='vertical'>
+            <Search placeholder='search serial' onSearch={onSearch} style={{ width: 200 }} />
+        </Space>
+);
 };
 
 export default SearchBike;

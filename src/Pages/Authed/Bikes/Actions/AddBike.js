@@ -26,10 +26,6 @@ const AddBike = () => {
         // })
     }
 
-    const onSearch = (value) => {
-        console.log(value)
-    }
-
    const addBike = (e) => {
        e.preventDefault()
         const newBike = { // how could I write a function to do this? -- revisit
@@ -48,7 +44,6 @@ const AddBike = () => {
        authedAxios()
         .post(`/bikes/add/`, newBike)
         .then(res => {
-            console.log('res: ', res.data);
             setFormValues(fd.initialFormValues)
         })
         .catch(err => {
@@ -74,7 +69,6 @@ const AddBike = () => {
        authedAxios()
         .put(`/bikes/edit/`, newBike)
         .then(res => {
-            console.log('res: ', res.data);
             setFormValues(fd.initialFormValues)
         })
         .catch(err => {
@@ -82,10 +76,6 @@ const AddBike = () => {
         })
    }
 
-    // const [form] = Form.useForm()
-   
-    const { Search } = Input
-    const { Option } = Select
 
     const [ componentSize, setComponentSize ] = useState('default');
 
@@ -109,10 +99,6 @@ const AddBike = () => {
 
    return (
         <div>
-            <Space direction='vertical'>
-                <Search placeholder='search serial' onSearch={onSearch} style={{ width: 200 }} />
-            </Space>
-
             <Form
                 // {...layout}
                 // form={form}

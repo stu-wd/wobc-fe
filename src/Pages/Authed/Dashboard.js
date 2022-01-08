@@ -5,6 +5,7 @@ import { useUserInfo } from '../../Contexts/user.context';
 import Bikes from './Bikes/Bikes';
 import { useBikes } from '../../Contexts/bikes.context';
 import AddBike from './Bikes/Actions/AddBike'
+import SearchBike from './Bikes/Actions/SearchBike';
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -12,9 +13,10 @@ const Dashboard = () => {
     const { cardView, showBikes, toggleBikes, toggleCardView } = useBikes();
     
     return (
-        <div style={{border: '1px solid black'}}>
-            <h2>Welcome back {user.username}</h2>
-            <button onClick={toggleBikes}>{`${ showBikes ? 'Hide' : 'Show' } Bikes`}</button>
+        <div>
+            <h2>Dashboard</h2>
+            <SearchBike />
+            {/* <button onClick={toggleBikes}>{`${ showBikes ? 'Hide' : 'Show' } Bikes`}</button>
 
             <div style={{display: 'flex'}}>
                 { 
@@ -31,7 +33,7 @@ const Dashboard = () => {
                     <></>
                     
                 }
-            </div>
+            </div> */}
         </div>
     
     )
