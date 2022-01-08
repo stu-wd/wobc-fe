@@ -16,9 +16,13 @@ function App() {
   },[loggedIn])
 
   return (
+    // <>
+    // <Header />
+    // { loggedIn ? <AuthenticatedRoutes /> : <UnauthenticatedRoutes /> }
+    // </>
     <>
     <Header />
-    { loggedIn ? <AuthenticatedRoutes /> : <UnauthenticatedRoutes /> }
+    <AuthenticatedRoutes />
     </>
   )
 

@@ -8,6 +8,7 @@ const BikesProvider = (props) => {
     const [ isLoading, setIsLoading ] = useState(false)
     const [ showBikes, setShowBikes ] = useState(false)
     const [ cardView, setCardView ] = useState(false)
+    const [ searchedBikeBySerial, setSearchedBikeBySerial ] = useState()
 
     const toggleBikes = () => {
         setShowBikes(!showBikes)
@@ -17,6 +18,16 @@ const BikesProvider = (props) => {
         setCardView(!cardView)
     }
     
+    const handleSerialSearch = (serial) => {
+        setIsLoading(true)
+        authedAxios()
+            .get(`/bikes/${serial}`)
+            .then(resp => {
+                setIsLoading(false)
+                setSearchedBikeBySerial(resp.data)
+            })
+            .catch(err => console.log(err))
+    }
 
     const getBikes = () => {
         setIsLoading(true)
@@ -28,9 +39,6 @@ const BikesProvider = (props) => {
                 setBikes(resp.data)
             })
             .catch(err => console.log(err))
-            .finally(() => {
-                console.log(bikes)
-            })
     }
 
     const bikesContextValue = {
@@ -40,7 +48,9 @@ const BikesProvider = (props) => {
         toggleBikes,
         toggleCardView,
         showBikes,
-        cardView
+        cardView,
+        handleSerialSearch,
+        searchedBikeBySerial
     };
 
     return <BikesContext.Provider value={bikesContextValue} {...props}/>;
