@@ -98,7 +98,8 @@ const AddBike = () => {
 
 
    return (
-        <div>
+        <div className='m-5 bg-blue-900 p-2 text-blue-200'>
+            <h2 className="pb-1 text-2xl">Add New Bike</h2>
             <Form
                 // {...layout}
                 // form={form}
@@ -109,6 +110,7 @@ const AddBike = () => {
                 onValuesChange={onFormLayoutChange}
                 size={componentSize}
                 onFinish={onFinish}
+                className="flex flex-col justiy-around"
                 >
 
             {/* {the size selector} */}
@@ -120,15 +122,15 @@ const AddBike = () => {
                 </Radio.Group>
             </Form.Item> */}
 
-            <Form.Item label="Serial">
-                <Input name='serial' />
+            <Form.Item label="Serial" className='flex py-2 pl-2 text-xl'>
+                <Input name='serial'  className="ml-5"/>
             </Form.Item>
 
             {fd.options.map(option => {
                 if (option.name === 'Brand' || option.name === 'Size' || option.name === 'Received')  {
                     return(
-                        <Form.Item label={option.name}>
-                             <select name={option.name} onChange={handleSelect}>
+                        <Form.Item label={option.name} key={option.name} className='flex p-2 my-1 text-xl'>
+                             <select name={option.name} onChange={handleSelect} className="ml-5 text-gray-900">
                                  {option.choices.map(choice =>{
                                      return(
                                         <option value={choice}>{choice}</option>
@@ -139,11 +141,11 @@ const AddBike = () => {
                     )
                 } else {
                     return(
-                        <Form.Item label={option.name}>
-                             <Radio.Group name={option.name} onChange={onChange}>
+                        <Form.Item label={option.name} className="p-2 my-1 text-xl">
+                             <Radio.Group name={option.name} onChange={onChange} className="flex flex-col pl-3 ">
                                      {option.choices.map(choice => {
                                          return(
-                                             <Radio.Button value={choice}>{choice}
+                                             <Radio.Button value={choice}> {choice}
                                              </Radio.Button>
                                          )
                                      })}

@@ -20,10 +20,15 @@ function App() {
     // <Header />
     // { loggedIn ? <AuthenticatedRoutes /> : <UnauthenticatedRoutes /> }
     // </>
-    <>
-    <Header />
-    <AuthenticatedRoutes />
-    </>
+    <div className="flex flex-col">
+      <div>
+        <Header />
+      </div>
+      <div className='box-border flex flex-col items-center'>
+
+        <AuthenticatedRoutes />
+      </div>
+    </div>
   )
 
 }
