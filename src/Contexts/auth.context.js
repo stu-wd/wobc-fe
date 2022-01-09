@@ -5,13 +5,18 @@ const AuthContext = createContext({});
 
 const AuthProvider = (props) => {
     const [ loggedIn, setLoggedIn ] = useState(false);
-    const [ user, setUser ] = useState(null);
+    const [ user, setUser ] = useState({});
 
     useEffect(() => {
         const token = localStorage.getItem('token')
+        const splitToken = token.split(',')
 
         if (token) {
             setLoggedIn(true)
+            setUser({
+                username: splitToken[1],
+                user_id: parseInt(splitToken[2])
+            })
         }
     }, [])
 
@@ -28,7 +33,8 @@ const AuthProvider = (props) => {
     const login = (loginAttempt) => {
         axios.post('http://localhost:4000/api/auth/login', loginAttempt)
             .then(res => {
-                localStorage.setItem('token', res.data.token)
+                console.log(res.data)
+                localStorage.setItem('token', [res.data.token, res.data.user.username, res.data.user.user_id])
                 setLoggedIn(true)
                 setUser(res.data.user)
             })
@@ -47,7 +53,8 @@ const AuthProvider = (props) => {
         loggedIn,
         login,
         logout,
-        register
+        register,
+        user
     };
 
     return <AuthContext.Provider value={authContextValue} {...props}/>;
