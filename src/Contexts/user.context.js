@@ -5,13 +5,6 @@ const UserContext = createContext({});
 const UserProvider = (props) => {
     const [ user, setUser ] = useState(null);
 
-    useEffect(() => {
-        setUser({
-                user_id: 5,
-                username: "testjerryuser"
-            })
-    }, [])
-
     const userContextValue = {
         user,
         setUser

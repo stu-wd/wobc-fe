@@ -7,7 +7,7 @@ const authedAxios = () => {
         headers: {
             authorization: token
         },
-        baseURL: 'http://localhost:3000/api'
+        baseURL: 'http://localhost:4000/api'
     });
 };
 

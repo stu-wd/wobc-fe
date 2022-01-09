@@ -1,85 +1,67 @@
-import React, { useContext, useState } from 'react';
-import axios from 'axios'
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Contexts/auth.context';
-import { useUserInfo } from '../../Contexts/user.context';
+import { Button, Checkbox, Form, Input } from 'antd'
 
-const initialFormValues = {
-    username: '',
-    password: ''
-}
-
-// const initialFormErrors = {
-//     username: '',
-//     password: '',
-// }
-
-const Login = (props) => {
-    const { setLoggedIn } = useAuth();
-    const { setUser } = useUserInfo();
+const Login = () => {
+    const { login } = useAuth();
     const navigate = useNavigate();
 
-    const [ formValues, setFormValues ] = useState(initialFormValues)
-    // const [ formErrors, setFormErrors ] = useState(initialFormErrors)
-    // const [ disabled, setDisabled ] = useState(true)
+    const onFinish = (values) => {
+        login(values)
+        navigate('/dashboard')
+      };
+    
+      const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+      };
 
-    const onChange = (e) => {
-        const { name, value } = e.target
-        setFormValues({
-            ...formValues,
-            [name]: value
-        })
-        // setFormValues({
-        //     ...formValues,
-        //     [name]: value
-        // })
-    }
-
-    const onLogin = (e) => {
-        e.preventDefault()
-        const loginAttempt = {
-            username: formValues.username,
-            password: formValues.password
-        }
-
-        axios.post(`http://localhost:3000/api/auth/login`, loginAttempt)
-            .then(res => {
-                localStorage.setItem('token', res.data.token)
-                setLoggedIn(true)
-                setUser(res.data.user)
-                navigate('/dashboard')
-            })
-            .catch(err => {
-                console.log('err', err);
-            })
-    }
-
+       {/* <Form.Item
+        name="remember"
+        valuePropName="checked"
+        wrapperCol={{
+          offset: 8,
+          span: 16,
+        }}
+      >
+        <Checkbox>Remember me</Checkbox>
+      </Form.Item> */}
+    
     return (
-        <div>
-            <form onSubmit={onLogin}>
-                <label>
-                    Username:
-                    <input 
-                        type='text'
-                        name='username'
-                        onChange = {onChange}
-                        value = {formValues.username}
-                    />
-                </label>
+        <Form
+            name="basic"
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 16 }}
+            initialValues={{ remember: false }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
+        >
+            <Form.Item
+                label="Username"
+                name="username"
+                rules={[{ required: true }]}
+            >
+                <Input />
+            </Form.Item>
 
-                <label>
-                    Password:
-                    <input
-                        type = 'password'
-                        name = 'password'
-                        onChange = {onChange}
-                        value = {formValues.password}
-                    />
-                </label>
+            <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true }]}
+            >
+                <Input.Password />
+            </Form.Item>
 
-                <button>Login</button>
-            </form>
-        </div>
+            <Form.Item
+                wrapperCol={{ offset: 8, span: 16 }}
+            >
+                <Button type="primary" htmlType="submit">
+                    Submit
+                </Button>
+            </Form.Item>
+
+    </Form>
     );
 };
 

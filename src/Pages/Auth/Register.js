@@ -1,90 +1,76 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-
-const initialFormValues = {
-    username: '',
-    password: '',
-    name: ''
-};
-
-// const initialFormErrors = {
-//     name: '',
-//     username: '',
-//     email: '',
-//     password: '',
-//     role_id: ''
-// }
+import { useAuth } from '../../Contexts/auth.context';
+import { Button, Checkbox, Form, Input } from 'antd'
 
 const Register = () => {
+    const { register } = useAuth();
+    const navigate = useNavigate();
 
-    const [ formValues, setFormValues ] = useState(initialFormValues)
-    const navigate = useNavigate()
+    const onFinish = (values) => {
+        register(values)
+        navigate('/login')
+      };
+    
+      const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+      };
 
-    // const [ formErrors, setFormErrors ] = useState(initialFormErrors)
-    // const [ disabled, setDisabled ] = useState(true)
+       {/* <Form.Item
+        name="remember"
+        valuePropName="checked"
+        wrapperCol={{
+          offset: 8,
+          span: 16,
+        }}
+      >
+        <Checkbox>Remember me</Checkbox>
+      </Form.Item> */}
+    
+    return (
+        <Form
+            name="basic"
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 16 }}
+            initialValues={{ remember: false }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
+        >
 
-    const onChange = e => {
-        const { name, value } = e.target
-        setFormValues({
-            ...formValues,
-            [name]: value
-        });
-    };
+            <Form.Item
+                label="Name"
+                name="name"
+                rules={[{ required: true }]}
+            >
+                <Input />
+            </Form.Item>
 
-    const formSubmit = (e) => {
-        e.preventDefault()
-        const newAccount = {
-            username: formValues.username.trim(),
-            name: formValues.name.trim(),
-            password: formValues.password.trim()
-        }
-        console.log(newAccount)
-        axios.post(`http://localhost:3000/api/auth/register`, newAccount)
-            .then(() => {
-                navigate('/login')
-            })
-            .catch(err => {
-                console.log('err: ', err)
-            })
-    }
+            <Form.Item
+                label="Username"
+                name="username"
+                rules={[{ required: true }]}
+            >
+                <Input />
+            </Form.Item>
 
-   return (
-        <>
-            <form onSubmit={formSubmit}>
-                <label>
-                    Name:
-                    <input
-                        type = 'text'
-                        name = 'name'
-                        onChange = {onChange}
-                        value = {formValues.name}
-                    />
-                </label>
+            <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true }]}
+            >
+                <Input.Password />
+            </Form.Item>
 
-                <label>
-                    Username:
-                    <input
-                        type = 'text'
-                        name = 'username'
-                        onChange = {onChange}
-                        value = {formValues.username}
-                    />
-                </label>
+            <Form.Item
+                wrapperCol={{ offset: 8, span: 16 }}
+            >
+                <Button type="primary" htmlType="submit">
+                    Submit
+                </Button>
+            </Form.Item>
 
-                <label>
-                    Password:
-                    <input
-                        type = 'password'
-                        name = 'password'
-                        onChange = {onChange}
-                        value = {formValues.password}
-                    />
-                </label>
-
-                <button>Submit</button>         
-            </form>
-        </>
+    </Form>
     );
 };
 

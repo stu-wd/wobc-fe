@@ -1,20 +1,20 @@
 const FormData = {
     initialFormValues: {
-        serial: '',
-        future: '',
-        condition: '',
-        type: '',
-        size: '',
-        brand: '',
-        gender: '',
-        kidadult: '',
-        received: '',
-        storage: '',
+        serial: null,
+        future: null,
+        condition: null,
+        type: null,
+        size: null,
+        brand: null,
+        gender: null,
+        kidadult: null,
+        received: null,
+        storage: null,
     },
     options:
     [
         {
-            name: 'Future',
+            name: 'future',
             choices: [
                 "Scrap",
                 "Repair",
@@ -22,7 +22,7 @@ const FormData = {
             ]
         },
         {
-            name: 'Brand',
+            name: 'brand',
             choices: [
                 "Cannondale",
                 "GT",
@@ -39,7 +39,7 @@ const FormData = {
             ]
         },
         {
-            name: 'Condition',
+            name: 'condition',
             choices: [
                 "Poor",
                 "Good",
@@ -47,7 +47,7 @@ const FormData = {
             ]
         },
         {
-            name: 'Type',
+            name: 'type',
             choices: [
                 "Cruiser",
                 "Hybrid",
@@ -56,7 +56,7 @@ const FormData = {
             ]
         },
         {
-            name: 'Gender',
+            name: 'gender',
             choices : [
                 "Female",
                 "Male",
@@ -64,7 +64,7 @@ const FormData = {
             ],
         },
         {
-            name: 'Kid/Adult',
+            name: 'kidadult',
             choices : [
                 "Adult",
                 "Child",
@@ -73,7 +73,7 @@ const FormData = {
         },
         {
 
-            name: 'Size',
+            name: 'size',
             choices : [
                 "12/12.5 in",
                 "16 in",
@@ -88,7 +88,7 @@ const FormData = {
             ]
         },
         {
-            name: 'Received',
+            name: 'received',
             choices : [
                 "Becaffeinated",
                 "East Ridge Bicycles",
@@ -100,7 +100,7 @@ const FormData = {
             ]
         },
         {
-            name: 'Storage',
+            name: 'storage',
             choices: [
                 "Dodds",
                 "Lookouts",

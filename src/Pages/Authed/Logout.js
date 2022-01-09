@@ -2,14 +2,13 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Contexts/auth.context';
 
-const Logout = (props) => {
-    const { setLoggedIn } = useAuth();
+const Logout = () => {
+    const { logout } = useAuth();
     const navigate = useNavigate();
     
     useEffect(() => {
-        localStorage.removeItem('token');
-        setLoggedIn(false);
-        navigate('/');
+        logout()
+        navigate('/')
     });
 
     return (
