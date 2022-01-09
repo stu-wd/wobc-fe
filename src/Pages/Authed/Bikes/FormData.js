@@ -1,16 +1,4 @@
 const FormData = {
-    initialFormValues: {
-        serial: null,
-        future: null,
-        condition: null,
-        type: null,
-        size: null,
-        brand: null,
-        gender: null,
-        kidadult: null,
-        received: null,
-        storage: null,
-    },
     options:
     [
         {

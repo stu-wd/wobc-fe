@@ -4,7 +4,7 @@ import Register from '../Pages/Auth/Register';
 import Login from '../Pages/Auth/Login';
 import Dashboard from '../Pages/Authed/Dashboard';
 import Bikes from '../Pages/Authed/Bikes/Bikes';
-import AddBike from '../Pages/Authed/Bikes/Actions/AddBike';
+import BikeActions from '../Pages/Authed/Bikes/Actions/BikeActions';
 import Logout from '../Pages/Authed/Logout';
 // import { UserProvider } from '../Contexts/user.context';
 
@@ -14,7 +14,7 @@ export const AuthenticatedRoutes = () => {
             <Routes>
                     <Route path='/dashboard' element={<Dashboard />} />
                     <Route path='/bikes' element={<Bikes />} />
-                    <Route path='/add' element={<AddBike />} />
+                    <Route path='/add' element={<BikeActions />} />
                     <Route path='/logout' element={<Logout />} />
             </Routes>
         </>

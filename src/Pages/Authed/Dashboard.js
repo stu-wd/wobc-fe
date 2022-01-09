@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useUserInfo } from '../../Contexts/user.context';
 import Bikes from './Bikes/Bikes';
 import { useBikes } from '../../Contexts/bikes.context';
-import AddBike from './Bikes/Actions/AddBike'
+import BikeActions from './Bikes/Actions/BikeActions'
 import SearchBike from './Bikes/Actions/SearchBike';
 import BikeCard from './Bikes/BikeCard';
 
@@ -21,7 +21,6 @@ const Dashboard = () => {
         <div>
             <h2>Dashboard</h2>
             <SearchBike />
-            <BikeCard />
          
             {/* <button onClick={toggleBikes}>{`${ showBikes ? 'Hide' : 'Show' } Bikes`}</button>
 
@@ -35,7 +34,7 @@ const Dashboard = () => {
 
                 {
                     cardView ? 
-                    <AddBike />
+                    <BikeActions />
                     :
                     <></>
                     

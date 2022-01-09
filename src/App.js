@@ -6,15 +6,6 @@ import { AuthenticatedRoutes, UnauthenticatedRoutes } from './Routes/routes.inde
 function App() {
   const { loggedIn } = useAuth();
 
-  // useEffect(() => {
-  //   return (
-  //     <>
-  //     <Header />
-  //     { loggedIn ? <AuthenticatedRoutes /> : <UnauthenticatedRoutes /> }
-  //     </>
-  //   )
-  // },[loggedIn])
-
   return (
     <div className="flex flex-col">
       <div>
