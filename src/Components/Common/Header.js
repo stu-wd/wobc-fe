@@ -22,13 +22,13 @@ const Header = () => {
         // </header>
 
         <header>
-            <>
+            <div className="flex justify-around bg-green-800 m-5 text-yellow-100 rounded-full">
                 <Link to='/dashboard'>Dashboard</Link>
                 <Link to='/add'>Add Bike</Link>
                 <Link to='/logout'>Logout</Link>
                 <Link to='/register'>Register</Link>
                 <Link to='/login'>Login</Link>
-            </>
+            </div>
         </header>
     )
 };
