@@ -1,20 +1,19 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { useUserInfo } from './user.context';
 
 const AuthContext = createContext({});
 
 const AuthProvider = (props) => {
     const [ loggedIn, setLoggedIn ] = useState(false);
-    const { setUser } = useUserInfo()
+    const [ user, setUser ] = useState(null);
 
     const register = (newAccount) => {
         axios.post('http://localhost:4000/api/auth/register', newAccount)
             .then((res) => {
-
+                console.log(res.data);
             })
             .catch(err => {
-                console.log(err);
+                console.log(`register ${err}`);
             })
     }
 
@@ -26,7 +25,8 @@ const AuthProvider = (props) => {
                 setUser(res.data.user)
             })
             .catch(err => {
-                console.log('err', err);
+                console.log(err);
+                setLoggedIn(false)
             })
     }
 

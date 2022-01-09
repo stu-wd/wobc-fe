@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../Contexts/auth.context';
 import { Link, useNavigate } from 'react-router-dom';
-import { useUserInfo } from '../../Contexts/user.context';
 import Bikes from './Bikes/Bikes';
 import { useBikes } from '../../Contexts/bikes.context';
 import BikeActions from './Bikes/Actions/BikeActions'
@@ -10,7 +9,7 @@ import BikeCard from './Bikes/BikeCard';
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const { user } = useUserInfo();
+    const { user } = useAuth();
     const { cardView, showBikes, toggleBikes, toggleCardView, searchedBikeBySerial } = useBikes();
 
     // useEffect(() => {

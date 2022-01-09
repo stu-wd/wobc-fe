@@ -39,14 +39,6 @@ const Register = () => {
         >
 
             <Form.Item
-                label="Name"
-                name="name"
-                rules={[{ required: true }]}
-            >
-                <Input />
-            </Form.Item>
-
-            <Form.Item
                 label="Username"
                 name="username"
                 rules={[{ required: true }]}

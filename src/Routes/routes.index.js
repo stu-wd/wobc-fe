@@ -11,6 +11,7 @@ import Logout from '../Pages/Authed/Logout';
 export const AuthenticatedRoutes = () => {
     return (
         <>
+        <h1>Authed</h1>
             <Routes>
                     <Route path='/dashboard' element={<Dashboard />} />
                     <Route path='/bikes' element={<Bikes />} />
@@ -24,6 +25,7 @@ export const AuthenticatedRoutes = () => {
 export const UnauthenticatedRoutes = () => {
     return (
         <>
+        <h1>Unauthed</h1>
             <Routes>
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
