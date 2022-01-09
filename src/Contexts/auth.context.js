@@ -7,6 +7,14 @@ const AuthProvider = (props) => {
     const [ loggedIn, setLoggedIn ] = useState(false);
     const [ user, setUser ] = useState(null);
 
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+
+        if (token) {
+            setLoggedIn(true)
+        }
+    }, [])
+
     const register = (newAccount) => {
         axios.post('http://localhost:4000/api/auth/register', newAccount)
             .then((res) => {
