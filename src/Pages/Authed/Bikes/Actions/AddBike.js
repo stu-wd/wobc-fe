@@ -98,7 +98,7 @@ const AddBike = () => {
 
 
    return (
-        <div>
+        <div className='bg-blue-500'>
             <Form
                 // {...layout}
                 // form={form}
@@ -127,7 +127,7 @@ const AddBike = () => {
             {fd.options.map(option => {
                 if (option.name === 'Brand' || option.name === 'Size' || option.name === 'Received')  {
                     return(
-                        <Form.Item label={option.name}>
+                        <Form.Item label={option.name} key={option.name}>
                              <select name={option.name} onChange={handleSelect}>
                                  {option.choices.map(choice =>{
                                      return(
