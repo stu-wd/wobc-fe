@@ -43,15 +43,23 @@ const BikesProvider = (props) => {
             .catch(err => console.log(err))
     }
 
-        const addBike = (newBike) => {
-            authedAxios()
-                .post(`/bikes/add`, newBike)
-                .then(res => {
-                    setSuccessMsg(true)
-                })
-                .catch(err => {
-                    setSuccessMsg(false)
-                })
+    const addBike = (newBike, user_id) => {
+        console.log(newBike)
+        const submission = {
+            ...newBike,
+            user_id: user_id
+        }
+        console.log(submission)
+        authedAxios()
+            .post(`/bikes/add`, submission)
+            .then(res => {
+                console.log(res.data);
+                setSuccessMsg(true)
+            })
+            .catch(err => {
+                console.log(err);
+                setSuccessMsg(false)
+            })
     }
 
     const bikesContextValue = {

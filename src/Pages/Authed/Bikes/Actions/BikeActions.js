@@ -4,13 +4,17 @@ import { Button, Checkbox, Col, Form, Input, Row, Select } from 'antd'
 import fd from '../FormData'
 import { useBikes } from '../../../../Contexts/bikes.context';
 import { capitalize } from './../../../../Utils/capitalize'
+import { useAuth } from '../../../../Contexts/auth.context';
 
 const BikeActions = () => {
     const { addBike, successMsg } = useBikes()
+    const { user } = useAuth()
     const [form] = Form.useForm()
 
     const onFinish = (values) => {
-        addBike(values)
+        console.log(values)
+        const { user_id } = user
+        addBike(values, user_id)
         form.resetFields()
     }
 

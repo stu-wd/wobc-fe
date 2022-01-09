@@ -9,9 +9,9 @@ const AuthProvider = (props) => {
 
     useEffect(() => {
         const token = localStorage.getItem('token')
-        const splitToken = token.split(',')
-
+        
         if (token) {
+            const splitToken = token.split(',')
             setLoggedIn(true)
             setUser({
                 username: splitToken[1],
@@ -34,7 +34,7 @@ const AuthProvider = (props) => {
         axios.post('http://localhost:4000/api/auth/login', loginAttempt)
             .then(res => {
                 console.log(res.data)
-                localStorage.setItem('token', [res.data.token, res.data.user.username, res.data.user.user_id])
+                localStorage.setItem('token', [ res.data.token, res.data.user.username, res.data.user.user_id ])
                 setLoggedIn(true)
                 setUser(res.data.user)
             })
