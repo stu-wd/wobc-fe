@@ -21,7 +21,7 @@ const AuthProvider = (props) => {
     }, [])
 
     const register = (newAccount) => {
-        axios.post('http://localhost:4000/api/auth/register', newAccount)
+        axios.post('https://whiteoakbikeco-op.herokuapp.com/api/auth/register', newAccount)
             .then((res) => {
                 console.log(res.data);
             })
@@ -31,7 +31,7 @@ const AuthProvider = (props) => {
     }
 
     const login = (loginAttempt) => {
-        axios.post('http://localhost:4000/api/auth/login', loginAttempt)
+        axios.post('https://whiteoakbikeco-op.herokuapp.com/api/auth/login', loginAttempt)
             .then(res => {
                 console.log(res.data)
                 localStorage.setItem('token', [ res.data.token, res.data.user.username, res.data.user.user_id ])
