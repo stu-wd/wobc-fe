@@ -44,7 +44,6 @@ const BikesProvider = (props) => {
     }
 
     const addBike = (newBike, user_id) => {
-        console.log(newBike)
         const submission = {
             ...newBike,
             user_id: user_id
