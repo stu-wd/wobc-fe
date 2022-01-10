@@ -5,20 +5,47 @@ import fd from '../FormData'
 import { useBikes } from '../../../../Contexts/bikes.context';
 import { capitalize } from './../../../../Utils/capitalize'
 import { useAuth } from '../../../../Contexts/auth.context';
+// import { useParams } from 'react-router-dom';
 
-const BikeActions = () => {
-    const { successMsg, postBike, resetMessage } = useBikes()
+const BikeActions = (props) => {
+    const { successMsg, postBike, editBike, resetMessage, serialSearchDetails } = useBikes()
     const { user } = useAuth()
     const [ form ] = Form.useForm()
+    const [ POST, setPOST ] = useState()
+    const [ PUT, setPUT ] = useState()
 
-    const onFinish = (values) => {
+    const onFinishPOST = (values) => {
+        console.log(values)
         const { user_id } = user
         values.user_id = user_id
         postBike(values)
     }
 
+    const onFinishPUT = (values) => {
+        console.log(values)
+        const { user_id } = user
+        values.user_id = user_id
+        editBike(values)
+    }
+
     const onFinishFailed = (error) => {
         console.log(`Failed: ${error}`);
+    }
+    
+    const { serialMatch } = props
+
+    useEffect(() => {
+        form.resetFields()
+    }, [serialMatch])
+
+    const changeToPOST = () => {
+        setPUT(false)
+        setPOST(true)
+    }
+
+    const changeToPUT = () => {
+        setPOST(false)
+        setPUT(true)
     }
 
     return (
@@ -29,22 +56,44 @@ const BikeActions = () => {
             name='bike'
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            initialValues={{  }}
-            onFinish={onFinish}
+            initialValues={props.serialMatch ? { 
+                serial: serialMatch.serial,
+                future: serialMatch.future,
+                brand: serialMatch.brand,
+                condition: serialMatch.condition,
+                type: serialMatch.type,
+                gender: serialMatch.gender,
+                kidadult: serialMatch.kidadult,
+                size: serialMatch.size,
+                received: serialMatch.received,
+                storage: serialMatch.storage } : {}}
+            onFinish={ POST ? onFinishPOST : onFinishPUT }
             onFinishFailed={onFinishFailed}
-            autoComplete="off"
             scrollToFirstError
             className='m-5 p-2 text-neutral-900'
             >
 
-            <Form.Item
-                label="Serial"
-                name="serial"
-                rules={[{ required: true }]}
-                className='flex py-2 pl-2 text-x'
-            >
-                <Input style={{ border: '2px solid black' }}/>
-            </Form.Item>
+            {/* { serialMatch ?
+                <>{`edit form for serial: ${serialMatch.serial}`}</>
+                :
+                <Form.Item
+                    label="Serial"
+                    name="serial"
+                    rules={[{ required: true }]}
+                    className='flex py-2 pl-2 text-x'
+                >
+                    <Input style={{ border: '2px solid black' }}/>
+                </Form.Item>
+            } */}
+
+                <Form.Item
+                    label="Serial"
+                    name="serial"
+                    rules={[{ required: true }]}
+                    className='flex py-2 pl-2 text-x'
+                >
+                    <Input style={{ border: '2px solid black' }}/>
+                </Form.Item>
 
             {fd.options.map(option => {
                 return(
@@ -53,13 +102,14 @@ const BikeActions = () => {
                         name={option.name}
                         className='flex py-2 pl-2 text-xl'
                         rules={option.name === 'future' ? [{ required: true }] : [{ required: false }]}
+                        key={option.name}
                         >                
                         <select
                         >
                             <option value='none'>None</option>
                             {option.choices.map(choice => {
                                 return(
-                                    <option value={choice}>{choice}</option>
+                                    <option key={choice} value={choice}>{choice}</option>
                                     )
                                 })}
                         </select>
@@ -67,16 +117,44 @@ const BikeActions = () => {
                 )
             })}
 
-            <Button
-                type='primary'
-                htmlType='submit'
-                className='border-solid border-2 border-black bg-rose-700 text-white p-2'
-                >
-                Add new bike
-            </Button>
+            
+            {
+                props.serialMatch ? 
+                <>
+                    <Button
+                    type='primary'
+                    htmlType='submit'
+                    className='border-solid border-2 border-black bg-rose-700 text-white p-2'
+                    onClick={changeToPUT}
+                    >
+                    edit bike
+                    </Button>
+
+                    {/* <Button
+                    type='primary'
+                    htmlType='submit'
+                    className='border-solid border-2 border-black bg-rose-700 text-white p-2'
+                    >
+                    Delete bike
+                    </Button> */}
+                </>
+
+                :
+                <>
+                    <Button
+                    type='primary'
+                    htmlType='submit'
+                    className='border-solid border-2 border-black bg-rose-700 text-white p-2'
+                    onClick={changeToPOST}
+                    >
+                    Add new bike
+                    </Button>
+                </>
+            }
+            
 
             <div>
-                {successMsg === 'Success' ?
+                {successMsg === 'Add Success' ?
                         <>
                             {successMsg}
                             {form.resetFields()}
@@ -84,7 +162,23 @@ const BikeActions = () => {
                         </>
                         :
                         <>
+                        </>}
+
+                {successMsg === 'Edit Success' ?
+                <> 
+                    {successMsg}
+                    {resetMessage()}
+                </>
+                :
+                <>
+                </>}
+
+                {successMsg === 'Edit Failed' ?
+                        <>
                             {successMsg}
+                        </>
+                        :
+                        <>
                         </>}
             </div>     
         </Form>

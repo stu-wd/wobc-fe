@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import authedAxios from '../Utils/authedAxios';
 import { useAsyncFn } from 'react-use'
+import { urls } from '../Utils/meta'
 
 const BikesContext = createContext({});
 
@@ -44,24 +45,28 @@ const BikesProvider = (props) => {
             .catch(err => console.log(err))
     }
 
-    // const addBike = (newBike, user_id) => {
-    //     const submission = {
-    //         ...newBike,
-    //         user_id: user_id
-    //     }
-    //     authedAxios()
-    //         .post(`https://whiteoakbikeco-op.herokuapp.com/api/bikes/add`, submission)
-    //         .then(res => {
-    //             console.log(res.data);
-    //             setSuccessMsg(true)
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //             setSuccessMsg(false)
-    //         })
-    // }
+    const searchSerialUrl = urls.local + '/bikes'
+    const [ serialSearchDetails, searchSerial ] = useAsyncFn(async (serial) => {
+        const response = await fetch(searchSerialUrl + `/${serial}`, {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
+            // body: JSON.stringify(serial)
+        })
+        const result = await response.json()
+        console.log(result)
+        return result
+    }, [searchSerialUrl])
 
-    let postBikeUrl = 'https://whiteoakbikeco-op.herokuapp.com/api/bikes/add'
+
+    
+    const postBikeUrl = urls.local + '/bikes/add'
     const [ addBikeDetails, postBike ] = useAsyncFn(async (data) => {
         const response = await fetch(postBikeUrl, {
             method: 'POST',
@@ -77,14 +82,14 @@ const BikesProvider = (props) => {
         })
         const result = await response.json()
         setSuccessMsg(result.message)
-        console.log(result, result.message);
+        console.log('add resolved');
         return
     }, [postBikeUrl])
 
-    let putBikeUrl = 'http://localhost:4000/api/bikes/edit'
-    const [ editBikeDetails, editBike ] = useAsyncFn(async (data) => {
-        console.log(data)
-        const response = await fetch(putBikeUrl, {
+    const putBikeUrl = urls.local + '/bikes'
+    const [ editBikeDetails, editBike ] = useAsyncFn(async (bike) => {
+        console.log(bike)
+        const response = await fetch(putBikeUrl + `/${bike.serial}`, {
             method: 'PUT',
             mode: 'cors',
             cache: 'no-cache',
@@ -94,10 +99,12 @@ const BikesProvider = (props) => {
             },
             redirect: 'follow',
             referrerPolicy: 'no-referrer',
-            body: JSON.stringify(data)
+            body: JSON.stringify(bike)
         })
+        console.log(response)
         const result = await response.json()
-        console.log(result)
+        setSuccessMsg(result.message)
+        console.log(result);
         return
     }, [putBikeUrl])
 
@@ -123,7 +130,9 @@ const BikesProvider = (props) => {
         successMsg,
         postBike,
         editBike,
-        resetMessage
+        resetMessage,
+        searchSerial,
+        serialSearchDetails
     };
 
     return <BikesContext.Provider value={bikesContextValue} {...props}/>;

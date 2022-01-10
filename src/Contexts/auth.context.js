@@ -1,7 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { urls } from '../Utils/meta'
 
 const AuthContext = createContext({});
+
 
 const AuthProvider = (props) => {
     const [ loggedIn, setLoggedIn ] = useState(false);
@@ -21,7 +23,7 @@ const AuthProvider = (props) => {
     }, [])
 
     const register = (newAccount) => {
-        axios.post('https://whiteoakbikeco-op.herokuapp.com/api/auth/register', newAccount)
+        axios.post(urls.local + '/auth/register', newAccount)
             .then((res) => {
                 console.log(res.data);
             })
@@ -31,7 +33,7 @@ const AuthProvider = (props) => {
     }
 
     const login = (loginAttempt) => {
-        axios.post('https://whiteoakbikeco-op.herokuapp.com/api/auth/login', loginAttempt)
+        axios.post(urls.local + '/auth/login', loginAttempt)
             .then(res => {
                 console.log(res.data)
                 localStorage.setItem('token', [ res.data.token, res.data.user.username, res.data.user.user_id ])
