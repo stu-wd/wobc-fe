@@ -82,6 +82,7 @@ const BikesProvider = (props) => {
         })
         const result = await response.json()
         setSuccessMsg(result.message)
+        console.log('add resolved');
         return
     }, [postBikeUrl])
 
@@ -100,8 +101,10 @@ const BikesProvider = (props) => {
             referrerPolicy: 'no-referrer',
             body: JSON.stringify(bike)
         })
+        console.log(response)
         const result = await response.json()
         setSuccessMsg(result.message)
+        console.log(result);
         return
     }, [putBikeUrl])
 

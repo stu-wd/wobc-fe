@@ -11,12 +11,20 @@ const BikeActions = (props) => {
     const { successMsg, postBike, editBike, resetMessage, serialSearchDetails } = useBikes()
     const { user } = useAuth()
     const [ form ] = Form.useForm()
+    const [ POST, setPOST ] = useState()
+    const [ PUT, setPUT ] = useState()
 
-    const onFinish = (values) => {
+    const onFinishPOST = (values) => {
         console.log(values)
         const { user_id } = user
         values.user_id = user_id
-        // postBike(values)
+        postBike(values)
+    }
+
+    const onFinishPUT = (values) => {
+        console.log(values)
+        const { user_id } = user
+        values.user_id = user_id
         editBike(values)
     }
 
@@ -29,6 +37,16 @@ const BikeActions = (props) => {
     useEffect(() => {
         form.resetFields()
     }, [serialMatch])
+
+    const changeToPOST = () => {
+        setPUT(false)
+        setPOST(true)
+    }
+
+    const changeToPUT = () => {
+        setPOST(false)
+        setPUT(true)
+    }
 
     return (
         <div
@@ -49,20 +67,33 @@ const BikeActions = (props) => {
                 size: serialMatch.size,
                 received: serialMatch.received,
                 storage: serialMatch.storage } : {}}
-            onFinish={onFinish}
+            onFinish={ POST ? onFinishPOST : onFinishPUT }
             onFinishFailed={onFinishFailed}
             scrollToFirstError
             className='m-5 p-2 text-neutral-900'
             >
 
-            <Form.Item
-                label="Serial"
-                name="serial"
-                rules={[{ required: true }]}
-                className='flex py-2 pl-2 text-x'
-            >
-                <Input style={{ border: '2px solid black' }}/>
-            </Form.Item>
+            {/* { serialMatch ?
+                <>{`edit form for serial: ${serialMatch.serial}`}</>
+                :
+                <Form.Item
+                    label="Serial"
+                    name="serial"
+                    rules={[{ required: true }]}
+                    className='flex py-2 pl-2 text-x'
+                >
+                    <Input style={{ border: '2px solid black' }}/>
+                </Form.Item>
+            } */}
+
+                <Form.Item
+                    label="Serial"
+                    name="serial"
+                    rules={[{ required: true }]}
+                    className='flex py-2 pl-2 text-x'
+                >
+                    <Input style={{ border: '2px solid black' }}/>
+                </Form.Item>
 
             {fd.options.map(option => {
                 return(
@@ -94,17 +125,18 @@ const BikeActions = (props) => {
                     type='primary'
                     htmlType='submit'
                     className='border-solid border-2 border-black bg-rose-700 text-white p-2'
+                    onClick={changeToPUT}
                     >
                     edit bike
                     </Button>
 
-                    <Button
+                    {/* <Button
                     type='primary'
                     htmlType='submit'
                     className='border-solid border-2 border-black bg-rose-700 text-white p-2'
                     >
                     Delete bike
-                    </Button>
+                    </Button> */}
                 </>
 
                 :
@@ -113,6 +145,7 @@ const BikeActions = (props) => {
                     type='primary'
                     htmlType='submit'
                     className='border-solid border-2 border-black bg-rose-700 text-white p-2'
+                    onClick={changeToPOST}
                     >
                     Add new bike
                     </Button>
@@ -121,7 +154,7 @@ const BikeActions = (props) => {
             
 
             <div>
-                {successMsg === 'Success' ?
+                {successMsg === 'Add Success' ?
                         <>
                             {successMsg}
                             {form.resetFields()}

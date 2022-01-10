@@ -10,7 +10,11 @@ const SearchBike = () => {
 
 
     const onSearch = (serial) => {
-        searchSerial(serial)
+        if (serial.length === 0) {
+            alert('must enter serial')
+        } else {
+            searchSerial(serial)
+        }
     }
 
     return (
@@ -24,11 +28,10 @@ const SearchBike = () => {
 
         {
             serialSearchDetails.value ? 
-                serialSearchDetails.value.map((match, idx) => {
+                serialSearchDetails.value.map((match) => {
                     return(
                         <>
-                        <BikeActions key={idx} serialMatch={match} />
-                        {console.log(serialSearchDetails)}
+                        <BikeActions key={match} serialMatch={match} />
                         </>
                     )
                 })
