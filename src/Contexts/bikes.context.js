@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import authedAxios from '../Utils/authedAxios';
+import { useAsync } from 'react-use'
 
 const BikesContext = createContext({});
 
@@ -48,11 +49,9 @@ const BikesProvider = (props) => {
             ...newBike,
             user_id: user_id
         }
-        console.log(submission)
         authedAxios()
             .post(`/bikes/add`, submission)
             .then(res => {
-                console.log(res.data);
                 setSuccessMsg(true)
             })
             .catch(err => {
@@ -60,6 +59,15 @@ const BikesProvider = (props) => {
                 setSuccessMsg(false)
             })
     }
+
+    // const addBikeAsync = ({ url }) => {
+    //     let url = 'http://localhost:4000/api/bikes/add'
+    //     const state = useAsync(async () => {
+    //         const response = await fetch(url)
+    //         const result = await response.text()
+    //         return result
+    //     }, [url])
+    // }
 
     const bikesContextValue = {
         bikes,
