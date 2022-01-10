@@ -23,7 +23,7 @@ const AuthProvider = (props) => {
     }, [])
 
     const register = (newAccount) => {
-        axios.post(urls.local + '/auth/register', newAccount)
+        axios.post(urls.heroku + '/auth/register', newAccount)
             .then((res) => {
                 console.log(res.data);
             })
@@ -33,7 +33,7 @@ const AuthProvider = (props) => {
     }
 
     const login = (loginAttempt) => {
-        axios.post(urls.local + '/auth/login', loginAttempt)
+        axios.post(urls.heroku + '/auth/login', loginAttempt)
             .then(res => {
                 console.log(res.data)
                 localStorage.setItem('token', [ res.data.token, res.data.user.username, res.data.user.user_id ])
