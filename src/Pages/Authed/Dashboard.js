@@ -12,7 +12,7 @@ const Dashboard = () => {
     const { user } = useAuth();
     const { cardView, showBikes, toggleBikes, toggleCardView, searchedBikeBySerial } = useBikes();
 
-    console.log(user)
+    // console.log(user)
 
     // useEffect(() => {
     //     { searchedBikeBySerial ? <div>{searchedBikeBySerial.serial}</div> : <>no serial</>}

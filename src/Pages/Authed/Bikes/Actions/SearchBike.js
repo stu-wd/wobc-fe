@@ -2,17 +2,15 @@ import React, { useEffect } from 'react';
 import { Input, Space } from 'antd';
 import { useBikes } from '../../../../Contexts/bikes.context';
 import BikeCard from '../BikeCard';
+import BikeActions from './BikeActions';
 
 const SearchBike = () => {
     const { Search } = Input
-    const { handleSerialSearch, searchedBikeBySerial } = useBikes()
+    const { handleSerialSearch, searchedBikeBySerial, searchSerial, serialSearchDetails } = useBikes()
+
 
     const onSearch = (serial) => {
-        handleSerialSearch(serial)
-
-        if (!searchedBikeBySerial) {
-            console.log('nothing found')
-        }
+        searchSerial(serial)
     }
 
     return (
@@ -23,6 +21,20 @@ const SearchBike = () => {
                 onSearch={onSearch}
                 style={{ width: 200 }} />
         </Space>
+
+        {
+            serialSearchDetails.value ? 
+                serialSearchDetails.value.map((match, idx) => {
+                    return(
+                        <>
+                        <BikeActions key={idx} serialMatch={match} />
+                        {console.log(serialSearchDetails)}
+                        </>
+                    )
+                })
+            :
+            <></>
+        }
         </>
 
 );
