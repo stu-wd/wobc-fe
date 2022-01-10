@@ -7,7 +7,7 @@ const Header = () => {
 
     return (
         <header>
-            <div className="flex justify-around bg-green-800 m-5 text-yellow-100 rounded-full">
+            <div className="flex justify-around bg-gray-500 m-5 text-white rounded-full">
             {loggedIn ?
                 <>
                     <Link to='/dashboard'>Dashboard</Link>

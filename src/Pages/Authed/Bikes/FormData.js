@@ -22,8 +22,7 @@ const FormData = {
                 "Santa Cruz",
                 "Scott",
                 "Specialized",
-                "Trek",
-                "Not Listed"
+                "Trek"
             ]
         },
         {
@@ -47,16 +46,14 @@ const FormData = {
             name: 'gender',
             choices : [
                 "Female",
-                "Male",
-                "N/A"
+                "Male"
             ],
         },
         {
             name: 'kidadult',
             choices : [
                 "Adult",
-                "Child",
-                "N/A"
+                "Child"
             ],
         },
         {
@@ -83,8 +80,7 @@ const FormData = {
                 "Hamilton Co. Recycling",
                 "Pedego",
                 "Red Bank Fire Department",
-                "Sweat Club",
-                "Unknown"
+                "Sweat Club"
             ]
         },
         {

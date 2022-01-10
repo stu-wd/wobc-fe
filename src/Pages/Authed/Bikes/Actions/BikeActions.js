@@ -7,22 +7,95 @@ import { capitalize } from './../../../../Utils/capitalize'
 import { useAuth } from '../../../../Contexts/auth.context';
 
 const BikeActions = () => {
-    const { addBike, successMsg } = useBikes()
+    const { successMsg, postBike, resetMessage } = useBikes()
     const { user } = useAuth()
-    const [form] = Form.useForm()
+    const [ form ] = Form.useForm()
 
     const onFinish = (values) => {
-        console.log(values)
         const { user_id } = user
-        addBike(values, user_id)
-        form.resetFields()
+        values.user_id = user_id
+        postBike(values)
     }
 
     const onFinishFailed = (error) => {
         console.log(`Failed: ${error}`);
     }
 
-    // const handleSelect = (value) => {
+    return (
+        <div
+            style={{ border: '3px solid black'}}>
+        <Form
+            form={form}
+            name='bike'
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 16 }}
+            initialValues={{  }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
+            scrollToFirstError
+            className='m-5 p-2 text-neutral-900'
+            >
+
+            <Form.Item
+                label="Serial"
+                name="serial"
+                rules={[{ required: true }]}
+                className='flex py-2 pl-2 text-x'
+            >
+                <Input style={{ border: '2px solid black' }}/>
+            </Form.Item>
+
+            {fd.options.map(option => {
+                return(
+                    <Form.Item
+                        label={option.name === 'kidadult' ? 'Kid/Adult' : capitalize(option.name)}
+                        name={option.name}
+                        className='flex py-2 pl-2 text-xl'
+                        rules={option.name === 'future' ? [{ required: true }] : [{ required: false }]}
+                        >                
+                        <select
+                        >
+                            <option value='none'>None</option>
+                            {option.choices.map(choice => {
+                                return(
+                                    <option value={choice}>{choice}</option>
+                                    )
+                                })}
+                        </select>
+                    </Form.Item>
+                )
+            })}
+
+            <Button
+                type='primary'
+                htmlType='submit'
+                className='border-solid border-2 border-black bg-rose-700 text-white p-2'
+                >
+                Add new bike
+            </Button>
+
+            <div>
+                {successMsg === 'Success' ?
+                        <>
+                            {successMsg}
+                            {form.resetFields()}
+                            {resetMessage()}
+                        </>
+                        :
+                        <>
+                            {successMsg}
+                        </>}
+            </div>     
+        </Form>
+        </div>
+
+    );
+};
+
+export default BikeActions;
+
+// const handleSelect = (value) => {
     //     console.log(`selected ${value}`);
     // }
 
@@ -38,89 +111,96 @@ const BikeActions = () => {
     //     }
     // }
 
-    return (
-        <Form
-            form={form}
-            name='bike'
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            initialValues={{  }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            autoComplete="off"
-            // className='m-5 bg-blue-900 p-2 text-blue-200'
-        >
-            <h2 className="pb-1 text-2xl">Add New Bike</h2>
+            {/* {addBikeDetails.value ? 
+                addBikeDetails.value.map(bike => {
+                    console.log(`add bike details: ${bike}`)
+                })
+                // console.log(`add bike details: ${addBikeDetails.value}`)
+                :
+                console.log(`no addbikedetails`)
+            } */}
 
-            <Form.Item
-                label="Serial"
-                name="serial"
-                rules={[{ required: true }]}
-                className='flex py-2 pl-2 text-x'
-                // style={{ border: '2px solid black' }}
-            >
-                <Input style={{ border: '2px solid black' }}/>
-            </Form.Item>
+    // let url = 'http://localhost:4000/api/bike/add'
 
-            {fd.options.map(option => {
-                return(
-                    <Form.Item
-                        label={option.name === 'kidadult' ? 'Kid/Adult' : capitalize(option.name)}
-                        name={option.name}
-                        className='flex py-2 pl-2 text-xl'
-                        >                
-                        <select
-                        >
-                            <option value='none'>None</option>
-                            {option.choices.map(choice => {
-                                <option value='none'>None</option>
-                                return(
-                                    <option value={choice}>{choice}</option>
-                                    )
-                                })}
-                        </select>
-                    </Form.Item>
-                )
-            })}
+    // const state = useAsync(async () => {
+    //     // authedAxios()
+    //         // .post(url, bike)
+    //         // .then(res => {
+    //         //         console.log(`async res ${res.data}`);
+    //         //     })
+    //         // .catch(err => console.log(err))
+    //     const response = await fetch(url)
+    //     const result = await response.text()
+    //     return result
+    //     setAsyncData(result)
+    // },[url])
 
-            <Button
-                type='primary'
-                htmlType='submit'
-            >
-                Add
-            </Button>
+    // let url = 'http://localhost:4000/api/users/'
 
-            { successMsg ? 
-                <>Success</>
-            :
-                <>Attempt Failed</>}
+    // const [ asyncBike, doFetch ] = useAsyncFn(async () => {
+    //     const response = await fetch(url, {
+    //         method: 'GET',
+    //         mode: 'cors',
+    //         cache: 'no-cache',
+    //         credentials: 'same-origin',
+    //         headers: {
+    //             'Content-Type' : 'application/json'
+    //         },
+    //         redirect: 'follow',
+    //         referrerPolicy: 'no-referrer'
+    //     })
+    //     const result = await response.json()
+    //     return result
+    // }, [url])
 
+{/* {
+                asyncData ?
+                    asyncData.map(user => {
+                        return(
+                            <>
+                            {user.username}</>
+                        )
+                    })
+                :
+                <></>
+            } */}
+
+            {/* {console.log(asyncBike.value.map(user =>{
+                console.log(user.username)
+            }))}
+            { typeof asyncBike.value === Object ? 
+                <>array</>
+                :
+                <></>
+            } */}
+
+                   {/* {asyncBike.loading
+                ? <div>Loading...</div>
+                : asyncBike.error
+                ? <div>Error: {asyncBike.error.message}</div>
+                : <div>Value: {asyncBike.value} {console.log(asyncBike)}</div>
+            } */}
             {/* <Button
                 type='primary'     
                 htmlType='submit'      
                 onClick={bikeActions}      
-            >
+                >
                 Save Edit
-            </Button>
-            
-            <Button
+                </Button>
+                
+                <Button
                 type='primary'
                 htmlType='submit'
                 onClick={bikeActions}
-            >
+                >
                 Delete Bike
             </Button> */}
 
 
             {/* <input type='submit' name='button1' value='add' /> */}
-        </Form>
-    );
-};
-
-export default BikeActions;
 
 {/* {fd.options.map(option => {
-                if (option.name === 'brand' || option.name === 'size' || option.name === 'received'){
+    if (option.name === 'brand' || option.name === 'size' || option.name === 'received'){
                     return(
                         <Form.Item
                             label={option.name}
