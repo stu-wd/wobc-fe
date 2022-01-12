@@ -31,8 +31,8 @@ const UserForm = (props) => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             style={{
-                width: '80vw',
-                height: '60vh',
+                // width: '80vw',
+                // height: '60vh',
                 // border: '3px solid black',
                 // backgroundColor: 'yellow'
                 // display: 'flex',
@@ -40,20 +40,17 @@ const UserForm = (props) => {
             }}
             >
             
-            <div
+            {/* <div
                 id='input-group'
                 style={{
                     transition: '0.5s'
                 }}
                 >
-
-            </div>
+            </div> */}
 
 
             { props.authPage === 'register' ? 
                 <Form.Item
-                label="Name"
-                // placeholder='Username'
                 name="name"
                 // rules={[{ required: true }]}
                 style={{
@@ -68,17 +65,17 @@ const UserForm = (props) => {
                     background: 'transparent'
                 }}
                 >
-                    <Input />
+                    <Input
+                        placeholder='Name'
+                    />
                 </Form.Item>
                 :
-                <>
-                </>
+                <></>
             }
             
 
             <Form.Item
-                label="Username"
-                // placeholder='Username'
+                // label="Username"
                 name="username"
                 rules={[{ required: true }]}
                 style={{
@@ -93,11 +90,12 @@ const UserForm = (props) => {
                     background: 'transparent'
                 }}
                 >
-                <Input />
+                <Input
+                placeholder='Username'
+                />
             </Form.Item>
 
             <Form.Item
-                label="Password"
                 name="password"
                 rules={[{ required: true }]}
                 style={{
@@ -112,18 +110,48 @@ const UserForm = (props) => {
                     background: 'transparent'
                 }}
                 >
-                <Input.Password />
+                <Input.Password
+                    placeholder='Password'
+                />
             </Form.Item>
 
+
+        { props.authPage === 'register' ? 
             <Form.Item
-                // wrapperCol={{ offset: 8, span: 16 }}
+                name="password"
+                rules={[{ required: true }]}
+                style={{
+                    width: '90%',
+                    padding: '10px 0',
+                    margin: '5px 0',
+                    borderLeft: 0,
+                    borderRight: 0,
+                    borderTop: 0,
+                    borderBottom: '1px solid #999',
+                    outline: 'none',
+                    background: 'transparent'
+                }}
+                >
+                <Input.Password
+                    placeholder='Confirm Password'
+                />
+            </Form.Item>
+              :
+              <></>
+          }
+
+            <Form.Item
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center'
+                }}
                 >
                 <Button
                     type="primary"
                     htmlType="submit"
                     style={{
-                        width: '25%',
-                        // display: 'block',
+                        width: '200px',
+                        display: 'block',
                         margin: 'auto',
                         background: 'linear-gradient(to right, #ff105f, #ffad06)',
                         border: 0,
