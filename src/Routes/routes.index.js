@@ -1,18 +1,20 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Register from '../Pages/Auth/Register';
-import Login from '../Pages/Auth/Login';
 import Dashboard from '../Pages/Authed/Dashboard';
 import Bikes from '../Pages/Authed/Bikes/Bikes';
 import BikeActions from '../Pages/Authed/Bikes/Actions/BikeActions';
 import Logout from '../Pages/Authed/Logout';
 import SearchBike from '../Pages/Authed/Bikes/Actions/SearchBike';
+import LandingPage from '../Pages/Auth/LandingPage';
 // import { UserProvider } from '../Contexts/user.context';
+import Header from '../Components/Common/Header';
 
 export const AuthenticatedRoutes = () => {
     return (
         <>
+        <Header />
             <Routes>
+                    {/* <Route path='/' element={<LandingPage />} /> */}
                     <Route path='/dashboard' element={<Dashboard />} />
                     <Route path='/bikes' element={<Bikes />} />
                     <Route path='/add' element={<BikeActions />} />
@@ -28,8 +30,7 @@ export const UnauthenticatedRoutes = () => {
     return (
         <>
             <Routes>
-                <Route path='/login' element={<Login />} />
-                <Route path='/register' element={<Register />} />
+                <Route path='/' element={<LandingPage />} />
             </Routes>
         </>
     )

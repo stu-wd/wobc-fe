@@ -8,6 +8,7 @@ const AuthContext = createContext({});
 const AuthProvider = (props) => {
     const [ loggedIn, setLoggedIn ] = useState(false);
     const [ user, setUser ] = useState({});
+    const [ authPage, setAuthPage ] = useState('')
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -23,7 +24,7 @@ const AuthProvider = (props) => {
     }, [])
 
     const register = (newAccount) => {
-        axios.post(urls.heroku + '/auth/register', newAccount)
+        axios.post(urls.local + '/auth/register', newAccount)
             .then((res) => {
                 console.log(res.data);
             })
@@ -33,7 +34,7 @@ const AuthProvider = (props) => {
     }
 
     const login = (loginAttempt) => {
-        axios.post(urls.heroku + '/auth/login', loginAttempt)
+        axios.post(urls.local + '/auth/login', loginAttempt)
             .then(res => {
                 console.log(res.data)
                 localStorage.setItem('token', [ res.data.token, res.data.user.username, res.data.user.user_id ])
@@ -56,7 +57,8 @@ const AuthProvider = (props) => {
         login,
         logout,
         register,
-        user
+        user,
+        setAuthPage
     };
 
     return <AuthContext.Provider value={authContextValue} {...props}/>;
