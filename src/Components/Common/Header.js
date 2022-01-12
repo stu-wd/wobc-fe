@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../Contexts/auth.context';
 
@@ -7,7 +7,7 @@ const Header = () => {
 
     return (
         <header>
-            <div className="flex justify-around bg-gray-500 m-5 text-white rounded-full">
+            <div>
             {loggedIn ?
                 <>
                     <Link to='/dashboard'>Dashboard</Link>
@@ -17,10 +17,8 @@ const Header = () => {
                 </>
                 :
                 <>
-                    <Link to='/register'>Register</Link>
-                    <Link to='/login'>Login</Link>
                 </>
-                }
+            }
             </div>
         </header>
     )

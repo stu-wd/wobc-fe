@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { urls } from '../Utils/meta'
+import { useAsyncFn } from 'react-use'
 
 const AuthContext = createContext({});
 
@@ -8,6 +9,7 @@ const AuthContext = createContext({});
 const AuthProvider = (props) => {
     const [ loggedIn, setLoggedIn ] = useState(false);
     const [ user, setUser ] = useState({});
+    const [ authPage, setAuthPage ] = useState('')
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -22,29 +24,43 @@ const AuthProvider = (props) => {
         }
     }, [])
 
-    const register = (newAccount) => {
-        axios.post(urls.heroku + '/auth/register', newAccount)
-            .then((res) => {
-                console.log(res.data);
-            })
-            .catch(err => {
-                console.log(`register ${err}`);
-            })
-    }
+    const registerUrl = urls.local + '/auth/register'
+    const [ registration, register ] = useAsyncFn(async (data) => {
+        const response = await fetch(registerUrl, {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
+            body: JSON.stringify(data)
+        })
+        const result = await response.json()
+        console.log(result)
+        return
+    }, [registerUrl])
 
-    const login = (loginAttempt) => {
-        axios.post(urls.heroku + '/auth/login', loginAttempt)
-            .then(res => {
-                console.log(res.data)
-                localStorage.setItem('token', [ res.data.token, res.data.user.username, res.data.user.user_id ])
-                setLoggedIn(true)
-                setUser(res.data.user)
-            })
-            .catch(err => {
-                console.log(err);
-                setLoggedIn(false)
-            })
-    }
+    const loginUrl = urls.local + '/auth/login'
+    const [ loginAttempt, login ] = useAsyncFn(async (data) => {
+        const response = await fetch(loginUrl, {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
+            body: JSON.stringify(data)
+        })
+        const result = await response.json()
+        console.log(result)
+        return
+    }, [loginUrl])
 
     const logout = () => {
         localStorage.removeItem('token')
@@ -56,7 +72,8 @@ const AuthProvider = (props) => {
         login,
         logout,
         register,
-        user
+        user,
+        setAuthPage,
     };
 
     return <AuthContext.Provider value={authContextValue} {...props}/>;

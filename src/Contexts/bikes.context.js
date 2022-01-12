@@ -45,7 +45,7 @@ const BikesProvider = (props) => {
             .catch(err => console.log(err))
     }
 
-    const searchSerialUrl = urls.heroku + '/bikes'
+    const searchSerialUrl = urls.local + '/bikes'
     const [ serialSearchDetails, searchSerial ] = useAsyncFn(async (serial) => {
         const response = await fetch(searchSerialUrl + `/${serial}`, {
             method: 'GET',
@@ -66,7 +66,7 @@ const BikesProvider = (props) => {
 
 
     
-    const postBikeUrl = urls.heroku + '/bikes/add'
+    const postBikeUrl = urls.local + '/bikes/add'
     const [ addBikeDetails, postBike ] = useAsyncFn(async (data) => {
         const response = await fetch(postBikeUrl, {
             method: 'POST',
@@ -86,7 +86,7 @@ const BikesProvider = (props) => {
         return
     }, [postBikeUrl])
 
-    const putBikeUrl = urls.heroku + '/bikes'
+    const putBikeUrl = urls.local + '/bikes'
     const [ editBikeDetails, editBike ] = useAsyncFn(async (bike) => {
         console.log(bike)
         const response = await fetch(putBikeUrl + `/${bike.serial}`, {
