@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import { AutoComplete, Button, Checkbox, Form, Input } from 'antd'
 import { useAuth } from '../../Contexts/auth.context';
 import { Link, useNavigate } from 'react-router-dom';
+import { UserOutlined as UserIcon, LockOutlined as LockIcon } from '@ant-design/icons';
 
 
 const UserForm = (props) => {
-    const { login, register } = useAuth();
+    const { login, register, setAuthPage } = useAuth();
     const navigate = useNavigate();
     console.log(props);
 
     const onFinish = (values) => {
         if (props.authPage === 'register') {
             register(values)
-            navigate('/login')
+            setAuthPage('login')
         }
 
         if (props.authPage === 'login') {
@@ -30,6 +31,8 @@ const UserForm = (props) => {
             name='registration'
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
+            // className='login-form'
+            // layout='inline'
             style={{
                 // width: '80vw',
                 // height: '60vh',
@@ -55,14 +58,15 @@ const UserForm = (props) => {
                 // rules={[{ required: true }]}
                 style={{
                     width: '90%',
-                    padding: '10px 0',
-                    margin: '5px 0',
-                    borderLeft: 0,
-                    borderRight: 0,
-                    borderTop: 0,
-                    borderBottom: '1px solid #999',
+                    padding: '2%',
+                    margin: '1% 0',
+                    // borderLeft: 0,
+                    // borderRight: 0,
+                    // borderTop: 0,
+                    // borderBottom: '1px solid #999',
                     outline: 'none',
-                    background: 'transparent'
+                    background: 'transparent',
+                    display: 'inline'
                 }}
                 >
                     <Input
@@ -80,17 +84,19 @@ const UserForm = (props) => {
                 rules={[{ required: true }]}
                 style={{
                     width: '90%',
-                    padding: '10px 0',
-                    margin: '5px 0',
-                    borderLeft: 0,
-                    borderRight: 0,
-                    borderTop: 0,
-                    borderBottom: '1px solid #999',
+                    padding: '2%',
+                    margin: '1% 0',
+                    // borderLeft: 0,
+                    // borderRight: 0,
+                    // borderTop: 0,
+                    // borderBottom: '1px solid #999',
                     outline: 'none',
-                    background: 'transparent'
+                    background: 'transparent',
+                    display: 'inline'
                 }}
                 >
                 <Input
+                // prefix={<UserIcon />}
                 placeholder='Username'
                 />
             </Form.Item>
@@ -100,17 +106,26 @@ const UserForm = (props) => {
                 rules={[{ required: true }]}
                 style={{
                     width: '90%',
-                    padding: '10px 0',
-                    margin: '5px 0',
-                    borderLeft: 0,
-                    borderRight: 0,
-                    borderTop: 0,
-                    borderBottom: '1px solid #999',
+                    padding: '2%',
+                    margin: '1% 0',
+                    // borderLeft: 0,
+                    // borderRight: 0,
+                    // borderTop: 0,
+                    // borderBottom: '1px solid #999',
                     outline: 'none',
-                    background: 'transparent'
+                    background: 'transparent',
+                    display: 'inline'
                 }}
                 >
                 <Input.Password
+                    style={{
+                        // border: '3px solid black',
+                        display: 'flex'
+                    }}
+                    // prefix={
+                    // <LockIcon
+                    //     className="site-form-item-icon"
+                    // />}
                     placeholder='Password'
                 />
             </Form.Item>
@@ -118,22 +133,36 @@ const UserForm = (props) => {
 
         { props.authPage === 'register' ? 
             <Form.Item
-                name="password"
-                rules={[{ required: true }]}
+                name="confirm_password"
+                // rules={[{ required: true }]}
                 style={{
                     width: '90%',
-                    padding: '10px 0',
-                    margin: '5px 0',
-                    borderLeft: 0,
-                    borderRight: 0,
-                    borderTop: 0,
-                    borderBottom: '1px solid #999',
-                    outline: 'none',
-                    background: 'transparent'
+                    padding: '2%',
+                    margin: '1% 0',
+                    // borderLeft: 0,
+                    // borderRight: 0,
+                    // borderTop: 0,
+                    // // borderBottom: '1px solid #999',
+                    // outline: 'none',
+                    background: 'transparent',
+                    display: 'inline'
                 }}
                 >
                 <Input.Password
-                    placeholder='Confirm Password'
+                    style={{
+                        // border: '3px solid black',
+                        
+                    }}
+                    // prefix={
+                    //     <LockIcon 
+                    //         style={{
+                    //             // border: '3px solid red',
+                    //             // margin: '3px',
+                    //             // display: 'flex'
+                    //         }}
+                    //         className="site-form-item-icon"
+                    //     />}
+                    placeholder='Not hooked up yet'
                 />
             </Form.Item>
               :
@@ -153,7 +182,7 @@ const UserForm = (props) => {
                         width: '200px',
                         display: 'block',
                         margin: 'auto',
-                        background: 'linear-gradient(to right, #ff105f, #ffad06)',
+                        background: 'linear-gradient(360deg, rgba(194,221,173,1) 0%, rgba(144,190,109,1) 83%)',
                         border: 0,
                         outline: 'none',
                         borderRadius: '30px'

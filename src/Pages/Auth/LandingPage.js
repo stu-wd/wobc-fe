@@ -17,7 +17,6 @@ const LandingPage = () => {
      const overlayCSS = {
          position: 'absolute',
          height: '100%',
-         background: 'linear-gradient(to right, #ff105f, #ffad06)',
          borderRadius: '30px',
          transition: '0.5s',
          top: 0
@@ -34,7 +33,7 @@ const LandingPage = () => {
                 alignItems: 'center'
             }}
         >
-            <h1>White Oak Bike Co-op Volunteer Portal</h1>
+            <h1>WOBC Volunteer Portal</h1>
             <div>
                 <img
                     src={WOBCLogo}
@@ -65,6 +64,7 @@ const LandingPage = () => {
                         ...overlayCSS,
                         width: side === undefined ? '20%' : '50%',
                         left: side === undefined ? '40%' : side === 'left' ? 0 : '50%',
+                        background: side === undefined ? '#999' : side === 'left' ? 'linear-gradient(90deg, rgba(194,221,173,1) 0%, rgba(144,190,109,1) 83%)' : 'linear-gradient(270deg, rgba(194,221,173,1) 0%, rgba(144,190,109,1) 83%)'
                     }}
                     >
                 </div>
