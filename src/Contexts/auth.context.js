@@ -10,7 +10,6 @@ const AuthProvider = (props) => {
 
     const [ loggedIn, setLoggedIn ] = useState(false);
     const [ user, setUser ] = useState({});
-    // const [ authPage, setAuthPage ] = useState('')
     const [ message, setMessage ] = useState()
 
     useEffect(() => {
