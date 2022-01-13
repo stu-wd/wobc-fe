@@ -39,6 +39,11 @@ const UserForm = (props) => {
                 flexDirection: 'column'
             }}
         >
+            { message === 'Login Success' ? 
+            <> {message} -- redirecting... </>
+            :
+            <> {message} </>    
+            }
         <Form
             name='registration'
             onFinish={onFinish}
@@ -181,6 +186,8 @@ const UserForm = (props) => {
               <></>
           }
 
+          {
+              props.authPage === 'login' ?
             <Form.Item
                 name='remember'
                 valuePropName="checked"
@@ -189,6 +196,11 @@ const UserForm = (props) => {
                     Remember me
                 </Checkbox>
             </Form.Item>
+            :
+            <></>
+          }
+
+            
 
             <Form.Item
                 style={{
@@ -214,11 +226,7 @@ const UserForm = (props) => {
             </Form.Item>
 
         </Form>
-        { message === 'Login Success' ? 
-            <> {message} -- redirecting... </>
-            :
-            <> {message} </>    
-        }
+        
         </div>
     );
 };
