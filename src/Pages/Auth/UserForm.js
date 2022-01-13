@@ -1,32 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AutoComplete, Button, Checkbox, Form, Input } from 'antd'
 import { useAuth } from '../../Contexts/auth.context';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserOutlined as UserIcon, LockOutlined as LockIcon } from '@ant-design/icons';
 
-
 const UserForm = (props) => {
-    const { login, register, setAuthPage } = useAuth();
-    const navigate = useNavigate();
-    console.log(props);
+    const { login, loginAttempt, register, message, setMessage } = useAuth();
+
+    useEffect(() => {
+        setMessage()
+    }, [props.authPage])
 
     const onFinish = (values) => {
         if (props.authPage === 'register') {
             register(values)
-            setAuthPage('login')
         }
 
         if (props.authPage === 'login') {
             login(values)
-            navigate('/dashboard')
         }
       };
     
-      const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-      };
+    const onFinishFailed = (errorInfo) => {
+        setMessage('Form error')
+    };
 
     return (
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column'
+            }}
+        >
         <Form
             name='registration'
             onFinish={onFinish}
@@ -193,6 +198,12 @@ const UserForm = (props) => {
             </Form.Item>
 
         </Form>
+        { message === 'Login Success' ? 
+            <> {message} -- redirecting... </>
+            :
+            <> {message} </>    
+        }
+        </div>
     );
 };
 

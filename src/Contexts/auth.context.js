@@ -7,9 +7,11 @@ const AuthContext = createContext({});
 
 
 const AuthProvider = (props) => {
+
     const [ loggedIn, setLoggedIn ] = useState(false);
     const [ user, setUser ] = useState({});
-    const [ authPage, setAuthPage ] = useState('')
+    // const [ authPage, setAuthPage ] = useState('')
+    const [ message, setMessage ] = useState()
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -39,7 +41,7 @@ const AuthProvider = (props) => {
             body: JSON.stringify(data)
         })
         const result = await response.json()
-        console.log(result)
+        setMessage(result.message)
         return
     }, [registerUrl])
 
@@ -58,8 +60,13 @@ const AuthProvider = (props) => {
             body: JSON.stringify(data)
         })
         const result = await response.json()
-        console.log(result)
-        return
+        setMessage(result.message)
+        if (result.message === 'Login Success') {
+            setTimeout(() => {
+                setLoggedIn(true)
+            }, 2500)
+        }
+        return result
     }, [loginUrl])
 
     const logout = () => {
@@ -73,7 +80,10 @@ const AuthProvider = (props) => {
         logout,
         register,
         user,
-        setAuthPage,
+        registration,
+        message,
+        setMessage,
+        loginAttempt
     };
 
     return <AuthContext.Provider value={authContextValue} {...props}/>;
