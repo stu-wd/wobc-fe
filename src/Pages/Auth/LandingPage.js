@@ -7,11 +7,11 @@ const LandingPage = () => {
     const [ side, setSide ] = useState()
 
     const showRegister = () => {
-        setSide('left')
+        setSide('register')
     }
 
     const showLogin = () => {
-        setSide('right')
+        setSide('login')
     }
     
      const overlayCSS = {
@@ -63,8 +63,8 @@ const LandingPage = () => {
                     style={{
                         ...overlayCSS,
                         width: side === undefined ? '20%' : '50%',
-                        left: side === undefined ? '40%' : side === 'left' ? 0 : '50%',
-                        background: side === undefined ? '#999' : side === 'left' ? 'linear-gradient(90deg, rgba(194,221,173,1) 0%, rgba(144,190,109,1) 83%)' : 'linear-gradient(270deg, rgba(194,221,173,1) 0%, rgba(144,190,109,1) 83%)'
+                        left: side === undefined ? '40%' : side === 'register' ? 0 : '50%',
+                        background: side === undefined ? '#999' : side === 'register' ? 'linear-gradient(90deg, rgba(194,221,173,1) 0%, rgba(144,190,109,1) 83%)' : 'linear-gradient(270deg, rgba(194,221,173,1) 0%, rgba(144,190,109,1) 83%)'
                     }}
                     >
                 </div>
@@ -109,12 +109,12 @@ const LandingPage = () => {
                     marginTop: '5%'
                 }}
             >
-            { side === 'left' ? 
+            { side === 'register' ? 
                 <UserForm authPage={'register'} />
                 :
                 <></>
             }
-            { side === 'right' ? 
+            { side === 'login' ? 
                 <UserForm authPage={'login'} />
                 :
                 <></>

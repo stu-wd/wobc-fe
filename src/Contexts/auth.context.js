@@ -25,7 +25,7 @@ const AuthProvider = (props) => {
         }
     }, [])
 
-    const registerUrl = urls.local + '/auth/register'
+    const registerUrl = urls.heroku + '/auth/register'
     const [ registration, register ] = useAsyncFn(async (data) => {
         const response = await fetch(registerUrl, {
             method: 'POST',
@@ -44,7 +44,7 @@ const AuthProvider = (props) => {
         return
     }, [registerUrl])
 
-    const loginUrl = urls.local + '/auth/login'
+    const loginUrl = urls.heroku + '/auth/login'
     const [ loginAttempt, login ] = useAsyncFn(async (data) => {
         const response = await fetch(loginUrl, {
             method: 'POST',
