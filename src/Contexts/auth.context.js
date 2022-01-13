@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import axios from 'axios';
 import { urls } from '../Utils/meta'
 import { useAsyncFn } from 'react-use'
 
@@ -25,7 +24,7 @@ const AuthProvider = (props) => {
         }
     }, [])
 
-    const registerUrl = urls.heroku + '/auth/register'
+    const registerUrl = urls.local + '/auth/register'
     const [ registration, register ] = useAsyncFn(async (data) => {
         const response = await fetch(registerUrl, {
             method: 'POST',
@@ -40,12 +39,14 @@ const AuthProvider = (props) => {
             body: JSON.stringify(data)
         })
         const result = await response.json()
+        console.log(result);
         setMessage(result.message)
-        return
+        return result
     }, [registerUrl])
 
-    const loginUrl = urls.heroku + '/auth/login'
+    const loginUrl = urls.local + '/auth/login'
     const [ loginAttempt, login ] = useAsyncFn(async (data) => {
+        console.log(data);
         const response = await fetch(loginUrl, {
             method: 'POST',
             mode: 'cors',
@@ -63,7 +64,10 @@ const AuthProvider = (props) => {
         if (result.message === 'Login Success') {
             setTimeout(() => {
                 setLoggedIn(true)
-            }, 2500)
+            }, 1500)
+            if (data.remember === true) {
+                localStorage.setItem('token', result.token)
+            }
         }
         return result
     }, [loginUrl])

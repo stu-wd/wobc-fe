@@ -5,8 +5,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { UserOutlined as UserIcon, LockOutlined as LockIcon } from '@ant-design/icons';
 
 const UserForm = (props) => {
-    const { login, loginAttempt, register, message, setMessage } = useAuth();
+    const { login, loginAttempt, register, message, setMessage, registration } = useAuth();
+    const [ checked, setChecked ] = useState()
 
+    console.log(registration)
     useEffect(() => {
         setMessage()
     }, [props.authPage])
@@ -24,6 +26,11 @@ const UserForm = (props) => {
     const onFinishFailed = (errorInfo) => {
         setMessage('Form error')
     };
+
+    const handleCheck = () => {
+        console.log(checked);
+        setChecked(!checked)
+    }
 
     return (
         <div
@@ -173,6 +180,15 @@ const UserForm = (props) => {
               :
               <></>
           }
+
+            <Form.Item
+                name='remember'
+                valuePropName="checked"
+            >
+                <Checkbox>
+                    Remember me
+                </Checkbox>
+            </Form.Item>
 
             <Form.Item
                 style={{
