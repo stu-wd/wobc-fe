@@ -1,3 +1,5 @@
+import manufacturers from "../Bikes/Options/brands";
+
 const FormData = {
   options: [
     {
@@ -6,19 +8,7 @@ const FormData = {
     },
     {
       name: "brand",
-      choices: [
-        "Cannondale",
-        "GT",
-        "Giant",
-        "Kona",
-        "Marin",
-        "Merida",
-        "Raleigh",
-        "Santa Cruz",
-        "Scott",
-        "Specialized",
-        "Trek",
-      ],
+      choices: manufacturers,
     },
     {
       name: "condition",

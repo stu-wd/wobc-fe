@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../Contexts/auth.context";
 import { Link, useNavigate } from "react-router-dom";
-import Bikes from "./Bikes/Bikes";
 import { useBikes } from "../../Contexts/bikes.context";
-import BikeActions from "./Bikes/Actions/BikeActions";
-import SearchBike from "./Bikes/Actions/SearchBike";
-import BikeCard from "./Bikes/BikeCard";
-import Sidebar from "../../Components/Sidebar";
-// import {MenuIcon} from '@mui/icons-material'
+import { useAuth } from "../../Contexts/auth.context";
+import Bikes from "../Bikes/Bikes";
+import BikeActions from "../Bikes/Actions/BikeActions";
+import SearchBike from "../Bikes/Actions/SearchBike";
+import BikeCard from "../Bikes/BikeCard";
+import Sidebar from "./Sidebar";
 
 const Dashboard = () => {
   const navigate = useNavigate();

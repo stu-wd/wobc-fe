@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import { Input, Space } from "antd";
-import { useBikes } from "../../../../Contexts/bikes.context";
+// import { useBikes } from "../../../../Contexts/bikes.context";
+import { useBikes } from "../../../Contexts/bikes.context";
 import BikeCard from "../BikeCard";
 import BikeActions from "./BikeActions";
+// import BikeCard from "../BikeCard";
+// import BikeActions from "./BikeActions";
 
 const SearchBike = () => {
   const { Search } = Input;

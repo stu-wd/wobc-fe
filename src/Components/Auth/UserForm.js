@@ -19,6 +19,7 @@ const UserForm = (props) => {
     if (message === "Login Success") {
       setTimeout(() => {
         navigate("/dashboard");
+        setMessage("");
       }, 2500);
     }
   }, [message]);
@@ -51,25 +52,7 @@ const UserForm = (props) => {
         onFinishFailed={onFinishFailed}
         // className='login-form'
         // layout='inline'
-        style={
-          {
-            // width: '80vw',
-            // height: '60vh',
-            // border: '3px solid black',
-            // backgroundColor: 'yellow'
-            // display: 'flex',
-            // justifyItems: 'start'
-          }
-        }
       >
-        {/* <div
-                id='input-group'
-                style={{
-                    transition: '0.5s'
-                }}
-                >
-            </div> */}
-
         {props.authPage === "register" ? (
           <Form.Item
             name="name"
@@ -198,19 +181,19 @@ const UserForm = (props) => {
             justifyContent: "center",
           }}
         >
-<Button
-type="primary"
-htmlType="submit"
-style={{
-width: "200px",
-display: "block",
-margin: "auto",
-background:
-"linear-gradient(360deg, rgba(194,221,173,1) 0%, rgba(144,190,109,1) 83%)",
-border: 0,
-outline: "none",
-borderRadius: "30px",
-}}
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{
+              width: "200px",
+              display: "block",
+              margin: "auto",
+              background:
+                "linear-gradient(360deg, rgba(194,221,173,1) 0%, rgba(144,190,109,1) 83%)",
+              border: 0,
+              outline: "none",
+              borderRadius: "30px",
+            }}
           >
             Submit
           </Button>

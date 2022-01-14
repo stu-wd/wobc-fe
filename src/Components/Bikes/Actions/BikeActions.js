@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Checkbox, Col, Form, Input, Row, Select } from "antd";
 import fd from "../FormData";
-import { useBikes } from "../../../../Contexts/bikes.context";
-import { capitalize } from "./../../../../Utils/capitalize";
-import { useAuth } from "../../../../Contexts/auth.context";
-// import { useParams } from 'react-router-dom';
+import { useBikes } from "../../../Contexts/bikes.context";
+import { capitalize } from "../../../Utils/capitalize";
+import { useAuth } from "../../../Contexts/auth.context";
 
 const BikeActions = (props) => {
   const { successMsg, postBike, editBike, resetMessage, serialSearchDetails } =

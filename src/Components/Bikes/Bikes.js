@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
-import { useBikes } from "./../../../Contexts/bikes.context";
+// import { useBikes } from "./../../../Contexts/bikes.context";
+// import BikeCard from "./BikeCard";
+import { useBikes } from "../../Contexts/bikes.context";
 import BikeCard from "./BikeCard";
 
 const Bikes = () => {

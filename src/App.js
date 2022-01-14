@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useAuth } from "./Contexts/auth.context.js";
-import UserForm from "./Pages/Auth/UserForm.js";
+import UserForm from "./Components/Auth/UserForm.js";
 import {
   AuthenticatedRoutes,
   UnauthenticatedRoutes,
 } from "./Routes/routes.index.js";
-import LandingPage from "./Pages/Auth/LandingPage.js";
+import LandingPage from "./Components/Auth/LandingPage.js";
 
 function App() {
   const { loggedIn } = useAuth();
