@@ -37,11 +37,11 @@ const FormData = {
       name: "brand",
       choices: manufacturers,
     },
-    {
-      type: "radio",
-      name: "condition",
-      choices: ["Poor", "Good", "Excellent"],
-    },
+    // {
+    //   type: "radio",
+    //   name: "condition",
+    //   choices: ["Poor", "Good", "Excellent"],
+    // },
     {
       type: "select",
       name: "type",
@@ -74,7 +74,12 @@ const FormData = {
       ],
     },
     {
-      type: "text",
+      type: "radio",
+      name: "storage",
+      choices: ["Dodds", "Lookouts", "Red Bank", "WOBC"],
+    },
+    {
+      type: "search",
       name: "received",
       choices: [
         "Becaffeinated",
@@ -84,11 +89,6 @@ const FormData = {
         "Red Bank Fire Department",
         "Sweat Club",
       ],
-    },
-    {
-      type: "radio",
-      name: "storage",
-      choices: ["Dodds", "Lookouts", "Red Bank", "WOBC"],
     },
   ],
 };

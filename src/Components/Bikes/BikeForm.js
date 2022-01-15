@@ -1,18 +1,17 @@
 import React from "react";
 import { Formik, Form, useField, Field } from "formik";
 import * as Yup from "yup";
-
-import fd, { sizes } from "./Options/formData";
+import { Autocomplete } from "formik-mui";
+import MuiTextField from "@mui/material/TextField";
+import fd from "./Options/formData";
+import manufacturers from "./Options/brands";
 
 const MyTextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
-
   return (
     <>
-      <label htmlFor={props.id || props.name}>{label}</label>
-
-      <input className="text-input" {...field} {...props} />
-
+      {/* <label htmlFor={props.id || props.name}>{label}</label> */}
+      <input placeholder={props.name} {...field} {...props} />
       {meta.touched && meta.error ? (
         <div className="error">{meta.error}</div>
       ) : null}
@@ -22,25 +21,13 @@ const MyTextInput = ({ label, ...props }) => {
 
 const MyRadio = ({ children, ...props }) => {
   const [field, meta] = useField(props);
-
   return (
-    <div name="group" role="group">
-      {/* {children.map((choice, i) => {
-        return (
-          <>
-            {choice}
-            <input value={choice} {...field} {...props} />
-          </>
-        );
-      })} */}
-      {/* {children.map((c) => {
-        return <h1>{c}</h1>;
-      })} */}
+    <div role="group">
       {children.map((choice, i) => {
         return (
           <>
             <label>
-              <Field type="radio" name={props.name} value={choice} />
+              <Field type="radio" key={i} name={props.name} value={choice} />
               {choice}
             </label>
           </>
@@ -59,9 +46,10 @@ const MySelect = ({ children, label, ...props }) => {
 
   return (
     <div>
-      <label htmlFor={props.id || props.name}>{label}</label>
-
       <select {...field} {...props}>
+        <option disabled selected value="">
+          {props.name}
+        </option>
         {children.map((choice, i) => {
           return (
             <option key={i} value={choice}>
@@ -75,6 +63,27 @@ const MySelect = ({ children, label, ...props }) => {
         <div className="error">{meta.error}</div>
       ) : null}
     </div>
+  );
+};
+
+const MySearchable = ({ children, ...props }) => {
+  const [field, meta] = useField(props);
+  return (
+    <Field
+      name={props.name}
+      component={Autocomplete}
+      options={children}
+      // getOptionLabel={() => }
+      // style={{ width: 300 }}
+      renderInput={(props) => (
+        <MuiTextField
+          {...props}
+          name={props.name}
+          label={props.brand}
+          variant="outlined"
+        />
+      )}
+    />
   );
 };
 
@@ -105,51 +114,49 @@ const BikeForm = () => {
           console.log(values);
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2));
-
             setSubmitting(false);
           }, 400);
         }}
+        className=""
       >
-        {({ values, onChange }) => (
-          <Form>
-            {fd.options.map((option, i) => {
-              if (option.type === "text") {
-                return (
-                  <MyTextInput
-                    type={option.type}
-                    key={i}
-                    label={option.name}
-                    name={option.name}
-                  />
-                );
-              }
-              if (option.type === "select") {
-                return (
-                  <MySelect
-                    children={option.choices}
-                    label={option.name}
-                    type={option.type}
-                    key={i}
-                    name={option.name}
-                  />
-                );
-              }
-              if (option.type === "radio") {
-                return (
-                  <MyRadio
-                    children={option.choices}
-                    // label={option.name}
-                    // type={option.type}
-                    // key={i}
-                    name={option.name}
-                  />
-                );
-              }
-            })}
+        <Form>
+          {fd.options.map((option, i) => {
+            if (option.type === "text") {
+              return (
+                <MyTextInput type={option.type} key={i} name={option.name} />
+              );
+            }
+            if (option.type === "select") {
+              return (
+                <MySelect
+                  children={option.choices}
+                  label={option.name}
+                  type={option.type}
+                  key={i}
+                  name={option.name}
+                />
+              );
+            }
+            if (option.type === "radio") {
+              return (
+                <MyRadio key={i} children={option.choices} name={option.name} />
+              );
+            }
+            if (option.type === "search") {
+              return (
+                <MySearchable
+                  key={i}
+                  name={option.name}
+                  children={option.choices}
+                />
+              );
+            }
+          })}
 
-            <button type="submit">Submit</button>
-          </Form>
-        )}
+          <button className="button" type="submit">
+            Submit
+          </button>
+        </Form>
       </Formik>
     </div>
   );
