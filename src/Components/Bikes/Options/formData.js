@@ -1,32 +1,51 @@
-import manufacturers from "../Bikes/Options/brands";
+// import manufacturers from "../brands";
+import manufacturers from "./brands";
 
 const FormData = {
   options: [
     {
-      name: "future",
-      choices: ["Scrap", "Repair", "Donate"],
+      type: "input",
+      name: "serial",
     },
     {
+      type: "select",
+      name: "status",
+      choices: [
+        "Scrapped",
+        "Scrap",
+        "Repair",
+        "Inspection",
+        "Ready",
+        "Donated",
+      ],
+    },
+    {
+      type: "search",
       name: "brand",
       choices: manufacturers,
     },
     {
+      type: "checkbox",
       name: "condition",
       choices: ["Poor", "Good", "Excellent"],
     },
     {
+      type: "select",
       name: "type",
-      choices: ["Cruiser", "Hybrid", "Mountain", "Road"],
+      choices: ["Comfort", "Cruiser", "Hybrid", "Mountain", "Road"],
     },
     {
+      type: "checkbox",
       name: "gender",
       choices: ["Female", "Male"],
     },
     {
+      type: "checkbox",
       name: "kidadult",
       choices: ["Adult", "Child"],
     },
     {
+      type: "select",
       name: "size",
       choices: [
         "12/12.5 in",
@@ -42,6 +61,7 @@ const FormData = {
       ],
     },
     {
+      type: "input",
       name: "received",
       choices: [
         "Becaffeinated",
@@ -53,6 +73,7 @@ const FormData = {
       ],
     },
     {
+      type: "checkbox",
       name: "storage",
       choices: ["Dodds", "Lookouts", "Red Bank", "WOBC"],
     },

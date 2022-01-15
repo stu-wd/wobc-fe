@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { urls } from "../Utils/meta";
 import { useAsyncFn } from "react-use";
 import { attachments } from "../Utils/authedAxios";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +22,7 @@ const AuthProvider = (props) => {
     }
   }, []);
 
-  const registerUrl = urls.local + "/auth/register";
+  const registerUrl = process.env.REACT_APP_API + "/auth/register";
   const [registration, register] = useAsyncFn(
     async (data) => {
       const response = await fetch(registerUrl, {
@@ -33,12 +32,13 @@ const AuthProvider = (props) => {
       });
       const result = await response.json();
       setMessage(result.message);
+      console.log(result);
       return result;
     },
     [registerUrl]
   );
 
-  const loginUrl = urls.local + "/auth/login";
+  const loginUrl = process.env.REACT_APP_API + "/auth/login";
   const [loginAttempt, login] = useAsyncFn(
     async (data) => {
       const response = await fetch(loginUrl, {
@@ -48,9 +48,10 @@ const AuthProvider = (props) => {
       });
       const result = await response.json();
       if (result.message === "Login Success") {
+        setUser(result.user);
         setTimeout(() => {
           setLoggedIn(true);
-        }, 2500);
+        }, 1500);
       }
       if (data.remember === true) localStorage.setItem("token", result.token);
       setMessage(result.message);

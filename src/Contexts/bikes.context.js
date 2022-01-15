@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import authedAxios from "../Utils/authedAxios";
 import { useAsyncFn } from "react-use";
-import { urls } from "../Utils/meta";
 
 const BikesContext = createContext({});
 
@@ -45,7 +44,7 @@ const BikesProvider = (props) => {
       .catch((err) => console.log(err));
   };
 
-  const searchSerialUrl = urls.local + "/bikes";
+  const searchSerialUrl = process.env.REACT_APP_API + "/bikes";
   const [serialSearchDetails, searchSerial] = useAsyncFn(
     async (serial) => {
       const response = await fetch(searchSerialUrl + `/${serial}`, {
@@ -67,7 +66,7 @@ const BikesProvider = (props) => {
     [searchSerialUrl]
   );
 
-  const postBikeUrl = urls.local + "/bikes/add";
+  const postBikeUrl = process.env.REACT_APP_API + "/bikes/add";
   const [addBikeDetails, postBike] = useAsyncFn(
     async (data) => {
       const response = await fetch(postBikeUrl, {
@@ -83,14 +82,15 @@ const BikesProvider = (props) => {
         body: JSON.stringify(data),
       });
       const result = await response.json();
-      setSuccessMsg(result.message);
-      console.log("add resolved");
+      console.log(result);
+      // setSuccessMsg(result.message);
+      // console.log("add resolved");
       return;
     },
     [postBikeUrl]
   );
 
-  const putBikeUrl = urls.local + "/bikes";
+  const putBikeUrl = process.env.REACT_APP_API + "/bikes";
   const [editBikeDetails, editBike] = useAsyncFn(
     async (bike) => {
       console.log(bike);

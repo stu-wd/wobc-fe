@@ -4,7 +4,7 @@ import { useBikes } from "../../Contexts/bikes.context";
 
 const BikeCard = (props) => {
   const { searchedBikeBySerial } = useBikes();
-  const { brand, condition, future, type, serial, size, user_id } = props.bike;
+  const { brand, condition, status, type, serial, size, user_id } = props.bike;
   return (
     <div
       style={{
@@ -13,7 +13,7 @@ const BikeCard = (props) => {
         flexDirection: "column",
       }}
     >
-      <h5>{future}</h5>
+      <h5>{status}</h5>
       <h5>{condition}</h5>
       <h5>{serial}</h5>
       <h5>{size}</h5>

@@ -1,113 +1,137 @@
 import React, { useState } from "react";
-import WOBCLogo from "../../Images/wobclogo.png";
-import UserForm from "./UserForm";
+import WOBCLogo from "../../Images/wobclogotransparent.png";
+import { useAuth } from "../../Contexts/auth.context";
+import { AutoComplete, Button, Checkbox, Form, Input } from "antd";
 
 const LandingPage = () => {
-  const [side, setSide] = useState();
+  const [side, setSide] = useState("register");
+  const { register, login, setMessage, message } = useAuth();
 
-  const showRegister = () => {
+  const setRegister = () => {
     setSide("register");
   };
 
-  const showLogin = () => {
+  const setLogin = () => {
     setSide("login");
+    setMessage("");
   };
 
-  const overlayCSS = {
-    position: "absolute",
-    height: "100%",
-    borderRadius: "30px",
-    transition: "0.5s",
-    top: 0,
+  const onFinish = (values) => {
+    if (side === "register") {
+      register(values);
+    }
+    if (side === "login") {
+      login(values);
+    }
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    setMessage("Form error");
   };
 
   return (
-    <div
-      // className='container'
-      style={{
-        display: "flex",
-        width: "100%",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <h1>WOBC Volunteer Portal</h1>
-      <div>
-        <img src={WOBCLogo} alt="WOBC Logo" style={{}} />
-      </div>
+    <div className="sm:mx-auto sm:w-full sm:max-w-md">
+      {/* <h2 className="text-center text-3xl font-extrabold text-gray-900">
+        WOBC Volunteer Portal
+      </h2> */}
 
-      <div
-        className="button-group"
-        style={{
-          width: "80%",
-          // height: '10%',
-          // margin: 'auto',
-          // backgroundColor: 'red',
-          display: "flex",
-          boxShadow: "0 0 20px 10px rgba(194,221,173,1)",
-          borderRadius: "30px",
-          position: "relative",
-          // border: '3px solid green'
-        }}
+      <img
+        className="mx-auto h-40 w-auto"
+        src={WOBCLogo}
+        alt="WOBC Logo"
+        // style={{}}
+      />
+      <h3 className="mt-6 text-center text-xl font-extrabold text-gray-900">
+        {side === "register" && message === undefined && "Create your account"}
+        {message != undefined ? `${message}` : <></>}
+      </h3>
+      <p
+        className={`mt-2 text-center text-sm text-gray-600 max-w ${
+          side === "login" ? "hidden m-0" : ""
+        }`}
       >
+        Already registered?
         <div
-          id="btn"
-          style={{
-            ...overlayCSS,
-            width: side === undefined ? "20%" : "50%",
-            left: side === undefined ? "40%" : side === "register" ? 0 : "50%",
-            background:
-              side === undefined
-                ? "#999"
-                : side === "register"
-                ? "linear-gradient(90deg, rgba(194,221,173,1) 0%, rgba(144,190,109,1) 83%)"
-                : "linear-gradient(270deg, rgba(194,221,173,1) 0%, rgba(144,190,109,1) 83%)",
-          }}
-        ></div>
-        <button
-          style={{
-            maxHeight: "",
-            height: "100%",
-            width: "50%",
-            padding: "5% 10%",
-            cursor: "pointer",
-            background: "transparent",
-            border: 0,
-            outline: "none",
-            zIndex: "99999",
-            // border: '3px solid black'
-          }}
-          onClick={showRegister}
+          onClick={setLogin}
+          className={`inline font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer`}
         >
-          Register
-        </button>
-        <button
-          style={{
-            maxHeight: "",
-            height: "100%",
-            width: "50%",
-            padding: "5% 10%",
-            cursor: "pointer",
-            background: "transparent",
-            border: 0,
-            outline: "none",
-            zIndex: "99999",
-          }}
-          onClick={showLogin}
-        >
-          Login
-        </button>
-      </div>
+          Sign in
+        </div>
+      </p>
 
-      <div
-        style={{
-          display: "flex",
-          marginTop: "5%",
-        }}
-      >
-        {side === "register" ? <UserForm authPage={"register"} /> : <></>}
-        {side === "login" ? <UserForm authPage={"login"} /> : <></>}
+      {/* <p className="mt-2 text-center text-sm text-gray-600 max-w">
+          Whoops...
+          <div
+            onClick={setRegister}
+            className={`inline font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer`}
+          >
+            Make new account instead
+          </div>
+        </p> */}
+
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
+          <Form
+            name="registration"
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            className="mb-0 space-y-6"
+          >
+            <Form.Item
+              name="name"
+              className={`${side === "login" ? "hidden" : ""}`}
+            >
+              <Input
+                className="block text-sm font-medium text-gray-900"
+                placeholder="Name"
+              />
+            </Form.Item>
+
+            <Form.Item
+              // label="Username"
+              name="username"
+              rules={[{ required: true }]}
+            >
+              <Input
+                className="block text-sm font-medium text-gray-900"
+                placeholder="Username"
+              />
+            </Form.Item>
+
+            <Form.Item name="password" rules={[{ required: true }]}>
+              <Input
+                className="block text-sm font-medium text-gray-900"
+                placeholder="Password"
+                type="password"
+              />
+            </Form.Item>
+
+            <Form.Item
+              className={`${side === "login" ? "hidden" : ""}`}
+              name="confirm_password"
+            >
+              <Input
+                className="block text-sm font-medium text-gray-900"
+                placeholder="Not hooked up yet"
+                type="password"
+              />
+            </Form.Item>
+
+            {side === "login" && (
+              <Form.Item name="remember" valuePropName="checked">
+                <Checkbox className="block text-sm font-medium text-gray-900">
+                  Remember me
+                </Checkbox>
+              </Form.Item>
+            )}
+
+            <Form.Item>
+              <Button type="primary" htmlType="submit" className="button">
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import BikeActions from "../Bikes/Actions/BikeActions";
 import SearchBike from "../Bikes/Actions/SearchBike";
 import BikeCard from "../Bikes/BikeCard";
 import Sidebar from "./Sidebar";
+import BikeForm from "../Bikes/BikeForm";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -27,7 +28,8 @@ const Dashboard = () => {
 
   return (
     <div>
-      Dashboard
+      {/* <BikeForm /> */}
+      More to come!
       {/* <h2>Dashboard</h2> */}
       {/* <SearchBike /> */}
       {/* welcome back {user.username} */}

@@ -5655,8 +5655,7 @@ const brands = [
   },
   {
     name: "Pearl Izumi",
-    company_url:
-      "https://www.pearlizumi.com/US/en/shop/c/shop?q=%3Apopular%3AisClearance%3AYES&show=All&utm_source=IMM&utm_medium=GG-Search&utm_term=23653233617&utm_content=pearl%20izumi%20bike%20shorts&utm_campaign=391609217&utm_a=23653233617",
+    company_url: "https://www.pearlizumi.com/",
     short_name: "Pearl Izumi",
     id: 703,
   },
@@ -8522,7 +8521,7 @@ const brands = [
 
 let manufacturers = [];
 brands.map((brand) => {
-  manufacturers.push(brand.name);
+  manufacturers.push(brand.name.toLowerCase());
   // console.log(brand.name);
   // console.log(manufacturers);
 });
