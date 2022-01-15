@@ -4,7 +4,7 @@ import manufacturers from "./brands";
 const FormData = {
   options: [
     {
-      type: "input",
+      type: "text",
       name: "serial",
     },
     {
@@ -24,24 +24,24 @@ const FormData = {
       name: "brand",
       choices: manufacturers,
     },
-    {
-      type: "checkbox",
-      name: "condition",
-      choices: ["Poor", "Good", "Excellent"],
-    },
+    // {
+    //   type: "radio",
+    //   name: "condition",
+    //   choices: ["Poor", "Good", "Excellent"],
+    // },
     {
       type: "select",
-      name: "type",
+      name: "style",
       choices: ["Comfort", "Cruiser", "Hybrid", "Mountain", "Road"],
     },
     {
-      type: "checkbox",
+      type: "radio",
       name: "gender",
       choices: ["Female", "Male"],
     },
     {
-      type: "checkbox",
-      name: "kidadult",
+      type: "radio",
+      name: "adultchild",
       choices: ["Adult", "Child"],
     },
     {
@@ -61,7 +61,12 @@ const FormData = {
       ],
     },
     {
-      type: "input",
+      type: "radio",
+      name: "storage",
+      choices: ["Dodds", "Lookouts", "Red Bank", "WOBC"],
+    },
+    {
+      type: "search",
       name: "received",
       choices: [
         "Becaffeinated",
@@ -71,11 +76,6 @@ const FormData = {
         "Red Bank Fire Department",
         "Sweat Club",
       ],
-    },
-    {
-      type: "checkbox",
-      name: "storage",
-      choices: ["Dodds", "Lookouts", "Red Bank", "WOBC"],
     },
   ],
 };
