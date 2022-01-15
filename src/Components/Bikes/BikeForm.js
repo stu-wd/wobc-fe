@@ -8,7 +8,6 @@ import { useState } from "react";
 
 const BikeForm = () => {
   const { user } = useAuth();
-  console.log(user);
   const [form] = Form.useForm();
   const { postBike } = useBikes();
 
