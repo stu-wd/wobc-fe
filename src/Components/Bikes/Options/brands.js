@@ -8522,8 +8522,6 @@ const brands = [
 let manufacturers = [];
 brands.map((brand) => {
   manufacturers.push(brand.name.toLowerCase());
-  // console.log(brand.name);
-  // console.log(manufacturers);
 });
 
 export default manufacturers;

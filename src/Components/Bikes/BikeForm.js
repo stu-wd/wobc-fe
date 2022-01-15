@@ -1,112 +1,157 @@
-import { Button, Form, Input, Radio } from "antd";
-import { useBikes } from "../../Contexts/bikes.context";
-import { capitalize } from "../../Utils/capitalize";
-import { useAuth } from "../../Contexts/auth.context";
-import fd from "../Bikes/Options/formData";
-import manufacturers from "./Options/brands";
-import { useState } from "react";
+import React from "react";
+import { Formik, Form, useField, Field } from "formik";
+import * as Yup from "yup";
 
-const BikeForm = () => {
-  const { user } = useAuth();
-  const [form] = Form.useForm();
-  const { postBike } = useBikes();
+import fd, { sizes } from "./Options/formData";
 
-  const [filteredData, setFilteredData] = useState([]);
-  const [brand, setBrand] = useState();
-
-  const onFinish = (values) => {
-    values["brand"] = brand;
-    values.user_id = user.user_id;
-    postBike(values);
-  };
-
-  const onFinishFailed = (values) => {
-    console.log(values);
-  };
-
-  const onSearch = (search) => {
-    if (search === "") return;
-    const newFilter = manufacturers.filter((value) =>
-      value.includes(search.toLowerCase())
-    );
-
-    newFilter.map((match) => {
-      setBrand(match);
-      setFilteredData(match);
-    });
-  };
-
-  const FormItem = ({ label, name, rules, type, choices }) => (
-    <Form.Item label={label} name={name}>
-      {type === "input" ? (
-        <Input placeholder={`${name}`} />
-      ) : type === "checkbox" ? (
-        <Radio.Group className="radio-group" options={choices} />
-      ) : type === "select" ? (
-        <select choices={choices}>
-          <option disabled selected hidden value="">
-            {name}
-          </option>
-          {choices.map((choice) => {
-            return (
-              <option key={choice} value={choice}>
-                {choice}
-              </option>
-            );
-          })}
-        </select>
-      ) : type === "search" ? (
-        <>
-          <Input.Search
-            // onChange={onChange}
-            choices={choices}
-            onSearch={onSearch}
-            placeholder={brand != undefined ? brand : "search brands"}
-          />
-          {filteredData.length != 0 && `success! ${filteredData} is set`}
-        </>
-      ) : (
-        <></>
-      )}
-    </Form.Item>
-    // type === 'input' && <Form.Item name={name}><Input placeholder={name} /></Form.Item>
-    // type === 'checkbox' && <Form.Item name={name} label={name}><Radio.Group className="radio-group" options={choices} /</Form.Item>
-  );
+const MyTextInput = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
 
   return (
-    <Form
-      form={form}
-      name="bike-form"
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      scrollToFirstError
-    >
-      {fd.options.map((option) => {
+    <>
+      <label htmlFor={props.id || props.name}>{label}</label>
+
+      <input className="text-input" {...field} {...props} />
+
+      {meta.touched && meta.error ? (
+        <div className="error">{meta.error}</div>
+      ) : null}
+    </>
+  );
+};
+
+const MyRadio = ({ children, ...props }) => {
+  const [field, meta] = useField(props);
+
+  return (
+    <div name="group" role="group">
+      {/* {children.map((choice, i) => {
         return (
-          <FormItem
-            label={
-              option.name === "kidadult"
-                ? "Kid/Adult"
-                : option.type === "input"
-                ? ""
-                : option.type === "select"
-                ? ""
-                : option.type === "search"
-                ? ""
-                : capitalize(option.name)
-            }
-            name={option.name}
-            type={option.type}
-            choices={option.choices}
-            key={option.name}
-          />
+          <>
+            {choice}
+            <input value={choice} {...field} {...props} />
+          </>
+        );
+      })} */}
+      {/* {children.map((c) => {
+        return <h1>{c}</h1>;
+      })} */}
+      {children.map((choice, i) => {
+        return (
+          <>
+            <label>
+              <Field type="radio" name={props.name} value={choice} />
+              {choice}
+            </label>
+          </>
         );
       })}
 
-      <Button className="button" type="primary" htmlType="submit">
-        Add bike
-      </Button>
-    </Form>
+      {meta.touched && meta.error ? (
+        <div className="error">{meta.error}</div>
+      ) : null}
+    </div>
+  );
+};
+
+const MySelect = ({ children, label, ...props }) => {
+  const [field, meta] = useField(props);
+
+  return (
+    <div>
+      <label htmlFor={props.id || props.name}>{label}</label>
+
+      <select {...field} {...props}>
+        {children.map((choice, i) => {
+          return (
+            <option key={i} value={choice}>
+              {choice}
+            </option>
+          );
+        })}
+      </select>
+
+      {meta.touched && meta.error ? (
+        <div className="error">{meta.error}</div>
+      ) : null}
+    </div>
+  );
+};
+
+// And now we can use these
+
+const BikeForm = () => {
+  return (
+    <div>
+      <Formik
+        initialValues={{
+          serial: "",
+          status: "",
+          brand: "",
+          condition: "",
+          type: "",
+          gender: "",
+          adultchild: "",
+          size: "",
+          received: "",
+          storage: "",
+          picked: "",
+        }}
+        validationSchema={Yup.object({
+          serial: Yup.string().required("Required"),
+          // status: Yup.string().required("Required"),
+        })}
+        onSubmit={(values, { setSubmitting }) => {
+          console.log(values);
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+
+            setSubmitting(false);
+          }, 400);
+        }}
+      >
+        {({ values, onChange }) => (
+          <Form>
+            {fd.options.map((option, i) => {
+              if (option.type === "text") {
+                return (
+                  <MyTextInput
+                    type={option.type}
+                    key={i}
+                    label={option.name}
+                    name={option.name}
+                  />
+                );
+              }
+              if (option.type === "select") {
+                return (
+                  <MySelect
+                    children={option.choices}
+                    label={option.name}
+                    type={option.type}
+                    key={i}
+                    name={option.name}
+                  />
+                );
+              }
+              if (option.type === "radio") {
+                return (
+                  <MyRadio
+                    children={option.choices}
+                    // label={option.name}
+                    // type={option.type}
+                    // key={i}
+                    name={option.name}
+                  />
+                );
+              }
+            })}
+
+            <button type="submit">Submit</button>
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
 };
 

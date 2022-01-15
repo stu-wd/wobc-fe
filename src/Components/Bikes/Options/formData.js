@@ -1,10 +1,23 @@
 // import manufacturers from "../brands";
 import manufacturers from "./brands";
 
+export const sizes = [
+  "12/12.5 in",
+  "16 in",
+  "18 in",
+  "20 in",
+  "24 in",
+  "26 in",
+  "27 in",
+  "29 in",
+  "650 cc",
+  "700 cc",
+];
+
 const FormData = {
   options: [
     {
-      type: "input",
+      type: "text",
       name: "serial",
     },
     {
@@ -25,7 +38,7 @@ const FormData = {
       choices: manufacturers,
     },
     {
-      type: "checkbox",
+      type: "radio",
       name: "condition",
       choices: ["Poor", "Good", "Excellent"],
     },
@@ -35,13 +48,13 @@ const FormData = {
       choices: ["Comfort", "Cruiser", "Hybrid", "Mountain", "Road"],
     },
     {
-      type: "checkbox",
+      type: "radio",
       name: "gender",
       choices: ["Female", "Male"],
     },
     {
-      type: "checkbox",
-      name: "kidadult",
+      type: "radio",
+      name: "adultchild",
       choices: ["Adult", "Child"],
     },
     {
@@ -61,7 +74,7 @@ const FormData = {
       ],
     },
     {
-      type: "input",
+      type: "text",
       name: "received",
       choices: [
         "Becaffeinated",
@@ -73,7 +86,7 @@ const FormData = {
       ],
     },
     {
-      type: "checkbox",
+      type: "radio",
       name: "storage",
       choices: ["Dodds", "Lookouts", "Red Bank", "WOBC"],
     },
