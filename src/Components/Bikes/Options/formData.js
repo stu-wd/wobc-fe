@@ -1,19 +1,6 @@
 // import manufacturers from "../brands";
 import manufacturers from "./brands";
 
-export const sizes = [
-  "12/12.5 in",
-  "16 in",
-  "18 in",
-  "20 in",
-  "24 in",
-  "26 in",
-  "27 in",
-  "29 in",
-  "650 cc",
-  "700 cc",
-];
-
 const FormData = {
   options: [
     {
@@ -44,7 +31,7 @@ const FormData = {
     // },
     {
       type: "select",
-      name: "type",
+      name: "style",
       choices: ["Comfort", "Cruiser", "Hybrid", "Mountain", "Road"],
     },
     {

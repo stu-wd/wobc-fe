@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { Autocomplete } from "formik-mui";
 import MuiTextField from "@mui/material/TextField";
 import fd from "./Options/formData";
-import manufacturers from "./Options/brands";
+import { useBikes } from "../../Contexts/bikes.context";
 
 const MyTextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
@@ -79,8 +79,9 @@ const MySearchable = ({ children, ...props }) => {
         <MuiTextField
           {...props}
           name={props.name}
-          label={props.brand}
+          label={props.name}
           variant="outlined"
+          placeholder={props.name}
         />
       )}
     />
@@ -90,6 +91,7 @@ const MySearchable = ({ children, ...props }) => {
 // And now we can use these
 
 const BikeForm = () => {
+  const { postBike } = useBikes();
   return (
     <div>
       <Formik
@@ -97,14 +99,12 @@ const BikeForm = () => {
           serial: "",
           status: "",
           brand: "",
-          condition: "",
-          type: "",
+          style: "",
           gender: "",
           adultchild: "",
           size: "",
           received: "",
           storage: "",
-          picked: "",
         }}
         validationSchema={Yup.object({
           serial: Yup.string().required("Required"),
@@ -112,10 +112,11 @@ const BikeForm = () => {
         })}
         onSubmit={(values, { setSubmitting }) => {
           console.log(values);
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          postBike(values);
+          // setTimeout(() => {
+          //   alert(JSON.stringify(values, null, 2));
+          //   setSubmitting(false);
+          // }, 400);
         }}
         className=""
       >
