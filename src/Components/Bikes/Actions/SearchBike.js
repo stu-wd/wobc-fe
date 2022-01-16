@@ -38,7 +38,11 @@ const SearchBike = () => {
 
       {searchResults.value &&
         searchResults.value.map((match) => {
-          return <BikeForm match={match} edit={true} delete={true} />;
+          return (
+            <>
+              <BikeForm match={match} edit={true} delete={true} />
+            </>
+          );
         })}
     </>
   );

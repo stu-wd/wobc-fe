@@ -25,32 +25,39 @@ const modalStyle = {
 const MyTextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
-    <>
-      {/* <label htmlFor={props.id || props.name}>{label}</label> */}
+    <div
+      className={`mt-2 ${
+        meta.error || (meta.touched && meta.error)
+          ? `border-2 border-red-600 rounded-md`
+          : ""
+      }`}
+    >
       <input placeholder={props.name} {...field} {...props} />
-      {meta.touched && meta.error ? (
+      {/* {meta.touched && meta.error ? (
         <div className="error">{meta.error}</div>
-      ) : null}
-    </>
+      ) : null} */}
+    </div>
   );
 };
 
 const MyRadio = ({ children, ...props }) => {
   const [field, meta] = useField(props);
   return (
-    <div role="group">
+    <div className="grid grid-cols-2 justify-center justify-items-start">
       {children.map((choice, i) => {
         return (
-          <label key={i}>
-            <Field type="radio" key={i} name={props.name} value={choice} />
-            {choice}
-          </label>
+          <div key={i} className="mt-2 flex justify-items-center items-center">
+            <label key={i}>
+              <Field type="radio" key={i} name={props.name} value={choice} />
+              {choice}
+            </label>
+          </div>
         );
       })}
 
-      {meta.touched && meta.error ? (
+      {/* {meta.touched && meta.error ? (
         <div className="error">{meta.error}</div>
-      ) : null}
+      ) : null} */}
     </div>
   );
 };
@@ -59,10 +66,16 @@ const MySelect = ({ children, label, ...props }) => {
   const [field, meta] = useField(props);
 
   return (
-    <div>
+    <div
+      className={`mt-2 ${
+        meta.error || (meta.error && meta.touched)
+          ? `border-2 border-red-600 rounded-md`
+          : ""
+      }`}
+    >
       <select {...field} {...props}>
-        <option disabled value="">
-          {props.name}
+        <option selected value="null">
+          {label}
         </option>
         {children.map((choice, i) => {
           return (
@@ -72,18 +85,15 @@ const MySelect = ({ children, label, ...props }) => {
           );
         })}
       </select>
-
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
     </div>
   );
 };
 
-const MySearchable = ({ children, ...props }) => {
+const MySearchable = ({ placeholder, children, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <Field
+      className="mt-2 p-0"
       name={props.name}
       component={Autocomplete}
       options={children}
@@ -92,7 +102,9 @@ const MySearchable = ({ children, ...props }) => {
           {...props}
           name={props.name}
           label={props.name}
-          variant="outlined"
+          placeholder={placeholder}
+          className="mt-2 p-0"
+          variant="standard"
         />
       )}
     />
@@ -123,19 +135,8 @@ const BikeForm = (props) => {
     putMsg.value = null;
   }, [deleteAttempt.value, postMsg.value, putMsg.value]);
 
-  // console.log(props);
-  // console.log(putMsg);
-
-  // useEffect(() => {
-  //   console.log(props);
-  // }, [putMsg]);
-
   return (
-    <div className="mt-4">
-      {deleteAttempt.value && deleteAttempt.value.message && (
-        <>{deleteAttempt.value.message}</>
-      )}
-
+    <div className="mt-2">
       <Formik
         initialValues={props.match ? { ...props.match } : {}}
         validationSchema={Yup.object({
@@ -160,7 +161,7 @@ const BikeForm = (props) => {
                   type={option.type}
                   key={i}
                   name={option.name}
-                  // className={` ${props.edit === true ? "hidden" : ""}`}
+                  className={` ${props.edit === true ? "hidden" : ""}`}
                 />
               );
             }
@@ -186,34 +187,20 @@ const BikeForm = (props) => {
                   key={i}
                   name={option.name}
                   children={option.choices}
+                  placeholder={option.name}
                 />
               );
             }
           })}
 
-          <button
-            className="button"
-            // onClick={(e) => console.log(e)}
-            type="submit"
-          >
-            {/* {props.add === true && `Add New Bike`}
-            {props.edit === true && props.add === undefined && `Edit Bike`} */}
-            Submit
+          <button className="button mt-2" type="submit">
+            {props.add === true && `Add New Bike`}
+            {props.edit === true && props.add === undefined && `Edit Bike`}
           </button>
-
-          {/* {props.edit === true && (
-            <>
-              <button className="button" type="submit">
-                Edit
-              </button>
-            </>
-          )} */}
-
-          {/* {showModal === true && <NestedModal />} */}
 
           {props.delete === true && (
             <button
-              className="button bg-red-300 hover:bg-red-600 focus:bg-red-600"
+              className="button bg-red-300 hover:bg-red-600 focus:bg-red-600 mt-2"
               type="button"
               onClick={handleOpen}
             >
@@ -233,6 +220,10 @@ const BikeForm = (props) => {
               {postMsg.value.newBike &&
                 `for ${postMsg.value.newBike[0].serial}`}
             </div>
+          )}
+
+          {deleteAttempt.value && deleteAttempt.value.message && (
+            <>{deleteAttempt.value.message}</>
           )}
         </Form>
       </Formik>
