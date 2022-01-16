@@ -123,6 +123,11 @@ const BikeForm = (props) => {
   // }, [deleteAttempt.value, postMsg.value]);
 
   console.log(props);
+  console.log(putMsg);
+
+  useEffect(() => {
+    console.log(props);
+  }, [putMsg]);
 
   return (
     <div className="mt-4">
@@ -131,7 +136,7 @@ const BikeForm = (props) => {
       )}
 
       <Formik
-        initialValues={props.match === true ? { ...props } : {}}
+        initialValues={props.match ? { ...props.match } : {}}
         validationSchema={Yup.object({
           serial: Yup.string().required("Required"),
           status: Yup.string().required("Required"),
@@ -157,7 +162,7 @@ const BikeForm = (props) => {
                   type={option.type}
                   key={i}
                   name={option.name}
-                  className={` ${props.edit === true ? "hidden" : ""}`}
+                  // className={` ${props.edit === true ? "hidden" : ""}`}
                 />
               );
             }
@@ -193,8 +198,9 @@ const BikeForm = (props) => {
             // onClick={(e) => console.log(e)}
             type="submit"
           >
-            {props.add === true && `Add New Bike`}
-            {props.edit === true && props.add === undefined && `Edit Bike`}
+            {/* {props.add === true && `Add New Bike`}
+            {props.edit === true && props.add === undefined && `Edit Bike`} */}
+            Submit
           </button>
 
           {/* {props.edit === true && (
