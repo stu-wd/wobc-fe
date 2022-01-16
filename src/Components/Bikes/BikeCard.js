@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useBikes } from "../../Contexts/bikes.context";
 
 const BikeCard = (props) => {
-  const { searchedBikeBySerial } = useBikes();
+  const { searchResults } = useBikes();
   const { brand, condition, status, type, serial, size, user_id } = props.bike;
   return (
     <div

@@ -45,7 +45,7 @@ const BikesProvider = (props) => {
   };
 
   const searchSerialUrl = process.env.REACT_APP_API + "/bikes";
-  const [serialSearchDetails, searchSerial] = useAsyncFn(
+  const [searchResults, searchSerial] = useAsyncFn(
     async (serial) => {
       const response = await fetch(searchSerialUrl + `/${serial}`, {
         method: "GET",
@@ -60,7 +60,6 @@ const BikesProvider = (props) => {
         // body: JSON.stringify(serial)
       });
       const result = await response.json();
-      console.log(result);
       return result;
     },
     [searchSerialUrl]
@@ -139,7 +138,7 @@ const BikesProvider = (props) => {
     editBike,
     resetMessage,
     searchSerial,
-    serialSearchDetails,
+    searchResults,
   };
 
   return <BikesContext.Provider value={bikesContextValue} {...props} />;

@@ -47,7 +47,7 @@ const MySelect = ({ children, label, ...props }) => {
   return (
     <div>
       <select {...field} {...props}>
-        <option disabled selected value="">
+        <option disabled value="">
           {props.name}
         </option>
         {children.map((choice, i) => {
@@ -81,19 +81,16 @@ const MySearchable = ({ children, ...props }) => {
           name={props.name}
           label={props.name}
           variant="outlined"
-          placeholder={props.name}
         />
       )}
     />
   );
 };
 
-// And now we can use these
-
 const BikeForm = () => {
   const { postBike } = useBikes();
   return (
-    <div>
+    <div className="mt-4">
       <Formik
         initialValues={{
           serial: "",
@@ -108,19 +105,18 @@ const BikeForm = () => {
         }}
         validationSchema={Yup.object({
           serial: Yup.string().required("Required"),
-          // status: Yup.string().required("Required"),
+          status: Yup.string().required("Required"),
         })}
         onSubmit={(values, { setSubmitting }) => {
-          console.log(values);
+          values.serial = values.serial.toUpperCase();
           postBike(values);
           // setTimeout(() => {
           //   alert(JSON.stringify(values, null, 2));
           //   setSubmitting(false);
           // }, 400);
         }}
-        className=""
       >
-        <Form>
+        <Form className="flex flex-col">
           {fd.options.map((option, i) => {
             if (option.type === "text") {
               return (

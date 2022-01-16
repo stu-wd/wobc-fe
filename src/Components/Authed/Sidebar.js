@@ -18,7 +18,7 @@ const Sidebar = () => {
 
   const onCollapse = () => {
     setCollapsed(!collapsed);
-    console.log(collapsed);
+    // console.log(collapsed);
   };
 
   const SidebarAction = ({ icon, text = "" }) => (
