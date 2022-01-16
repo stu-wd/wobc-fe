@@ -117,10 +117,11 @@ const BikeForm = (props) => {
     setShowModal(false);
   };
 
-  // useEffect(() => {
-  //   deleteAttempt.value = null;
-  //   postMsg.value = null;
-  // }, [deleteAttempt.value, postMsg.value]);
+  useEffect(() => {
+    deleteAttempt.value = null;
+    postMsg.value = null;
+    putMsg.value = null;
+  }, [deleteAttempt.value, postMsg.value, putMsg.value]);
 
   // console.log(props);
   // console.log(putMsg);
