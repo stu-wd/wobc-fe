@@ -122,12 +122,12 @@ const BikeForm = (props) => {
   //   postMsg.value = null;
   // }, [deleteAttempt.value, postMsg.value]);
 
-  console.log(props);
-  console.log(putMsg);
+  // console.log(props);
+  // console.log(putMsg);
 
-  useEffect(() => {
-    console.log(props);
-  }, [putMsg]);
+  // useEffect(() => {
+  //   console.log(props);
+  // }, [putMsg]);
 
   return (
     <div className="mt-4">
@@ -142,14 +142,11 @@ const BikeForm = (props) => {
           status: Yup.string().required("Required"),
         })}
         onSubmit={(values, { setSubmitting, setValues, resetForm }) => {
-          console.log(values);
           values.serial = values.serial.toUpperCase();
-          if (props.edit === true && props.add === undefined) {
-            console.log(values);
+          if (props.edit === true) {
             editBike(values);
           }
           if (props.add === true) {
-            console.log(values);
             postBike(values);
           }
         }}
@@ -225,7 +222,7 @@ const BikeForm = (props) => {
 
           {putMsg.value != undefined && (
             <div>
-              {putMsg.value.message} for {props.match.serial}
+              {putMsg.value.message} for {props.match && props.match.serial}
             </div>
           )}
 
