@@ -38,19 +38,7 @@ const SearchBike = () => {
 
       {searchResults.value &&
         searchResults.value.map((match) => {
-          return (
-            <BikeForm
-              match={match}
-              edit={true}
-              key={match}
-              // delete={
-              //   user.username === "blake" || user.username === "jerry"
-              //     ? true
-              //     : false
-              // }
-              delete={true}
-            />
-          );
+          return <BikeForm match={match} edit={true} delete={true} />;
         })}
     </>
   );

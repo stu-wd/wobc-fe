@@ -7,7 +7,6 @@ import fd, { initialValues } from "./Options/formData";
 import { useBikes } from "../../Contexts/bikes.context";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
 
 const modalStyle = {
   position: "absolute",
@@ -118,10 +117,12 @@ const BikeForm = (props) => {
     setShowModal(false);
   };
 
-  useEffect(() => {
-    deleteAttempt.value = null;
-    postMsg.value = null;
-  }, [deleteAttempt.value, postMsg.value]);
+  // useEffect(() => {
+  //   deleteAttempt.value = null;
+  //   postMsg.value = null;
+  // }, [deleteAttempt.value, postMsg.value]);
+
+  console.log(props);
 
   return (
     <div className="mt-4">
@@ -136,10 +137,16 @@ const BikeForm = (props) => {
           status: Yup.string().required("Required"),
         })}
         onSubmit={(values, { setSubmitting, setValues, resetForm }) => {
+          console.log(values);
           values.serial = values.serial.toUpperCase();
-          if (props.edit === true) editBike(values);
-          if (props.add === true) postBike(values);
-          // setValues(initialValues);
+          if (props.edit === true && props.add === undefined) {
+            console.log(values);
+            editBike(values);
+          }
+          if (props.add === true) {
+            console.log(values);
+            postBike(values);
+          }
         }}
       >
         <Form className="flex flex-col">
@@ -181,23 +188,22 @@ const BikeForm = (props) => {
             }
           })}
 
-          {props.add === true && (
+          <button
+            className="button"
+            // onClick={(e) => console.log(e)}
+            type="submit"
+          >
+            {props.add === true && `Add New Bike`}
+            {props.edit === true && props.add === undefined && `Edit Bike`}
+          </button>
+
+          {/* {props.edit === true && (
             <>
               <button className="button" type="submit">
-                Add new bike
+                Edit
               </button>
-
-              {/* <button onClick={(e) => console.log(e)} type="reset">
-                Reset
-              </button> */}
             </>
-          )}
-
-          {props.edit === true && (
-            <button className="button" type="submit">
-              Edit
-            </button>
-          )}
+          )} */}
 
           {/* {showModal === true && <NestedModal />} */}
 
@@ -224,20 +230,6 @@ const BikeForm = (props) => {
                 `for ${postMsg.value.newBike[0].serial}`}
             </div>
           )}
-          <Modal open={showModal} onClose={onClose}>
-            <Box sx={modalStyle}>
-              <p>
-                This is forever. Mainly because your developer isn't that good.
-                But please be sure. Tap anywhere to cancel.
-              </p>
-              <button
-                className="button bg-red-400 hover:bg-red-600 focus:bg-red-600"
-                onClick={confirmDeletion}
-              >
-                Confirm deletion
-              </button>
-            </Box>
-          </Modal>
         </Form>
       </Formik>
       <Modal open={showModal} onClose={onClose}>

@@ -98,7 +98,8 @@ const BikesProvider = (props) => {
   const putBikeUrl = process.env.REACT_APP_API + "/bikes";
   const [putMsg, editBike] = useAsyncFn(
     async (bike) => {
-      const response = await fetch(putBikeUrl + `/${bike.serial}`, {
+      console.log(bike);
+      const response = await fetch(putBikeUrl + `/${bike}`, {
         method: "PUT",
         mode: "cors",
         cache: "no-cache",
