@@ -1,6 +1,18 @@
 // import manufacturers from "../brands";
 import manufacturers from "./brands";
 
+export const initialValues = {
+  serial: "",
+  status: "",
+  brand: "",
+  style: "",
+  gender: "",
+  adultchild: "",
+  size: "",
+  storage: "",
+  received: "",
+};
+
 const FormData = {
   options: [
     {

@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useAsyncFn } from "react-use";
 import { attachments } from "../Utils/authedAxios";
-import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext({});
 
@@ -32,7 +31,6 @@ const AuthProvider = (props) => {
       });
       const result = await response.json();
       setMessage(result.message);
-      console.log(result);
       return result;
     },
     [registerUrl]

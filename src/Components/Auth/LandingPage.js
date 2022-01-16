@@ -18,7 +18,16 @@ const LandingPage = () => {
 
   const onFinish = (values) => {
     if (side === "register") {
-      register(values);
+      if (values.password != values.confirm_password) {
+        alert("Passwords do not match");
+      } else {
+        values = {
+          name: values.name,
+          username: values.username,
+          password: values.password,
+        };
+        register(values);
+      }
     }
     if (side === "login") {
       login(values);
@@ -34,7 +43,6 @@ const LandingPage = () => {
       {/* <h2 className="text-center text-3xl font-extrabold text-gray-900">
         WOBC Volunteer Portal
       </h2> */}
-
       <img
         className="mx-auto h-40 w-auto"
         src={WOBCLogo}
@@ -45,20 +53,21 @@ const LandingPage = () => {
         {side === "register" && message === undefined && "Create your account"}
         {message != undefined ? `${message}` : <></>}
       </h3>
-      <p
+      <div
         className={`mt-2 text-center text-sm text-gray-600 max-w ${
           side === "login" ? "hidden m-0" : ""
         }`}
       >
         Already registered?
-        <div
-          onClick={setLogin}
-          className={`inline font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer`}
-        >
-          Sign in
-        </div>
+      </div>
+      <p
+        onClick={setLogin}
+        className={`text-center font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer ${
+          side === "login" ? "hidden" : null
+        }`}
+      >
+        Sign in
       </p>
-
       {/* <p className="mt-2 text-center text-sm text-gray-600 max-w">
           Whoops...
           <div
@@ -68,7 +77,6 @@ const LandingPage = () => {
             Make new account instead
           </div>
         </p> */}
-
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
           <Form
@@ -112,7 +120,7 @@ const LandingPage = () => {
             >
               <Input
                 className="block text-sm font-medium text-gray-900"
-                placeholder="Not hooked up yet"
+                placeholder="Confirm password"
                 type="password"
               />
             </Form.Item>

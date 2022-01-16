@@ -1,48 +1,28 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import authedAxios from "../Utils/authedAxios";
 import { useAsyncFn } from "react-use";
 
 const BikesContext = createContext({});
 
 const BikesProvider = (props) => {
-  const [bikes, setBikes] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [showBikes, setShowBikes] = useState(false);
-  const [cardView, setCardView] = useState(false);
-  const [searchedBikeBySerial, setSearchedBikeBySerial] = useState();
-  const [bikeFormValues, setBikeFormValues] = useState();
   const [successMsg, setSuccessMsg] = useState(undefined);
 
-  const toggleBikes = () => {
-    setShowBikes(!showBikes);
-  };
-
-  const toggleCardView = () => {
-    setCardView(!cardView);
-  };
-
-  const handleSerialSearch = (serial) => {
-    setIsLoading(true);
-    authedAxios()
-      .get(`/bikes/${serial}`)
-      .then((resp) => {
-        setIsLoading(false);
-        setSearchedBikeBySerial(resp.data);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const getBikes = () => {
-    setIsLoading(true);
-    authedAxios()
-      .get("/bikes")
-      .then((resp) => {
-        setIsLoading(false);
-        console.log(resp.data);
-        setBikes(resp.data);
-      })
-      .catch((err) => console.log(err));
-  };
+  const allBikesUrl = process.env.REACT_APP_API + "/bikes";
+  const [bikes, getBikes] = useAsyncFn(async () => {
+    const response = await fetch(allBikesUrl, {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+    });
+    const result = await response.json();
+    return result;
+  }, [allBikesUrl]);
 
   const searchSerialUrl = process.env.REACT_APP_API + "/bikes";
   const [searchResults, searchSerial] = useAsyncFn(
@@ -57,7 +37,6 @@ const BikesProvider = (props) => {
         },
         redirect: "follow",
         referrerPolicy: "no-referrer",
-        // body: JSON.stringify(serial)
       });
       const result = await response.json();
       return result;
@@ -65,8 +44,38 @@ const BikesProvider = (props) => {
     [searchSerialUrl]
   );
 
+  // const searchByParamsUrl = process.env.REACT_APP_API + "/bikes/filter";
+  // const [searchByParamsResults, searchByParams] = useAsyncFn(
+  //   async (params) => {
+  //     const response = await fetch(searchByParamsUrl, {
+  //       method: "GET",
+  //       mode: "cors",
+  //       cache: "no-cache",
+  //       credentials: "same-origin",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       redirect: "follow",
+  //       referrerPolicy: "no-referrer",
+  //       body: JSON.stringify(params),
+  //     });
+  //     const result = await response.json();
+  //     console.log(result);
+  //     return result;
+  //   },
+  //   [searchSerialUrl]
+  // );
+
+  // useEffect(() => {
+  //   searchByParams({
+  //     type: "Mountain",
+  //   });
+  // }, []);
+
+  // console.log(searchByParamsResults);
+
   const postBikeUrl = process.env.REACT_APP_API + "/bikes/add";
-  const [addBikeDetails, postBike] = useAsyncFn(
+  const [postMsg, postBike] = useAsyncFn(
     async (data) => {
       const response = await fetch(postBikeUrl, {
         method: "POST",
@@ -81,18 +90,14 @@ const BikesProvider = (props) => {
         body: JSON.stringify(data),
       });
       const result = await response.json();
-      console.log(result);
-      // setSuccessMsg(result.message);
-      // console.log("add resolved");
-      return;
+      return result;
     },
     [postBikeUrl]
   );
 
   const putBikeUrl = process.env.REACT_APP_API + "/bikes";
-  const [editBikeDetails, editBike] = useAsyncFn(
+  const [putMsg, editBike] = useAsyncFn(
     async (bike) => {
-      console.log(bike);
       const response = await fetch(putBikeUrl + `/${bike.serial}`, {
         method: "PUT",
         mode: "cors",
@@ -105,13 +110,30 @@ const BikesProvider = (props) => {
         referrerPolicy: "no-referrer",
         body: JSON.stringify(bike),
       });
-      console.log(response);
       const result = await response.json();
-      setSuccessMsg(result.message);
-      console.log(result);
-      return;
+      return result;
     },
     [putBikeUrl]
+  );
+
+  const deleteBikeUrl = process.env.REACT_APP_API + "/bikes";
+  const [deleteAttempt, deleteBike] = useAsyncFn(
+    async (serial) => {
+      const response = await fetch(putBikeUrl + `/${serial}`, {
+        method: "DELETE",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+      });
+      const result = await response.json();
+      return result;
+    },
+    [deleteBikeUrl]
   );
 
   const resetMessage = () => {
@@ -125,20 +147,16 @@ const BikesProvider = (props) => {
     bikes,
     isLoading,
     getBikes,
-    toggleBikes,
-    toggleCardView,
-    showBikes,
-    cardView,
-    handleSerialSearch,
-    searchedBikeBySerial,
-    bikeFormValues,
-    setBikeFormValues,
     successMsg,
     postBike,
     editBike,
     resetMessage,
     searchSerial,
     searchResults,
+    postMsg,
+    putMsg,
+    deleteBike,
+    deleteAttempt,
   };
 
   return <BikesContext.Provider value={bikesContextValue} {...props} />;

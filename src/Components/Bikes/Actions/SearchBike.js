@@ -1,74 +1,22 @@
-// import React, { useEffect } from "react";
-// import { Input, Space } from "antd";
-// // import { useBikes } from "../../../../Contexts/bikes.context";
-// import { useBikes } from "../../../Contexts/bikes.context";
-// import BikeCard from "../BikeCard";
-// import BikeActions from "./BikeActions";
-// // import BikeCard from "../BikeCard";
-// // import BikeActions from "./BikeActions";
-
-// const SearchBike = () => {
-//   const { Search } = Input;
-//   const {
-//     handleSerialSearch,
-//     searchedBikeBySerial,
-//     searchSerial,
-//     serialSearchDetails,
-//   } = useBikes();
-
-//   const onSearch = (serial) => {
-//     if (serial.length === 0) {
-//       alert("must enter serial");
-//     } else {
-//       searchSerial(serial);
-//     }
-//   };
-
-//   return (
-//     <>
-//       <Space direction="vertical">
-//         <Search
-//           placeholder="search by serial"
-//           onSearch={onSearch}
-//           style={{ width: 200 }}
-//         />
-//       </Space>
-
-//       {serialSearchDetails.value ? (
-//         serialSearchDetails.value.map((match) => {
-//           return (
-//             <>
-//               <BikeActions key={match} serialMatch={match} />
-//             </>
-//           );
-//         })
-//       ) : (
-//         <></>
-//       )}
-//     </>
-//   );
-// };
-
-// export default SearchBike;
-
 import React, { useEffect, useState } from "react";
-import SearchIcon from "@material-ui/icons/Search";
-import { InputBase } from "@material-ui/core";
 import { useBikes } from "../../../Contexts/bikes.context";
+import { useAuth } from "../../../Contexts/auth.context";
 import { BiSearchAlt } from "react-icons/bi";
-import BikeCard from "../BikeCard";
+import BikeForm from "../BikeForm";
 
 const SearchBike = () => {
-  const { getBikes, bikes, searchSerial, searchResults } = useBikes();
-  console.log(searchResults);
+  const { getBikes, searchSerial, searchResults } = useBikes();
+  const { user } = useAuth();
 
   useEffect(() => {
+    searchResults.value = undefined;
     getBikes();
   }, []);
 
   const [search, setSearch] = useState("");
 
   const handleSearch = () => {
+    if (search === "" || undefined) return;
     searchSerial(search.toUpperCase());
   };
 
@@ -84,9 +32,25 @@ const SearchBike = () => {
         </div>
       </div>
 
+      {searchResults.value && searchResults.value.length === 0 && (
+        <>No results</>
+      )}
+
       {searchResults.value &&
         searchResults.value.map((match) => {
-          return <BikeCard bike={match} />;
+          return (
+            <BikeForm
+              match={match}
+              edit={true}
+              key={match}
+              // delete={
+              //   user.username === "blake" || user.username === "jerry"
+              //     ? true
+              //     : false
+              // }
+              delete={true}
+            />
+          );
         })}
     </>
   );
