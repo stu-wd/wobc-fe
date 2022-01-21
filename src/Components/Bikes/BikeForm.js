@@ -273,12 +273,15 @@ import {
   FormLabel,
   RadioGroup,
   Radio,
+  Autocomplete,
+  Input,
 } from "@mui/material";
 import WOBCLogo from "../../Images/wobclogotransparent.png";
 import { useAuth } from "../../Contexts/auth.context";
 import { Circles } from "react-loading-icons";
 import { capitalize } from "../../Utils/capitalize";
 import fd, { initialValues } from "./Options/formData";
+import manufacturers from "./Options/brands";
 
 const MyTextField = ({ ...props }) => {
   return (
@@ -294,8 +297,9 @@ const MyTextField = ({ ...props }) => {
       name={props.name}
       className="block text-sm font-medium text-gray-900"
       type={
-        (props.name === "confirmPassword" || props.name === "password") &&
-        "password"
+        props.name === "confirmPassword" || props.name === "password"
+          ? "password"
+          : ""
       }
     />
   );
@@ -347,12 +351,31 @@ const MyRadio = ({ children, ...props }) => {
   );
 };
 
+const MySearchable = ({ search, children, ...props }) => {
+  return (
+    <TextField
+      margin="normal"
+      fullWidth
+      id={props.name}
+      name={props.name}
+      onClick={props.toggleDisplay}
+      value={search}
+      label={props.label}
+      className="block text-sm font-medium text-gray-900"
+      onChange={(event) => props.setSearch(event.target.value)}
+    />
+  );
+};
+
 const BikeForm = () => {
   const [radios, setRadios] = useState({
     gender: false,
-    location: false,
+    storage: false,
     adultchild: false,
   });
+  const [display, setDisplay] = useState(false);
+  const [search, setSearch] = useState("");
+  const [filtered, setFiltered] = useState([]);
 
   const handleRadio = (event) => {
     setRadios({
@@ -365,29 +388,109 @@ const BikeForm = () => {
     event.preventDefault();
     const values = new FormData(event.currentTarget);
 
-    console.log({
+    const formSubmit = {
       serial: values.get("serial"),
       status: values.get("status"),
       gender: values.get("gender"),
+      adultchild: values.get("adultchild"),
+      storage: values.get("storage"),
+      style: values.get("style"),
+      brand: values.get("brand"),
+      size: values.get("size"),
+      received: values.get("received"),
+    };
+    console.log(formSubmit);
+  };
+
+  const handleSearchClick = (event) => {
+    console.log(event.target.textContent);
+    setSearch(event.target.textContent);
+    setDisplay(false);
+  };
+
+  const onSearch = (event) => {
+    console.log(event.target.name, event.target.value);
+    setSearch({
+      ...search,
+      [event.target.name]: event.target.value,
     });
   };
 
-  const options = ["Aspen", "Stuart"];
-  console.log("radios: ", radios);
+  // const handleFilter = (event, data) => {
+  //   const searchWord = event.target.value;
+  //   const newFilter = data.filter(value);
+  //   console.log(event);
+  // };
+
+  const toggleDisplay = () => {
+    setDisplay(!display);
+  };
 
   return (
-    <Box className="flex flex-col items-center mt-8">
+    <Box className="flex flex-col items-center">
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-        <MyTextField name="serial" />
-        <MySelect name="status" children={options} />
-        <MyRadio
-          name="gender"
-          children={options}
-          handleRadio={handleRadio}
-          value={radios.gender}
-        />
+        {fd.options.map((o, i) => {
+          if (o.type === "text") {
+            return <MyTextField name={o.name} key={i} />;
+          }
 
-        <Button type="submit" fullWidth variant="contained"></Button>
+          if (o.type === "select") {
+            return <MySelect name={o.name} key={i} children={o.choices} />;
+          }
+
+          if (o.type === "radio") {
+            return (
+              <MyRadio
+                name={o.name}
+                key={i}
+                children={o.choices}
+                handleRadio={handleRadio}
+              />
+            );
+          }
+
+          if (o.type === "search") {
+            return (
+              <>
+                <MySearchable
+                  name={o.name}
+                  handleSearchClick={handleSearchClick}
+                  search={search}
+                  setSearch={setSearch}
+                  label={capitalize(o.name)}
+                  toggleDisplay={toggleDisplay}
+                />
+                {display && (
+                  <Box>
+                    {o.choices
+                      .filter((value) => {
+                        if (search == "") {
+                          return;
+                        } else if (
+                          value.toLowerCase().includes(search.toLowerCase())
+                        ) {
+                          return value;
+                        }
+                      })
+                      .map((choice, i) => {
+                        return (
+                          <div>
+                            <span value={choice} onClick={handleSearchClick}>
+                              {choice}
+                            </span>
+                          </div>
+                        );
+                      })}
+                  </Box>
+                )}
+              </>
+            );
+          }
+        })}
+
+        <Button type="submit" fullWidth variant="contained">
+          Submit
+        </Button>
       </Box>
     </Box>
   );

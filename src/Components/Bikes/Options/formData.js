@@ -49,7 +49,7 @@ const FormData = {
     {
       type: "radio",
       name: "gender",
-      choices: ["Female", "Male"],
+      choices: ["Female", "Male", "Non-binary"],
     },
     {
       type: "radio",
