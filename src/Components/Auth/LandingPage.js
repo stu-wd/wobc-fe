@@ -137,48 +137,70 @@
 // };
 
 // export default LandingPage;
-import React, { useState, useEffect } from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+import {
+  Box,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+  Button,
+} from "@mui/material";
 import WOBCLogo from "../../Images/wobclogotransparent.png";
 import { useAuth } from "../../Contexts/auth.context";
 import { Circles } from "react-loading-icons";
+import { capitalize } from "../../Utils/capitalize";
+
+const MyTextField = ({ ...props }) => {
+  return (
+    <TextField
+      margin="normal"
+      required
+      fullWidth
+      id={props.name}
+      label={
+        props.name === "confirmPassword"
+          ? capitalize("Confirm Password")
+          : capitalize(props.name)
+      }
+      name={props.name}
+      className="block text-sm font-medium text-gray-900"
+      type={
+        (props.name === "confirmPassword" || props.name === "password") &&
+        "password"
+      }
+    />
+  );
+};
 
 const LandingPage = () => {
   const { login, loginAttempt, register, registrationAttempt } = useAuth();
   const [showRegister, setShowRegister] = useState(false);
   const [checked, setChecked] = useState(false);
-  console.log(loginAttempt);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const values = new FormData(event.currentTarget);
 
     if (showRegister) {
-      if (data.get("password") != data.get("confirmPassword")) {
+      if (values.get("password") != values.get("confirmPassword")) {
         console.log("passwords dont match");
       } else {
-        const formValues = {
-          name: data.get("name"),
-          username: data.get("username"),
-          password: data.get("password"),
+        const formSubmit = {
+          name: values.get("name"),
+          username: values.get("username"),
+          password: values.get("password"),
         };
-        register(formValues);
+        register(formSubmit);
       }
     }
 
     if (!showRegister) {
-      const formValues = {
-        username: data.get("username"),
-        password: data.get("password"),
+      const formSubmit = {
+        username: values.get("username"),
+        password: values.get("password"),
         remember: checked,
       };
-      login(formValues);
+      login(formSubmit);
     }
   };
 
@@ -191,16 +213,7 @@ const LandingPage = () => {
     registrationAttempt.value = null;
   };
 
-  // while (
-  //   loginAttempt.loading === true ||
-  //   registrationAttempt.loading === true
-  // ) {
-  //   return (
-  //     <div className="flex items-center justify-center absolute top-0 left-1/2">
-  //       <Circles width={"2rem"} fill="#000" />;
-  //     </div>
-  //   );
-  // }
+  console.log(registrationAttempt);
 
   return (
     <Box className="flex flex-col items-center mt-8">
@@ -213,7 +226,7 @@ const LandingPage = () => {
         <>
           <div className={`mt-2 text-center text-sm text-gray-600 max-w m-0`}>
             {showRegister &&
-              registrationAttempt.value === undefined &&
+              registrationAttempt.value === null &&
               "Already registered?"}
             {!showRegister && "Not registered?"}
           </div>
@@ -231,44 +244,10 @@ const LandingPage = () => {
         </>
       )}
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-        {showRegister && (
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            label="Name"
-            name="name"
-          />
-        )}
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="username"
-          label="Username"
-          name="username"
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-        />
-        {showRegister && (
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="confirmPassword"
-            label="Confirm Password"
-            type="password"
-            id="confirmPassword"
-          />
-        )}
+        {showRegister && <MyTextField name="name" />}
+        <MyTextField name="username" />
+        <MyTextField name="password" />
+        {showRegister && <MyTextField name="confirmPassword" />}
         {!showRegister && (
           <FormControlLabel
             control={
