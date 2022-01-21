@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Dashboard from "../Components/Authed/Dashboard";
 import Stats from "../Components/Bikes/Stats";
 import SearchBike from "../Components//Bikes/Actions/SearchBike";
-import LandingPage from "../Components/Auth/LandingPage";
+import UserForm from "../Components/Auth/UserForm";
 import Sidebar from "../Components/Authed/Sidebar";
 import BikeForm from "../Components/Bikes/BikeForm";
 import Logout from "../Components/Authed/Logout";
@@ -29,7 +29,7 @@ export const UnauthenticatedRoutes = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<UserForm />} />
       </Routes>
     </>
   );

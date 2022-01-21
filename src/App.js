@@ -4,7 +4,7 @@ import {
   AuthenticatedRoutes,
   UnauthenticatedRoutes,
 } from "./Routes/routes.index.js";
-import LandingPage from "./Components/Auth/LandingPage.js";
+import UserForm from "./Components/Auth/UserForm.js";
 
 function App() {
   const { loggedIn } = useAuth();
