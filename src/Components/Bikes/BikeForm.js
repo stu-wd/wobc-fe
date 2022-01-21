@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Formik, Form, useField, Field } from "formik";
 import * as Yup from "yup";
 import { Autocomplete } from "formik-mui";
+import TextField from "@mui/material/TextField";
 import MuiTextField from "@mui/material/TextField";
 import fd, { initialValues } from "./Options/formData";
 import { useBikes } from "../../Contexts/bikes.context";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import Select from "@mui/material/Select";
 
 const modalStyle = {
   position: "absolute",
@@ -32,7 +34,15 @@ const MyTextInput = ({ label, ...props }) => {
           : ""
       }`}
     >
-      <input placeholder={props.name} {...field} {...props} />
+      <MuiTextField
+        // placeholder={props.name}
+        required
+        {...field}
+        {...props}
+        label={props.name}
+        fullWidth
+        // defaultValue={props.name}
+      />
       {/* {meta.touched && meta.error ? (
         <div className="error">{meta.error}</div>
       ) : null} */}
@@ -97,11 +107,11 @@ const MySearchable = ({ placeholder, children, ...props }) => {
       name={props.name}
       component={Autocomplete}
       options={children}
+      label={props.name}
       renderInput={(props) => (
-        <MuiTextField
+        <TextField
           {...props}
           name={props.name}
-          label={props.name}
           placeholder={placeholder}
           className="mt-2 p-0"
           variant="standard"

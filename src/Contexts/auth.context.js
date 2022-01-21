@@ -22,7 +22,7 @@ const AuthProvider = (props) => {
   }, []);
 
   const registerUrl = process.env.REACT_APP_API + "/auth/register";
-  const [registration, register] = useAsyncFn(
+  const [registrationAttempt, register] = useAsyncFn(
     async (data) => {
       const response = await fetch(registerUrl, {
         ...attachments,
@@ -30,7 +30,6 @@ const AuthProvider = (props) => {
         body: JSON.stringify(data),
       });
       const result = await response.json();
-      setMessage(result.message);
       return result;
     },
     [registerUrl]
@@ -47,12 +46,9 @@ const AuthProvider = (props) => {
       const result = await response.json();
       if (result.message === "Login Success") {
         setUser(result.user);
-        setTimeout(() => {
-          setLoggedIn(true);
-        }, 1500);
+        setLoggedIn(true);
       }
       if (data.remember === true) localStorage.setItem("token", result.token);
-      setMessage(result.message);
       return result;
     },
     [loginUrl]
@@ -71,6 +67,8 @@ const AuthProvider = (props) => {
     user,
     message,
     setMessage,
+    loginAttempt,
+    registrationAttempt,
   };
 
   return <AuthContext.Provider value={authContextValue} {...props} />;
