@@ -282,6 +282,7 @@ import { Circles } from "react-loading-icons";
 import { capitalize } from "../../Utils/capitalize";
 import fd, { initialValues } from "./Options/formData";
 import manufacturers from "./Options/brands";
+import { useSearchParams } from "react-router-dom";
 
 const MyTextField = ({ ...props }) => {
   return (
@@ -351,7 +352,7 @@ const MyRadio = ({ children, ...props }) => {
   );
 };
 
-const MySearchable = ({ search, children, ...props }) => {
+const MySearchable = ({ ...props }) => {
   return (
     <TextField
       margin="normal"
@@ -359,10 +360,15 @@ const MySearchable = ({ search, children, ...props }) => {
       id={props.name}
       name={props.name}
       onClick={props.toggleDisplay}
-      value={search}
+      value={props.search}
       label={props.label}
       className="block text-sm font-medium text-gray-900"
-      onChange={(event) => props.setSearch(event.target.value)}
+      onChange={(event) =>
+        props.setSearch({
+          ...props.search,
+          [event.target.name]: event.target.value,
+        })
+      }
     />
   );
 };
@@ -374,8 +380,10 @@ const BikeForm = () => {
     adultchild: false,
   });
   const [display, setDisplay] = useState(false);
-  const [search, setSearch] = useState("");
-  const [filtered, setFiltered] = useState([]);
+  const [search, setSearch] = useState({
+    brand: "",
+    received: "",
+  });
 
   const handleRadio = (event) => {
     setRadios({
@@ -402,11 +410,15 @@ const BikeForm = () => {
     console.log(formSubmit);
   };
 
-  const handleSearchClick = (event) => {
-    console.log(event.target.textContent);
-    setSearch(event.target.textContent);
+  const handleSearchClick = (selection, name) => {
+    console.log(selection, name);
+    setSearch({
+      ...search,
+      [name]: selection,
+    });
     setDisplay(false);
   };
+  console.log(search);
 
   const onSearch = (event) => {
     console.log(event.target.name, event.target.value);
@@ -415,12 +427,6 @@ const BikeForm = () => {
       [event.target.name]: event.target.value,
     });
   };
-
-  // const handleFilter = (event, data) => {
-  //   const searchWord = event.target.value;
-  //   const newFilter = data.filter(value);
-  //   console.log(event);
-  // };
 
   const toggleDisplay = () => {
     setDisplay(!display);
@@ -455,8 +461,8 @@ const BikeForm = () => {
                 <MySearchable
                   name={o.name}
                   handleSearchClick={handleSearchClick}
-                  search={search}
                   setSearch={setSearch}
+                  search={search[o.name]}
                   label={capitalize(o.name)}
                   toggleDisplay={toggleDisplay}
                 />
@@ -464,10 +470,15 @@ const BikeForm = () => {
                   <Box>
                     {o.choices
                       .filter((value) => {
-                        if (search == "") {
+                        if (
+                          search[o.name] == "" ||
+                          search[o.name] == undefined
+                        ) {
                           return;
                         } else if (
-                          value.toLowerCase().includes(search.toLowerCase())
+                          value
+                            .toLowerCase()
+                            .includes(search[o.name].toLowerCase())
                         ) {
                           return value;
                         }
@@ -475,7 +486,10 @@ const BikeForm = () => {
                       .map((choice, i) => {
                         return (
                           <div>
-                            <span value={choice} onClick={handleSearchClick}>
+                            <span
+                              value={choice}
+                              onClick={() => handleSearchClick(choice, o.name)}
+                            >
                               {choice}
                             </span>
                           </div>
