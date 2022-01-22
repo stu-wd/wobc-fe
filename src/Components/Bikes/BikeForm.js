@@ -353,23 +353,51 @@ const MyRadio = ({ children, ...props }) => {
 };
 
 const MySearchable = ({ ...props }) => {
+  console.log(props.search);
   return (
-    <TextField
-      margin="normal"
-      fullWidth
-      id={props.name}
-      name={props.name}
-      onClick={props.toggleDisplay}
-      value={props.search}
-      label={props.label}
-      className="block text-sm font-medium text-gray-900"
-      onChange={(event) =>
-        props.setSearch({
-          ...props.search,
-          [event.target.name]: event.target.value,
-        })
-      }
-    />
+    <>
+      <TextField
+        margin="normal"
+        fullWidth
+        id={props.name}
+        name={props.name}
+        onClick={() => props.toggleDisplay(props.name)}
+        value={props.search}
+        label={capitalize(props.name)}
+        className="block text-sm font-medium text-gray-900"
+        onChange={props.onChange}
+        search={props.search}
+        display={props.display}
+        handleSearchClick={props.handleSearchClick}
+        children={props.children}
+      />
+      {props.display[props.name] && (
+        <Box>
+          {props.children
+            .filter((value) => {
+              if (props.search == "" || props.search == undefined) {
+                return;
+              } else if (
+                value.toLowerCase().includes(props.search.toLowerCase())
+              ) {
+                return value;
+              }
+            })
+            .map((choice, i) => {
+              return (
+                <div>
+                  <span
+                    value={choice}
+                    onClick={() => props.handleSearchClick(choice, props.name)}
+                  >
+                    {choice}
+                  </span>
+                </div>
+              );
+            })}
+        </Box>
+      )}
+    </>
   );
 };
 
@@ -379,7 +407,10 @@ const BikeForm = () => {
     storage: false,
     adultchild: false,
   });
-  const [display, setDisplay] = useState(false);
+  const [display, setDisplay] = useState({
+    brand: false,
+    received: false,
+  });
   const [search, setSearch] = useState({
     brand: "",
     received: "",
@@ -418,18 +449,30 @@ const BikeForm = () => {
     });
     setDisplay(false);
   };
-  console.log(search);
+  console.log("search: ", search);
+  console.log("display: ", display);
 
   const onSearch = (event) => {
-    console.log(event.target.name, event.target.value);
+    console.log(event);
     setSearch({
       ...search,
       [event.target.name]: event.target.value,
     });
   };
 
-  const toggleDisplay = () => {
-    setDisplay(!display);
+  const toggleDisplay = (name) => {
+    if (name === "brand") {
+      setDisplay({
+        brand: true,
+        received: false,
+      });
+    }
+    if (name === "received") {
+      setDisplay({
+        brand: false,
+        received: true,
+      });
+    }
   };
 
   return (
@@ -465,8 +508,12 @@ const BikeForm = () => {
                   search={search[o.name]}
                   label={capitalize(o.name)}
                   toggleDisplay={toggleDisplay}
+                  onChange={onSearch}
+                  children={o.choices}
+                  display={display}
+                  handleSearchClick={handleSearchClick}
                 />
-                {display && (
+                {/* {display[o.name] && (
                   <Box>
                     {o.choices
                       .filter((value) => {
@@ -496,7 +543,7 @@ const BikeForm = () => {
                         );
                       })}
                   </Box>
-                )}
+                )} */}
               </>
             );
           }
