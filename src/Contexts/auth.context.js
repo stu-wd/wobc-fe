@@ -44,12 +44,12 @@ const AuthProvider = (props) => {
         body: JSON.stringify(data),
       });
       const result = await response.json();
+      if (data.remember === true) localStorage.setItem("token", result.token);
       if (result.message === "Login Success") {
         setUser(result.user);
         setLoggedIn(true);
-      }
-      if (data.remember === true) localStorage.setItem("token", result.token);
-      return result;
+        return { token: result.token, user: result.user };
+      } else return result;
     },
     [loginUrl]
   );

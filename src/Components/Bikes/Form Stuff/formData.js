@@ -21,7 +21,7 @@ const FormData = {
     },
     {
       type: "text",
-      name: "WOBC ID (optional)",
+      name: "wobc_id",
     },
     {
       type: "search",

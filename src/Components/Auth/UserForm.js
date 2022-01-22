@@ -1,38 +1,9 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Checkbox,
-  FormControlLabel,
-  FormControl,
-  TextField,
-  Button,
-} from "@mui/material";
+import { Box, Checkbox, FormControlLabel, Button } from "@mui/material";
 import WOBCLogo from "../../Images/wobclogotransparent.png";
 import { useAuth } from "../../Contexts/auth.context";
 import { Circles } from "react-loading-icons";
-import { capitalize } from "../../Utils/capitalize";
-
-const MyTextField = ({ ...props }) => {
-  return (
-    <TextField
-      margin="normal"
-      required
-      fullWidth
-      id={props.name}
-      label={
-        props.name === "confirmPassword"
-          ? capitalize("Confirm Password")
-          : capitalize(props.name)
-      }
-      name={props.name}
-      className="block text-sm font-medium text-gray-900"
-      type={
-        (props.name === "confirmPassword" || props.name === "password") &&
-        "password"
-      }
-    />
-  );
-};
+import { MyTextField } from "../Bikes/Form Stuff/formComponents";
 
 const UserForm = () => {
   const { login, loginAttempt, register, registrationAttempt } = useAuth();
@@ -45,7 +16,7 @@ const UserForm = () => {
 
     if (showRegister) {
       if (values.get("password") != values.get("confirmPassword")) {
-        console.log("passwords dont match");
+        alert("Passwords do not match");
       } else {
         const formSubmit = {
           name: values.get("name"),
@@ -80,6 +51,8 @@ const UserForm = () => {
       <img className="mx-auto h-40 w-auto" src={WOBCLogo} alt="WOBC Logo" />
       {registrationAttempt.value != undefined &&
         registrationAttempt.value.message}
+
+      {loginAttempt.value != undefined && loginAttempt.value.message}
 
       {loginAttempt.loading === false &&
       registrationAttempt.loading === false ? (

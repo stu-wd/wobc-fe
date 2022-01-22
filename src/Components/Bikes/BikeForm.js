@@ -10,8 +10,6 @@
 // import Modal from "@mui/material/Modal";
 // import Select from "@mui/material/Select";
 
-import { resolveOnChange } from "antd/lib/input/Input";
-
 // const modalStyle = {
 //   position: "absolute",
 //   top: "50%",
@@ -272,7 +270,7 @@ import {
 import { capitalize } from "../../Utils/capitalize";
 
 const BikeForm = () => {
-  const { postBike } = useBikes();
+  const { postBike, postMsg } = useBikes();
 
   const [radios, setRadios] = useState({
     gender: false,
@@ -369,25 +367,19 @@ const BikeForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const values = new FormData(event.currentTarget);
+    const fd = new FormData(event.currentTarget);
 
-    const formSubmit = {
-      serial: values.get("serial"),
-      status: values.get("status"),
-      gender: values.get("gender"),
-      adultchild: values.get("adultchild"),
-      storage: values.get("storage"),
-      style: values.get("style"),
-      brand: values.get("brand"),
-      size: values.get("size"),
-      received: values.get("received"),
-    };
+    let formSubmit = {};
+    for (let key of fd.keys()) {
+      formSubmit[key] = fd.get(key);
+    }
+
     postBike(formSubmit);
   };
 
   return (
     <Box className="flex flex-col items-center">
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+      <Box component="form" onSubmit={handleSubmit} noValidate>
         {fd.options.map((o, i) => {
           if (o.type === "text") {
             return <MyTextField name={o.name} key={i} />;
@@ -427,10 +419,11 @@ const BikeForm = () => {
             );
           }
         })}
+        <Button fullWidth type="submit" htmlFor="submit" variant="contained">
+          Submit
+        </Button>
+        <>{postMsg.value != undefined && postMsg.value.message}</>
       </Box>
-      <Button type="submit" variant="contained">
-        Submit
-      </Button>
     </Box>
   );
 };

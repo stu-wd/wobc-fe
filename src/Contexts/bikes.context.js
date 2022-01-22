@@ -77,6 +77,7 @@ const BikesProvider = (props) => {
   const postBikeUrl = process.env.REACT_APP_API + "/bikes/add";
   const [postMsg, postBike] = useAsyncFn(
     async (data) => {
+      console.log(data);
       const response = await fetch(postBikeUrl, {
         method: "POST",
         mode: "cors",

@@ -20,6 +20,8 @@ export const MyTextField = ({ ...props }) => {
       label={
         props.name === "confirmPassword"
           ? capitalize("Confirm Password")
+          : props.name === "wobc_id"
+          ? "WOBC ID (optional)"
           : capitalize(props.name)
       }
       name={props.name}
@@ -110,8 +112,9 @@ export const MySearchable = ({ ...props }) => {
             })
             .map((choice, i) => {
               return (
-                <div>
+                <div className="border-2 border-neutral-800 p-1">
                   <span
+                    className="cursor-pointer"
                     value={choice}
                     onClick={() => props.handleOptionSelect(choice, props.name)}
                   >
