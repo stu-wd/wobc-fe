@@ -20,7 +20,11 @@ const FormData = {
       name: "serial",
     },
     {
-      type: "select",
+      type: "text",
+      name: "WOBC ID (optional)",
+    },
+    {
+      type: "search",
       name: "status",
       choices: [
         "Scrapped",
@@ -36,16 +40,6 @@ const FormData = {
       name: "brand",
       choices: manufacturers,
     },
-    // {
-    //   type: "radio",
-    //   name: "condition",
-    //   choices: ["Poor", "Good", "Excellent"],
-    // },
-    {
-      type: "select",
-      name: "style",
-      choices: ["Comfort", "Cruiser", "Hybrid", "Mountain", "Road"],
-    },
     {
       type: "radio",
       name: "gender",
@@ -58,6 +52,11 @@ const FormData = {
     },
     {
       type: "select",
+      name: "style",
+      choices: ["Comfort", "Cruiser", "Hybrid", "Mountain", "Road"],
+    },
+    {
+      type: "search",
       name: "size",
       choices: [
         "12/12.5 in",
@@ -73,9 +72,9 @@ const FormData = {
       ],
     },
     {
-      type: "radio",
+      type: "search",
       name: "storage",
-      choices: ["Dodds", "Lookouts", "Red Bank", "WOBC"],
+      choices: ["Dodds", "Lookouts", "North Chatt", "Red Bank", "WOBC"],
     },
     {
       type: "search",
@@ -87,6 +86,7 @@ const FormData = {
         "Pedego",
         "Red Bank Fire Department",
         "Sweat Club",
+        "Donor",
       ],
     },
   ],

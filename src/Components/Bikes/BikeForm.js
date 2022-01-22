@@ -260,148 +260,20 @@ import { resolveOnChange } from "antd/lib/input/Input";
 // export default BikeForm;
 
 import React, { useState } from "react";
+import { Box, Button } from "@mui/material";
+import { useBikes } from "../../Contexts/bikes.context";
+import fd from "./Form Stuff/formData";
 import {
-  Box,
-  Checkbox,
-  FormControlLabel,
-  TextField,
-  Button,
-  NativeSelect,
-  FormControl,
-  InputLabel,
-  FormGroup,
-  FormLabel,
-  RadioGroup,
-  Radio,
-  Autocomplete,
-  Input,
-} from "@mui/material";
-import WOBCLogo from "../../Images/wobclogotransparent.png";
-import { useAuth } from "../../Contexts/auth.context";
-import { Circles } from "react-loading-icons";
+  MyRadio,
+  MySearchable,
+  MySelect,
+  MyTextField,
+} from "./Form Stuff/formComponents";
 import { capitalize } from "../../Utils/capitalize";
-import fd, { initialValues } from "./Options/formData";
-import manufacturers from "./Options/brands";
-import { useSearchParams } from "react-router-dom";
-
-const MyTextField = ({ ...props }) => {
-  return (
-    <TextField
-      margin="normal"
-      fullWidth
-      id={props.name}
-      label={
-        props.name === "confirmPassword"
-          ? capitalize("Confirm Password")
-          : capitalize(props.name)
-      }
-      name={props.name}
-      className="block text-sm font-medium text-gray-900"
-      type={
-        props.name === "confirmPassword" || props.name === "password"
-          ? "password"
-          : ""
-      }
-    />
-  );
-};
-
-const MySelect = ({ children, ...props }) => {
-  return (
-    <FormControl fullWidth>
-      <InputLabel variant="standard" htmlFor={props.name}>
-        {capitalize(props.name)}
-      </InputLabel>
-      <NativeSelect
-        inputProps={{
-          name: props.name,
-        }}
-      >
-        <option value=""></option>
-        {children.map((choice, i) => {
-          return (
-            <option value={choice} key={i}>
-              {choice}
-            </option>
-          );
-        })}
-      </NativeSelect>
-    </FormControl>
-  );
-};
-
-const MyRadio = ({ children, ...props }) => {
-  return (
-    <FormControl>
-      <RadioGroup
-        name={props.name}
-        value={props.value}
-        onChange={props.handleRadio}
-      >
-        {children.map((choice, i) => {
-          return (
-            <FormControlLabel
-              control={<Radio />}
-              value={choice}
-              label={choice}
-            />
-          );
-        })}
-      </RadioGroup>
-    </FormControl>
-  );
-};
-
-const MySearchable = ({ ...props }) => {
-  console.log(props.search);
-  return (
-    <>
-      <TextField
-        margin="normal"
-        fullWidth
-        id={props.name}
-        name={props.name}
-        onClick={() => props.toggleDisplay(props.name)}
-        value={props.search}
-        label={capitalize(props.name)}
-        className="block text-sm font-medium text-gray-900"
-        onChange={props.onChange}
-        search={props.search}
-        display={props.display}
-        handleSearchClick={props.handleSearchClick}
-        children={props.children}
-      />
-      {props.display[props.name] && (
-        <Box>
-          {props.children
-            .filter((value) => {
-              if (props.search == "" || props.search == undefined) {
-                return;
-              } else if (
-                value.toLowerCase().includes(props.search.toLowerCase())
-              ) {
-                return value;
-              }
-            })
-            .map((choice, i) => {
-              return (
-                <div>
-                  <span
-                    value={choice}
-                    onClick={() => props.handleSearchClick(choice, props.name)}
-                  >
-                    {choice}
-                  </span>
-                </div>
-              );
-            })}
-        </Box>
-      )}
-    </>
-  );
-};
 
 const BikeForm = () => {
+  const { postBike } = useBikes();
+
   const [radios, setRadios] = useState({
     gender: false,
     storage: false,
@@ -410,10 +282,16 @@ const BikeForm = () => {
   const [display, setDisplay] = useState({
     brand: false,
     received: false,
+    size: false,
+    storage: false,
+    status: false,
   });
   const [search, setSearch] = useState({
-    brand: "",
-    received: "",
+    brand: null,
+    received: null,
+    size: null,
+    storage: null,
+    status: null,
   });
 
   const handleRadio = (event) => {
@@ -421,6 +299,72 @@ const BikeForm = () => {
       ...radios,
       [event.target.name]: event.target.value,
     });
+  };
+
+  const handleOptionSelect = (selection, name) => {
+    setSearch({
+      ...search,
+      [name]: selection,
+    });
+    setDisplay({
+      ...display,
+      [name]: false,
+    });
+  };
+
+  const onInputType = (event) => {
+    setSearch({
+      ...search,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const toggleDisplay = (name) => {
+    if (name === "brand") {
+      setDisplay({
+        brand: true,
+        received: false,
+        size: false,
+        storage: false,
+        status: false,
+      });
+    }
+    if (name === "received") {
+      setDisplay({
+        brand: false,
+        received: true,
+        size: false,
+        storage: false,
+        status: false,
+      });
+    }
+    if (name === "size") {
+      setDisplay({
+        brand: false,
+        received: false,
+        size: true,
+        storage: false,
+        status: false,
+      });
+    }
+    if (name === "storage") {
+      setDisplay({
+        brand: false,
+        received: false,
+        size: false,
+        storage: true,
+        status: false,
+      });
+    }
+    if (name === "status") {
+      setDisplay({
+        brand: false,
+        received: false,
+        size: false,
+        storage: false,
+        status: true,
+      });
+    }
   };
 
   const handleSubmit = (event) => {
@@ -438,41 +382,7 @@ const BikeForm = () => {
       size: values.get("size"),
       received: values.get("received"),
     };
-    console.log(formSubmit);
-  };
-
-  const handleSearchClick = (selection, name) => {
-    console.log(selection, name);
-    setSearch({
-      ...search,
-      [name]: selection,
-    });
-    setDisplay(false);
-  };
-  console.log("search: ", search);
-  console.log("display: ", display);
-
-  const onSearch = (event) => {
-    console.log(event);
-    setSearch({
-      ...search,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const toggleDisplay = (name) => {
-    if (name === "brand") {
-      setDisplay({
-        brand: true,
-        received: false,
-      });
-    }
-    if (name === "received") {
-      setDisplay({
-        brand: false,
-        received: true,
-      });
-    }
+    postBike(formSubmit);
   };
 
   return (
@@ -503,56 +413,24 @@ const BikeForm = () => {
               <>
                 <MySearchable
                   name={o.name}
-                  handleSearchClick={handleSearchClick}
+                  handleOptionSelect={handleOptionSelect}
                   setSearch={setSearch}
                   search={search[o.name]}
                   label={capitalize(o.name)}
                   toggleDisplay={toggleDisplay}
-                  onChange={onSearch}
+                  onChange={onInputType}
                   children={o.choices}
                   display={display}
-                  handleSearchClick={handleSearchClick}
+                  handleOptionSelect={handleOptionSelect}
                 />
-                {/* {display[o.name] && (
-                  <Box>
-                    {o.choices
-                      .filter((value) => {
-                        if (
-                          search[o.name] == "" ||
-                          search[o.name] == undefined
-                        ) {
-                          return;
-                        } else if (
-                          value
-                            .toLowerCase()
-                            .includes(search[o.name].toLowerCase())
-                        ) {
-                          return value;
-                        }
-                      })
-                      .map((choice, i) => {
-                        return (
-                          <div>
-                            <span
-                              value={choice}
-                              onClick={() => handleSearchClick(choice, o.name)}
-                            >
-                              {choice}
-                            </span>
-                          </div>
-                        );
-                      })}
-                  </Box>
-                )} */}
               </>
             );
           }
         })}
-
-        <Button type="submit" fullWidth variant="contained">
-          Submit
-        </Button>
       </Box>
+      <Button type="submit" variant="contained">
+        Submit
+      </Button>
     </Box>
   );
 };
