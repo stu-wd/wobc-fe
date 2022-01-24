@@ -261,14 +261,10 @@ import React from "react";
 import { Box, Button } from "@mui/material";
 import { useBikes } from "../../../Contexts/bikesContext";
 import { useBikeForm } from "../../../Contexts/Bikes/bikeFormContext";
-import fd from "../Form/data/formData";
-import {
-  MyRadio,
-  MySearchable,
-  MySelect,
-  MyTextField,
-} from "../Form/formInputs";
-import { Formik, Form } from "formik";
+import fd, { initialValues as initFormVals } from "../Form/data/formData";
+import { MyRadio, MySelect, MyTextField } from "../Form/formInputs";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 
 const BikeForm = (props) => {
   const { postBike, postMsg } = useBikes();
@@ -280,159 +276,130 @@ const BikeForm = (props) => {
     toggleDisplay,
     onInputType,
     display,
-    handleSubmit,
   } = useBikeForm();
 
   return (
-    // <Box className="flex flex-col items-center">
-    //   <Box component="form" onSubmit={handleSubmit}>
-    //     {fd.options.map((o, i) => {
-    //       if (o.type === "text") {
-    //         return <MyTextField name={o.name} key={i} />;
-    //       }
-
-    //       if (o.type === "select") {
-    //         return <MySelect name={o.name} key={i} children={o.choices} />;
-    //       }
-
-    //       if (o.type === "radio") {
-    //         return (
-    //           <MyRadio
-    //             name={o.name}
-    //             key={i}
-    //             children={o.choices}
-    //             handleRadio={handleRadio}
-    //           />
-    //         );
-    //       }
-
-    //       if (o.type === "search") {
-    //         return (
-    //           <MySearchable
-    //             name={o.name}
-    //             handleOptionSelect={handleOptionSelect}
-    //             setSearch={setSearch}
-    //             search={search[o.name]}
-    //             label={o.name}
-    //             toggleDisplay={toggleDisplay}
-    //             onChange={onInputType}
-    //             children={o.choices}
-    //             display={display}
-    //             handleOptionSelect={handleOptionSelect}
-    //             key={i}
-    //           />
-    //         );
-    //       }
-    //     })}
-    //     <Button fullWidth type="submit" htmlFor="submit" variant="contained">
-    //       Submit
-    //     </Button>
-    //     <>{postMsg.value != undefined && postMsg.value.message}</>
-    //   </Box>
-    // </Box>
-
-    <Formik
-      initialValues={props.match ? { ...props.match } : {}}
-      // validationSchema={Yup.object({
-      //   serial: Yup.string().required("Required"),
-      //   status: Yup.string().required("Required"),
-      // })}
-      onSubmit={(values, { setSubmitting, setValues, resetForm }) => {
-        values.serial = values.serial.toUpperCase();
-        let submission = {
-          ...values,
-          status: search.status,
-          brand: search.brand,
-          size: search.size,
-          storage: search.storage,
-          received: search.storage,
-        };
-        console.log(submission);
-
-        // if (props.edit === true) {
-        //   editBike(values);
-        // }
-        // if (props.add === true) {
-        //   postBike(values);
-        // }
-        postBike(submission);
-      }}
-    >
-      <Form className="flex flex-col">
-        {fd.options.map((o, i) => {
-          if (o.type === "text") {
-            return <MyTextField name={o.name} key={i} />;
+    <>
+      {console.log(postMsg)}
+      <Formik
+        initialValues={props.match ? { ...props.match } : {}}
+        // validationSchema={Yup.object({
+        //   serial: Yup.string().required("Required"),
+        //   status: Yup.string().required("Required"),
+        // })}
+        onSubmit={(values, { setSubmitting, resetForm }) => {
+          // values.serial = values.serial.toUpperCase();
+          let submission = {
+            ...values,
+            status: search.status,
+            brand: search.brand,
+            size: search.size,
+            storage: search.storage,
+            received: search.storage,
+          };
+          if (props.add === true) {
+            postBike(submission)
+              .then((res) => {
+                if (res.message === "Add Success") {
+                  resetForm({
+                    values: initFormVals,
+                  });
+                  setSearch({
+                    status: "",
+                    brand: "",
+                    size: "",
+                    storage: "",
+                    received: "",
+                  });
+                }
+              })
+              .catch((err) => {
+                console.log("here");
+              });
           }
+        }}
+      >
+        <Form className="flex flex-col">
+          {fd.options.map((o, i) => {
+            if (o.type === "text") {
+              return <MyTextField name={o.name} key={i} />;
+            }
 
-          if (o.type === "select") {
-            return <MySelect name={o.name} key={i} children={o.choices} />;
-          }
+            if (o.type === "select") {
+              return <MySelect name={o.name} key={i} children={o.choices} />;
+            }
 
-          if (o.type === "radio") {
-            return (
-              <MyRadio
-                name={o.name}
-                key={i}
-                children={o.choices}
-                handleRadio={handleRadio}
-              />
-            );
-          }
-
-          if (o.type === "search") {
-            return (
-              <>
-                <MySearchable
+            if (o.type === "radio") {
+              return (
+                <MyRadio
                   name={o.name}
-                  search={search[o.name]}
-                  children={o.choices}
-                  display={display}
                   key={i}
-                  onClick={() => toggleDisplay(o.name)}
-                  onChange={onInputType}
-                  value={search[o.name]}
+                  children={o.choices}
+                  handleRadio={handleRadio}
                 />
-                {display[o.name] && (
-                  <Box>
-                    {o.choices
-                      .filter((value) => {
-                        if (
-                          search[o.name] == "" ||
-                          search[o.name] == undefined
-                        ) {
-                          return;
-                        } else if (
-                          value
-                            .toLowerCase()
-                            .includes(search[o.name].toLowerCase())
-                        ) {
-                          return value;
-                        }
-                      })
-                      .map((choice, i) => {
-                        return (
-                          <div
-                            onClick={() => handleOptionSelect(choice, o.name)}
-                            key={i}
-                            className="cursor-pointer border-[1px] border-neutral-800 p-1"
-                          >
-                            <span className="cursor-pointer" value={choice}>
-                              {choice}
-                            </span>
-                          </div>
-                        );
-                      })}
-                  </Box>
-                )}
-              </>
-            );
-          }
-        })}
-        <button className="button mt-2" type="submit">
-          Submit
-        </button>
-      </Form>
-    </Formik>
+              );
+            }
+
+            if (o.type === "search") {
+              return (
+                <>
+                  <MyTextField
+                    name={o.name}
+                    key={i}
+                    onClick={() => toggleDisplay(o.name)}
+                    onChange={onInputType}
+                    value={search[o.name]}
+                  />
+                  {display[o.name] && (
+                    <Box>
+                      {o.choices
+                        .filter((value) => {
+                          if (
+                            search[o.name] == "" ||
+                            search[o.name] == undefined
+                          ) {
+                            return;
+                          } else if (
+                            value
+                              .toLowerCase()
+                              .includes(search[o.name].toLowerCase())
+                          ) {
+                            return value;
+                          }
+                        })
+                        .map((choice, i) => {
+                          return (
+                            <div
+                              onClick={() => handleOptionSelect(choice, o.name)}
+                              key={i}
+                              className="cursor-pointer border-[1px] border-neutral-800 p-1"
+                            >
+                              <span
+                                onClick={() =>
+                                  handleOptionSelect(choice, o.name)
+                                }
+                                className="cursor-pointer"
+                                value={choice}
+                              >
+                                {choice}
+                              </span>
+                            </div>
+                          );
+                        })}
+                    </Box>
+                  )}
+                </>
+              );
+            }
+          })}
+          <button className="button mt-2" type="submit">
+            {props.add === true && `Add New Bike`}
+            {props.edit === true && props.add === undefined && `Edit Bike`}
+          </button>
+        </Form>
+      </Formik>
+      {postMsg.value != undefined && postMsg.value.message}
+    </>
   );
 };
 

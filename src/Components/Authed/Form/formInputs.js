@@ -1,13 +1,8 @@
 import {
-  Box,
-  FormControlLabel,
   TextField,
-  Button,
   NativeSelect,
   FormControl,
   InputLabel,
-  RadioGroup,
-  Radio,
 } from "@mui/material";
 import { capitalize } from "../../../Utils/capitalize";
 import { useField, Field } from "formik";
@@ -15,27 +10,29 @@ import { useField, Field } from "formik";
 export const MyTextField = ({ ...props }) => {
   const [field, meta] = useField(props);
   return (
-    <TextField
-      {...field}
-      {...props}
-      margin="normal"
-      fullWidth
-      label={
-        props.name === "confirmPassword"
-          ? capitalize("Confirm Password")
-          : props.name === "wobc_id"
-          ? "WOBC ID (optional)"
-          : capitalize(props.name)
-      }
-      name={props.name}
-      className="block text-sm font-medium text-gray-900"
-      type={
-        props.name === "confirmPassword" || props.name === "password"
-          ? "password"
-          : "input"
-      }
-      autoComplete="off"
-    />
+    <>
+      <TextField
+        {...field}
+        {...props}
+        margin="normal"
+        fullWidth
+        label={
+          props.name === "confirmPassword"
+            ? capitalize("Confirm Password")
+            : props.name === "wobc_id"
+            ? "WOBC ID (optional)"
+            : capitalize(props.name)
+        }
+        name={props.name}
+        className="block text-sm font-medium text-gray-900"
+        type={
+          props.name === "confirmPassword" || props.name === "password"
+            ? "password"
+            : "input"
+        }
+        autoComplete="off"
+      />
+    </>
   );
 };
 
@@ -65,34 +62,6 @@ export const MySelect = ({ children, ...props }) => {
   );
 };
 
-// export const MyRadio = ({ children, ...props }) => {
-//   const [field, meta] = useField(props);
-//   return (
-//     <FormControl>
-//       <RadioGroup
-//         name={props.name}
-//         value={props.value}
-//         onChange={props.handleRadio}
-//         {...field}
-//         {...props}
-//       >
-//         {children.map((choice, i) => {
-//           return (
-//             <FormControlLabel
-//               {...field}
-//               {...props}
-//               key={i}
-//               control={<Radio />}
-//               value={choice}
-//               label={choice}
-//             />
-//           );
-//         })}
-//       </RadioGroup>
-//     </FormControl>
-//   );
-// };
-
 export const MyRadio = ({ children, ...props }) => {
   const [field, meta] = useField(props);
   return (
@@ -108,25 +77,5 @@ export const MyRadio = ({ children, ...props }) => {
         );
       })}
     </div>
-  );
-};
-
-export const MySearchable = ({ ...props }) => {
-  const [field, meta] = useField(props);
-  return (
-    <>
-      <TextField
-        {...field}
-        {...props}
-        margin="normal"
-        fullWidth
-        // onClick={() => props.toggleDisplay(props.name)}
-        label={capitalize(props.name)}
-        className="block text-sm font-medium text-gray-900"
-        type="input"
-        autoComplete="off"
-        value={props.value}
-      />
-    </>
   );
 };

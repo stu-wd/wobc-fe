@@ -2,6 +2,7 @@ import manufacturers from "./manufacturers";
 
 export const initialValues = {
   serial: "",
+  wobc_id: "",
   status: "",
   brand: "",
   style: "",
