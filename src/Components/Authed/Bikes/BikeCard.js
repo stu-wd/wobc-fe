@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useBikes } from "../../Contexts/bikes.context";
+import { useBikes } from "../../../Contexts/bikesContext";
 
 const BikeCard = (props) => {
   const { searchResults } = useBikes();

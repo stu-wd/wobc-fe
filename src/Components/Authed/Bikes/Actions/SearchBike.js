@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useBikes } from "../../../Contexts/bikes.context";
-import { useAuth } from "../../../Contexts/auth.context";
+import { useBikes } from "../../../../Contexts/bikesContext";
+import { useAuth } from "../../../../Contexts/authContext";
 import { BiSearchAlt } from "react-icons/bi";
 import BikeForm from "../BikeForm";
 

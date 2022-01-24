@@ -5,7 +5,7 @@
 // import TextField from "@mui/material/TextField";
 // import MuiTextField from "@mui/material/TextField";
 // import fd, { initialValues } from "./Options/formData";
-// import { useBikes } from "../../Contexts/bikes.context";
+// import { useBikes } from "../../Contexts/bikesContext";
 // import Box from "@mui/material/Box";
 // import Modal from "@mui/material/Modal";
 // import Select from "@mui/material/Select";
@@ -257,129 +257,34 @@
 
 // export default BikeForm;
 
-import React, { useState } from "react";
+import React from "react";
 import { Box, Button } from "@mui/material";
-import { useBikes } from "../../Contexts/bikes.context";
-import fd from "./Form Stuff/formData";
+import { useBikes } from "../../../Contexts/bikesContext";
+import { useBikeForm } from "../../../Contexts/Bikes/bikeFormContext";
+import fd from "../Form/data/formData";
 import {
   MyRadio,
   MySearchable,
   MySelect,
   MyTextField,
-} from "./Form Stuff/formComponents";
-import { capitalize } from "../../Utils/capitalize";
+} from "../Form/formInputs";
 
 const BikeForm = () => {
-  const { postBike, postMsg } = useBikes();
-
-  const [radios, setRadios] = useState({
-    gender: false,
-    storage: false,
-    adultchild: false,
-  });
-  const [display, setDisplay] = useState({
-    brand: false,
-    received: false,
-    size: false,
-    storage: false,
-    status: false,
-  });
-  const [search, setSearch] = useState({
-    brand: null,
-    received: null,
-    size: null,
-    storage: null,
-    status: null,
-  });
-
-  const handleRadio = (event) => {
-    setRadios({
-      ...radios,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleOptionSelect = (selection, name) => {
-    setSearch({
-      ...search,
-      [name]: selection,
-    });
-    setDisplay({
-      ...display,
-      [name]: false,
-    });
-  };
-
-  const onInputType = (event) => {
-    setSearch({
-      ...search,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const toggleDisplay = (name) => {
-    if (name === "brand") {
-      setDisplay({
-        brand: true,
-        received: false,
-        size: false,
-        storage: false,
-        status: false,
-      });
-    }
-    if (name === "received") {
-      setDisplay({
-        brand: false,
-        received: true,
-        size: false,
-        storage: false,
-        status: false,
-      });
-    }
-    if (name === "size") {
-      setDisplay({
-        brand: false,
-        received: false,
-        size: true,
-        storage: false,
-        status: false,
-      });
-    }
-    if (name === "storage") {
-      setDisplay({
-        brand: false,
-        received: false,
-        size: false,
-        storage: true,
-        status: false,
-      });
-    }
-    if (name === "status") {
-      setDisplay({
-        brand: false,
-        received: false,
-        size: false,
-        storage: false,
-        status: true,
-      });
-    }
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const fd = new FormData(event.currentTarget);
-
-    let formSubmit = {};
-    for (let key of fd.keys()) {
-      formSubmit[key] = fd.get(key);
-    }
-
-    postBike(formSubmit);
-  };
+  const { postMsg } = useBikes();
+  const {
+    handleRadio,
+    handleOptionSelect,
+    setSearch,
+    search,
+    toggleDisplay,
+    onInputType,
+    display,
+    handleSubmit,
+  } = useBikeForm();
 
   return (
     <Box className="flex flex-col items-center">
-      <Box component="form" onSubmit={handleSubmit} noValidate>
+      <Box component="form" onSubmit={handleSubmit}>
         {fd.options.map((o, i) => {
           if (o.type === "text") {
             return <MyTextField name={o.name} key={i} />;
@@ -402,20 +307,19 @@ const BikeForm = () => {
 
           if (o.type === "search") {
             return (
-              <>
-                <MySearchable
-                  name={o.name}
-                  handleOptionSelect={handleOptionSelect}
-                  setSearch={setSearch}
-                  search={search[o.name]}
-                  label={capitalize(o.name)}
-                  toggleDisplay={toggleDisplay}
-                  onChange={onInputType}
-                  children={o.choices}
-                  display={display}
-                  handleOptionSelect={handleOptionSelect}
-                />
-              </>
+              <MySearchable
+                name={o.name}
+                handleOptionSelect={handleOptionSelect}
+                setSearch={setSearch}
+                search={search[o.name]}
+                label={o.name}
+                toggleDisplay={toggleDisplay}
+                onChange={onInputType}
+                children={o.choices}
+                display={display}
+                handleOptionSelect={handleOptionSelect}
+                key={i}
+              />
             );
           }
         })}

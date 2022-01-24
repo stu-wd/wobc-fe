@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { useBikes } from "../../Contexts/bikes.context";
-import BikeCard from "./BikeCard";
+import { useBikes } from "../../../Contexts/bikesContext";
 
 const Stats = () => {
   const { bikes, getBikes } = useBikes();

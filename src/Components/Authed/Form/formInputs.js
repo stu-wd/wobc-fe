@@ -16,7 +16,6 @@ export const MyTextField = ({ ...props }) => {
     <TextField
       margin="normal"
       fullWidth
-      id={props.name}
       label={
         props.name === "confirmPassword"
           ? capitalize("Confirm Password")
@@ -29,8 +28,9 @@ export const MyTextField = ({ ...props }) => {
       type={
         props.name === "confirmPassword" || props.name === "password"
           ? "password"
-          : ""
+          : "input"
       }
+      autoComplete="off"
     />
   );
 };
@@ -70,6 +70,7 @@ export const MyRadio = ({ children, ...props }) => {
         {children.map((choice, i) => {
           return (
             <FormControlLabel
+              key={i}
               control={<Radio />}
               value={choice}
               label={choice}
@@ -97,6 +98,8 @@ export const MySearchable = ({ ...props }) => {
         display={props.display}
         handleOptionSelect={props.handleOptionSelect}
         children={props.children}
+        type="input"
+        autoComplete="off"
       />
       {props.display[props.name] && (
         <Box>
@@ -112,12 +115,12 @@ export const MySearchable = ({ ...props }) => {
             })
             .map((choice, i) => {
               return (
-                <div className="border-2 border-neutral-800 p-1">
-                  <span
-                    className="cursor-pointer"
-                    value={choice}
-                    onClick={() => props.handleOptionSelect(choice, props.name)}
-                  >
+                <div
+                  onClick={() => props.handleOptionSelect(choice, props.name)}
+                  key={i}
+                  className="cursor-pointer border-[1px] border-neutral-800 p-1"
+                >
+                  <span className="cursor-pointer" value={choice}>
                     {choice}
                   </span>
                 </div>

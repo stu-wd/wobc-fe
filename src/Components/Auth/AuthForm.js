@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Box, Checkbox, FormControlLabel, Button } from "@mui/material";
 import WOBCLogo from "../../Images/wobclogotransparent.png";
-import { useAuth } from "../../Contexts/auth.context";
+import { useAuth } from "../../Contexts/authContext";
 import { Circles } from "react-loading-icons";
-import { MyTextField } from "../Bikes/Form Stuff/formComponents";
+import { MyTextField } from "../Authed/Form/formInputs";
 
-const UserForm = () => {
+const AuthForm = () => {
   const { login, loginAttempt, register, registrationAttempt } = useAuth();
   const [showRegister, setShowRegister] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -76,7 +76,7 @@ const UserForm = () => {
           <Circles width="2rem" fill="blue" speed={0.5} />
         </>
       )}
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+      <Box component="form" onSubmit={handleSubmit}>
         {showRegister && <MyTextField name="name" />}
         <MyTextField name="username" />
         <MyTextField name="password" />
@@ -101,4 +101,4 @@ const UserForm = () => {
   );
 };
 
-export default UserForm;
+export default AuthForm;

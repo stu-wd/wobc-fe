@@ -1,5 +1,4 @@
-// import manufacturers from "../brands";
-import manufacturers from "./brands";
+import manufacturers from "./manufacturers";
 
 export const initialValues = {
   serial: "",

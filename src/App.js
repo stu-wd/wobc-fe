@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
-import { useAuth } from "./Contexts/auth.context.js";
-import {
-  AuthenticatedRoutes,
-  UnauthenticatedRoutes,
-} from "./Routes/routes.index.js";
-import UserForm from "./Components/Auth/UserForm.js";
+import { useAuth } from "./Contexts/authContext.js";
+import { AuthenticatedRoutes, UnauthenticatedRoutes } from "./Routes/index.js";
+import AuthForm from "./Components/Auth/AuthForm.js";
 
 function App() {
   const { loggedIn } = useAuth();
