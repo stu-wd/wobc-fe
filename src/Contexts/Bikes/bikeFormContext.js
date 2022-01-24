@@ -32,6 +32,7 @@ const BikeFormProvider = (props) => {
     });
   };
   const handleOptionSelect = (selection, name) => {
+    console.log(selection, name);
     setSearch({
       ...search,
       [name]: selection,
@@ -41,7 +42,9 @@ const BikeFormProvider = (props) => {
       [name]: false,
     });
   };
+  console.log(search);
   const onInputType = (event) => {
+    console.log(event.target.name, event.target.value);
     setSearch({
       ...search,
       [event.target.name]: event.target.value,

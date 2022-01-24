@@ -10,10 +10,14 @@ import {
   Radio,
 } from "@mui/material";
 import { capitalize } from "../../../Utils/capitalize";
+import { useField, Field } from "formik";
 
 export const MyTextField = ({ ...props }) => {
+  const [field, meta] = useField(props);
   return (
     <TextField
+      {...field}
+      {...props}
       margin="normal"
       fullWidth
       label={
@@ -36,12 +40,14 @@ export const MyTextField = ({ ...props }) => {
 };
 
 export const MySelect = ({ children, ...props }) => {
+  const [field, meta] = useField(props);
   return (
     <FormControl fullWidth>
       <InputLabel variant="standard" htmlFor={props.name}>
         {capitalize(props.name)}
       </InputLabel>
       <NativeSelect
+        {...field}
         inputProps={{
           name: props.name,
         }}
@@ -59,75 +65,68 @@ export const MySelect = ({ children, ...props }) => {
   );
 };
 
+// export const MyRadio = ({ children, ...props }) => {
+//   const [field, meta] = useField(props);
+//   return (
+//     <FormControl>
+//       <RadioGroup
+//         name={props.name}
+//         value={props.value}
+//         onChange={props.handleRadio}
+//         {...field}
+//         {...props}
+//       >
+//         {children.map((choice, i) => {
+//           return (
+//             <FormControlLabel
+//               {...field}
+//               {...props}
+//               key={i}
+//               control={<Radio />}
+//               value={choice}
+//               label={choice}
+//             />
+//           );
+//         })}
+//       </RadioGroup>
+//     </FormControl>
+//   );
+// };
+
 export const MyRadio = ({ children, ...props }) => {
+  const [field, meta] = useField(props);
   return (
-    <FormControl>
-      <RadioGroup
-        name={props.name}
-        value={props.value}
-        onChange={props.handleRadio}
-      >
-        {children.map((choice, i) => {
-          return (
-            <FormControlLabel
-              key={i}
-              control={<Radio />}
-              value={choice}
-              label={choice}
-            />
-          );
-        })}
-      </RadioGroup>
-    </FormControl>
+    <div className="grid grid-cols-2 justify-center justify-items-start">
+      {children.map((choice, i) => {
+        return (
+          <div key={i} className="mt-2 flex justify-items-center items-center">
+            <label key={i}>
+              <Field type="radio" key={i} name={props.name} value={choice} />
+              {choice}
+            </label>
+          </div>
+        );
+      })}
+    </div>
   );
 };
 
 export const MySearchable = ({ ...props }) => {
+  const [field, meta] = useField(props);
   return (
     <>
       <TextField
+        {...field}
+        {...props}
         margin="normal"
         fullWidth
-        name={props.name}
-        onClick={() => props.toggleDisplay(props.name)}
-        value={props.search}
+        // onClick={() => props.toggleDisplay(props.name)}
         label={capitalize(props.name)}
         className="block text-sm font-medium text-gray-900"
-        onChange={props.onChange}
-        search={props.search}
-        display={props.display}
-        handleOptionSelect={props.handleOptionSelect}
-        children={props.children}
         type="input"
         autoComplete="off"
+        value={props.value}
       />
-      {props.display[props.name] && (
-        <Box>
-          {props.children
-            .filter((value) => {
-              if (props.search == "" || props.search == undefined) {
-                return;
-              } else if (
-                value.toLowerCase().includes(props.search.toLowerCase())
-              ) {
-                return value;
-              }
-            })
-            .map((choice, i) => {
-              return (
-                <div
-                  onClick={() => props.handleOptionSelect(choice, props.name)}
-                  key={i}
-                  className="cursor-pointer border-[1px] border-neutral-800 p-1"
-                >
-                  <span className="cursor-pointer" value={choice}>
-                    {choice}
-                  </span>
-                </div>
-              );
-            })}
-        </Box>
-      )}
     </>
   );
 };

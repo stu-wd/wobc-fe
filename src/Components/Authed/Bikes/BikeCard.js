@@ -28,5 +28,4 @@ const BikeCard = (props) => {
     </div>
   );
 };
-
 export default BikeCard;

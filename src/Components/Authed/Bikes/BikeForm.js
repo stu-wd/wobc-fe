@@ -268,9 +268,10 @@ import {
   MySelect,
   MyTextField,
 } from "../Form/formInputs";
+import { Formik, Form } from "formik";
 
-const BikeForm = () => {
-  const { postMsg } = useBikes();
+const BikeForm = (props) => {
+  const { postBike, postMsg } = useBikes();
   const {
     handleRadio,
     handleOptionSelect,
@@ -283,8 +284,81 @@ const BikeForm = () => {
   } = useBikeForm();
 
   return (
-    <Box className="flex flex-col items-center">
-      <Box component="form" onSubmit={handleSubmit}>
+    // <Box className="flex flex-col items-center">
+    //   <Box component="form" onSubmit={handleSubmit}>
+    //     {fd.options.map((o, i) => {
+    //       if (o.type === "text") {
+    //         return <MyTextField name={o.name} key={i} />;
+    //       }
+
+    //       if (o.type === "select") {
+    //         return <MySelect name={o.name} key={i} children={o.choices} />;
+    //       }
+
+    //       if (o.type === "radio") {
+    //         return (
+    //           <MyRadio
+    //             name={o.name}
+    //             key={i}
+    //             children={o.choices}
+    //             handleRadio={handleRadio}
+    //           />
+    //         );
+    //       }
+
+    //       if (o.type === "search") {
+    //         return (
+    //           <MySearchable
+    //             name={o.name}
+    //             handleOptionSelect={handleOptionSelect}
+    //             setSearch={setSearch}
+    //             search={search[o.name]}
+    //             label={o.name}
+    //             toggleDisplay={toggleDisplay}
+    //             onChange={onInputType}
+    //             children={o.choices}
+    //             display={display}
+    //             handleOptionSelect={handleOptionSelect}
+    //             key={i}
+    //           />
+    //         );
+    //       }
+    //     })}
+    //     <Button fullWidth type="submit" htmlFor="submit" variant="contained">
+    //       Submit
+    //     </Button>
+    //     <>{postMsg.value != undefined && postMsg.value.message}</>
+    //   </Box>
+    // </Box>
+
+    <Formik
+      initialValues={props.match ? { ...props.match } : {}}
+      // validationSchema={Yup.object({
+      //   serial: Yup.string().required("Required"),
+      //   status: Yup.string().required("Required"),
+      // })}
+      onSubmit={(values, { setSubmitting, setValues, resetForm }) => {
+        values.serial = values.serial.toUpperCase();
+        let submission = {
+          ...values,
+          status: search.status,
+          brand: search.brand,
+          size: search.size,
+          storage: search.storage,
+          received: search.storage,
+        };
+        console.log(submission);
+
+        // if (props.edit === true) {
+        //   editBike(values);
+        // }
+        // if (props.add === true) {
+        //   postBike(values);
+        // }
+        postBike(submission);
+      }}
+    >
+      <Form className="flex flex-col">
         {fd.options.map((o, i) => {
           if (o.type === "text") {
             return <MyTextField name={o.name} key={i} />;
@@ -307,28 +381,58 @@ const BikeForm = () => {
 
           if (o.type === "search") {
             return (
-              <MySearchable
-                name={o.name}
-                handleOptionSelect={handleOptionSelect}
-                setSearch={setSearch}
-                search={search[o.name]}
-                label={o.name}
-                toggleDisplay={toggleDisplay}
-                onChange={onInputType}
-                children={o.choices}
-                display={display}
-                handleOptionSelect={handleOptionSelect}
-                key={i}
-              />
+              <>
+                <MySearchable
+                  name={o.name}
+                  search={search[o.name]}
+                  children={o.choices}
+                  display={display}
+                  key={i}
+                  onClick={() => toggleDisplay(o.name)}
+                  onChange={onInputType}
+                  value={search[o.name]}
+                />
+                {display[o.name] && (
+                  <Box>
+                    {o.choices
+                      .filter((value) => {
+                        if (
+                          search[o.name] == "" ||
+                          search[o.name] == undefined
+                        ) {
+                          return;
+                        } else if (
+                          value
+                            .toLowerCase()
+                            .includes(search[o.name].toLowerCase())
+                        ) {
+                          return value;
+                        }
+                      })
+                      .map((choice, i) => {
+                        return (
+                          <div
+                            onClick={() => handleOptionSelect(choice, o.name)}
+                            key={i}
+                            className="cursor-pointer border-[1px] border-neutral-800 p-1"
+                          >
+                            <span className="cursor-pointer" value={choice}>
+                              {choice}
+                            </span>
+                          </div>
+                        );
+                      })}
+                  </Box>
+                )}
+              </>
             );
           }
         })}
-        <Button fullWidth type="submit" htmlFor="submit" variant="contained">
+        <button className="button mt-2" type="submit">
           Submit
-        </Button>
-        <>{postMsg.value != undefined && postMsg.value.message}</>
-      </Box>
-    </Box>
+        </button>
+      </Form>
+    </Formik>
   );
 };
 
