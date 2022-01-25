@@ -47,7 +47,7 @@ const BikesProvider = (props) => {
   const searchByParamsUrl = process.env.REACT_APP_API + "/bikes/filter";
   const [searchByParamsResults, searchByParams] = useAsyncFn(
     async (params) => {
-      console.log(`params!! ${params}`);
+      await console.log(`params!! ${params}`);
       const response = await fetch(searchByParamsUrl, {
         method: "POST",
         mode: "cors",

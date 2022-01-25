@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useBikes } from "../../../Contexts/bikesContext";
 
 const BikeCard = (props) => {
-  const { brand, status, style, serial, size, storage } = props.match;
+  const { brand, status, style, serial, size, storage, wobc_id } = props.match;
   return (
     <div
       style={{
@@ -13,6 +13,7 @@ const BikeCard = (props) => {
       }}
     >
       <h5>serial: {serial}</h5>
+      <h5>wobc_id: {wobc_id}</h5>
       <h5>status: {status}</h5>
       <h5>size: {size}</h5>
       <h5>brand: {brand}</h5>

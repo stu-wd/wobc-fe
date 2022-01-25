@@ -22,9 +22,9 @@ export const MyTextField = ({ ...props }) => {
           {...field}
           {...props}
           fullWidth
-          required={
-            props.name === "serial" || props.name === "status" ? true : false
-          }
+          // required={
+          //   props.name === "serial" || props.name === "status" ? true : false
+          // }
           label={
             props.name === "confirmPassword"
               ? capitalize("Confirm Password")
