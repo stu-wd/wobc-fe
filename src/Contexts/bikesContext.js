@@ -44,27 +44,28 @@ const BikesProvider = (props) => {
     [searchSerialUrl]
   );
 
-  // const searchByParamsUrl = process.env.REACT_APP_API + "/bikes/filter";
-  // const [searchByParamsResults, searchByParams] = useAsyncFn(
-  //   async (params) => {
-  //     const response = await fetch(searchByParamsUrl, {
-  //       method: "GET",
-  //       mode: "cors",
-  //       cache: "no-cache",
-  //       credentials: "same-origin",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       redirect: "follow",
-  //       referrerPolicy: "no-referrer",
-  //       body: JSON.stringify(params),
-  //     });
-  //     const result = await response.json();
-  //     console.log(result);
-  //     return result;
-  //   },
-  //   [searchSerialUrl]
-  // );
+  const searchByParamsUrl = process.env.REACT_APP_API + "/bikes/filter";
+  const [searchByParamsResults, searchByParams] = useAsyncFn(
+    async (params) => {
+      console.log(`params!! ${params}`);
+      const response = await fetch(searchByParamsUrl, {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(params),
+      });
+      const result = await response.json();
+      console.log(result);
+      return result;
+    },
+    [searchByParamsUrl]
+  );
 
   // useEffect(() => {
   //   searchByParams({
@@ -159,6 +160,8 @@ const BikesProvider = (props) => {
     putMsg,
     deleteBike,
     deleteAttempt,
+    searchByParams,
+    searchByParamsResults,
   };
 
   return <BikesContext.Provider value={bikesContextValue} {...props} />;

@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { useBikes } from "../../../Contexts/bikesContext";
 
 const BikeCard = (props) => {
-  const { searchResults } = useBikes();
-  const { brand, condition, status, type, serial, size, user_id } = props.bike;
+  const { brand, status, style, serial, size, storage } = props.match;
   return (
     <div
       style={{
@@ -13,18 +12,12 @@ const BikeCard = (props) => {
         flexDirection: "column",
       }}
     >
-      <h5>{status}</h5>
-      <h5>{condition}</h5>
-      <h5>{serial}</h5>
-      <h5>{size}</h5>
-      <h5>{brand}</h5>
-      <h5>{user_id}</h5>
-      <h5>{type}</h5>
-      <div>
-        <button>
-          <Link to="/edit">Edit</Link>
-        </button>
-      </div>
+      <h5>serial: {serial}</h5>
+      <h5>status: {status}</h5>
+      <h5>size: {size}</h5>
+      <h5>brand: {brand}</h5>
+      <h5>style: {style}</h5>
+      <h5>storage: {storage}</h5>
     </div>
   );
 };
