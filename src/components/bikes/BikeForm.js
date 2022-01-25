@@ -259,10 +259,10 @@
 
 import React from "react";
 import { Box, Button } from "@mui/material";
-import { useBikes } from "../../../Contexts/bikesContext";
-import { useBikeForm } from "../../../Contexts/Bikes/bikeFormContext";
-import fd, { initialValues as initFormVals } from "../Form/data/formData";
-import { MyRadio, MySelect, MyTextField } from "../Form/formInputs";
+import { useBikes } from "../../state/bikesContext";
+import { useBikeForm } from "../../state/Bikes/bikeFormContext";
+import fd, { initialValues as initFormVals } from "../form/data/formData";
+import { MyRadio, MySelect, MyTextField } from "../form/formInputs";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 

@@ -1,16 +1,18 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Dashboard from "../Components/Authed/Dashboard";
-import Stats from "../Components/Authed/Bikes/Stats";
-import SearchBike from "../Components/Authed/Bikes/Actions/SearchBike";
-import AuthForm from "../Components/Auth/AuthForm";
-import Sidebar from "../Components/Authed/Sidebar";
-import BikeForm from "../Components/Authed/Bikes/BikeForm";
-import Logout from "../Components/Authed/Logout";
+import Dashboard from "../components/Dashboard";
+import Stats from "../components/bikes/Stats";
+import SearchBike from "../components/bikes/Actions/SearchBike";
+import LoginRegisterForm from "../components/auth/LoginRegisterForm";
+import Header from "../components/Header";
+import BikeForm from "../components/bikes/BikeForm";
+import Logout from "../components/Logout";
+import Sidebar from "../components/Sidebar";
 
 export const AuthenticatedRoutes = () => {
   return (
     <>
+      <Header />
       <Sidebar />
       <div className="py-12">
         <Routes>
@@ -29,7 +31,7 @@ export const UnauthenticatedRoutes = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<AuthForm />} />
+        <Route path="/" element={<LoginRegisterForm />} />
       </Routes>
     </>
   );

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useBikes } from "../../Contexts/bikesContext";
-import Stats from "./Bikes/Stats";
+import { useBikes } from "../state/bikesContext";
+import Stats from "./bikes/Stats";
 
 const Dashboard = () => {
   const navigate = useNavigate();

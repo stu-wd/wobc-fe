@@ -4,7 +4,7 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
-import { capitalize } from "../../../Utils/capitalize";
+import { capitalize } from "../../utils/capitalize";
 import { useField, Field } from "formik";
 
 export const MyTextField = ({ ...props }) => {

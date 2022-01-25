@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useBikes } from "../../../Contexts/bikesContext";
+import { useBikes } from "../../state/bikesContext";
 
 const Stats = () => {
   const { bikes, getBikes } = useBikes();

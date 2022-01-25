@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useBikes } from "../../../../Contexts/bikesContext";
-import { useAuth } from "../../../../Contexts/authContext";
+import { useBikes } from "../../../state/bikesContext";
+import { useAuth } from "../../../state/authContext";
 import { BiSearchAlt } from "react-icons/bi";
 import BikeForm from "../BikeForm";
 import BikeCard from "../BikeCard";
-import fd from "../../Form/data/formData";
-import { MyRadio, MyTextField } from "../../Form/formInputs";
+import fd from "../../form/data/formData";
+import { MyRadio, MyTextField } from "../../form/formInputs";
 import { Form, Formik, Field } from "formik";
 import Circles from "react-loading-icons/dist/components/circles";
 

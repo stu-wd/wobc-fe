@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Box, Checkbox, FormControlLabel, Button } from "@mui/material";
-import WOBCLogo from "../../Images/wobclogotransparent.png";
-import { useAuth } from "../../Contexts/authContext";
+import WOBCLogo from "../../assets/images/wobclogotransparent.png";
+import { useAuth } from "../../state/authContext";
 import { Circles } from "react-loading-icons";
-import { MyTextField } from "../Authed/Form/formInputs";
+import { MyTextField } from "../form/formInputs";
 import { Formik, Form } from "formik";
 
-const AuthForm = () => {
+const LoginRegisterForm = () => {
   const { login, loginAttempt, register, registrationAttempt } = useAuth();
   const [showRegister, setShowRegister] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -99,4 +99,4 @@ const AuthForm = () => {
   );
 };
 
-export default AuthForm;
+export default LoginRegisterForm;
