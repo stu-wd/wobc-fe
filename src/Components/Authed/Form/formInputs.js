@@ -11,27 +11,46 @@ export const MyTextField = ({ ...props }) => {
   const [field, meta] = useField(props);
   return (
     <>
-      <TextField
-        {...field}
-        {...props}
-        margin="normal"
-        fullWidth
-        label={
-          props.name === "confirmPassword"
-            ? capitalize("Confirm Password")
-            : props.name === "wobc_id"
-            ? "WOBC ID (optional)"
-            : capitalize(props.name)
-        }
-        name={props.name}
-        className="block text-sm font-medium text-gray-900"
-        type={
-          props.name === "confirmPassword" || props.name === "password"
-            ? "password"
-            : "input"
-        }
-        autoComplete="off"
-      />
+      <div
+        className={`mt-4 ${
+          meta.error || (meta.touched && meta.error)
+            ? `border-2 border-red-600 rounded-md`
+            : ""
+        }`}
+      >
+        <TextField
+          {...field}
+          {...props}
+          fullWidth
+          required={
+            props.name === "serial" || props.name === "status" ? true : false
+          }
+          label={
+            props.name === "confirmPassword"
+              ? capitalize("Confirm Password")
+              : props.name === "wobc_id"
+              ? "WOBC ID (optional)"
+              : capitalize(props.name)
+          }
+          name={props.name}
+          className={`text-sm font-medium text-gray-900 ${
+            meta.error || (meta.touched && meta.error)
+              ? "border-2 border-red-600"
+              : ""
+          }`}
+          type={
+            props.name === "confirmPassword" || props.name === "password"
+              ? "password"
+              : "input"
+          }
+          autoComplete="off"
+        />
+      </div>
+      {/* <div> */}
+      {/* {meta.touched && meta.error ? (
+          <div className="error">{meta.error}</div>
+        ) : null} */}
+      {/* </div> */}
     </>
   );
 };

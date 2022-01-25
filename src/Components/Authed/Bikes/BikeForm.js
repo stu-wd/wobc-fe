@@ -267,7 +267,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
 const BikeForm = (props) => {
-  const { postBike, postMsg } = useBikes();
+  const { editBike, postBike, postMsg, putMsg } = useBikes();
   const {
     handleRadio,
     handleOptionSelect,
@@ -280,15 +280,14 @@ const BikeForm = (props) => {
 
   return (
     <>
-      {console.log(postMsg)}
       <Formik
         initialValues={props.match ? { ...props.match } : {}}
         // validationSchema={Yup.object({
-        //   serial: Yup.string().required("Required"),
-        //   status: Yup.string().required("Required"),
+        //   serial: Yup.string().required(),
+        //   status: Yup.string().required(),
         // })}
         onSubmit={(values, { setSubmitting, resetForm }) => {
-          // values.serial = values.serial.toUpperCase();
+          values.serial = values.serial.toUpperCase();
           let submission = {
             ...values,
             status: search.status,
@@ -316,6 +315,10 @@ const BikeForm = (props) => {
               .catch((err) => {
                 console.log("here");
               });
+          }
+
+          if (props.edit === true) {
+            editBike(submission);
           }
         }}
       >
@@ -393,12 +396,10 @@ const BikeForm = (props) => {
             }
           })}
           <button className="button mt-2" type="submit">
-            {props.add === true && `Add New Bike`}
-            {props.edit === true && props.add === undefined && `Edit Bike`}
+            Submit
           </button>
         </Form>
       </Formik>
-      {postMsg.value != undefined && postMsg.value.message}
     </>
   );
 };

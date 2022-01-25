@@ -9,9 +9,9 @@ const Logout = () => {
   useEffect(() => {
     logout();
     navigate("/");
-  });
+  }, []);
 
-  return <div></div>;
+  return <></>;
 };
 
 export default Logout;
