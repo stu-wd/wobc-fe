@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useBikes } from "../../../state/bikesContext";
 import { useAuth } from "../../../state/authContext";
 import { BiSearchAlt } from "react-icons/bi";
-import BikeForm from "../BikeForm";
 import BikeCard from "../BikeCard";
 import fd from "../../form/data/formData";
 import { MyRadio, MyTextField } from "../../form/formInputs";

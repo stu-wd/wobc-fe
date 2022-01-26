@@ -8,11 +8,6 @@ const AuthProvider = (props) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState();
   const [message, setMessage] = useState();
-  const [openSidebar, setOpenSidebar] = useState(false);
-
-  const toggleSidebar = () => {
-    setOpenSidebar(!openSidebar);
-  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -75,8 +70,6 @@ const AuthProvider = (props) => {
     setMessage,
     loginAttempt,
     registrationAttempt,
-    toggleSidebar,
-    openSidebar,
   };
 
   return <AuthContext.Provider value={authContextValue} {...props} />;

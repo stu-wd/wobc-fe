@@ -14,15 +14,16 @@ import {
   BiLeftArrowCircle as Collapse,
   BiRightArrowCircle as Expand,
 } from "react-icons/bi";
-import { useAuth } from "../state/authContext";
+// import { useAuth } from "../state/authContext";
+import { useLayout } from "../state/layoutContext";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-  const { openSidebar, toggleSidebar } = useAuth();
+  const { openSidebar, toggleSidebar } = useLayout();
 
   const MyListItem = ({ icon, text }) => {
     return (
-      <Link onClick={toggleSidebar} to={`${text}`}>
+      <Link onClick={toggleSidebar} to={`${text.toLowerCase()}`}>
         <ListItem button key={text}>
           <ListItemIcon>
             {icon}

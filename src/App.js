@@ -8,14 +8,14 @@ function App() {
 
   useEffect(() => {
     return (
-      <div className="min-h-screen bg-gray-200 flex flex-col">
+      <div className="min-h-screen bg-gray-200 px-3 flex flex-col">
         {loggedIn ? <AuthenticatedRoutes /> : <UnauthenticatedRoutes />}
       </div>
     );
   }, [loggedIn]);
 
   return (
-    <div className="min-h-screen bg-gray-200 flex flex-col">
+    <div className="min-h-screen bg-gray-200 flex flex-col  px-3">
       {loggedIn ? <AuthenticatedRoutes /> : <UnauthenticatedRoutes />}
     </div>
   );

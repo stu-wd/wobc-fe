@@ -14,10 +14,11 @@ import {
   RiMenuLine as MenuBars,
 } from "react-icons/ri";
 import { Box } from "@mui/material";
-import { useAuth } from "../state/authContext";
+// import { useAuth } from "../state/authContext";
+import { useLayout } from "../state/layoutContext";
 
 const Header = () => {
-  const { toggleSidebar } = useAuth();
+  const { toggleSidebar } = useLayout();
   const [openSearchBar, setOpenSearchBar] = useState(false);
 
   const toggleSearchBar = () => {
