@@ -5,13 +5,7 @@ import { useBikes } from "../../state/bikesContext";
 const BikeCard = (props) => {
   const { brand, status, style, serial, size, storage, wobc_id } = props.match;
   return (
-    <div
-      style={{
-        border: "2px solid black",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <div className="border-[1px] border-grey p-2 mb-2">
       <h5>serial: {serial}</h5>
       <h5>wobc_id: {wobc_id}</h5>
       <h5>status: {status}</h5>

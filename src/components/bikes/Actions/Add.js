@@ -46,8 +46,8 @@ const AddBike = () => {
       <MyBikeForm
         buttonText="Add bike"
         startingValues={startingValues}
-        myValidationSchema={validate}
-        addSubmit={addSubmit}
+        validate={validate}
+        onSubmit={addSubmit}
       />
       {postMsg.value != undefined && postMsg.value.message}
     </>

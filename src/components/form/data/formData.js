@@ -41,6 +41,11 @@ const FormData = {
       choices: manufacturers,
     },
     {
+      type: "select",
+      name: "style",
+      choices: ["Comfort", "Cruiser", "Hybrid", "Mountain", "Road"],
+    },
+    {
       type: "radio",
       name: "gender",
       choices: ["Female", "Male", "Non-binary"],
@@ -49,11 +54,6 @@ const FormData = {
       type: "radio",
       name: "adultchild",
       choices: ["Adult", "Child"],
-    },
-    {
-      type: "select",
-      name: "style",
-      choices: ["Comfort", "Cruiser", "Hybrid", "Mountain", "Road"],
     },
     {
       type: "search",

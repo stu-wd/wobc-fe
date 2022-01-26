@@ -4,10 +4,10 @@
 
 @layer components {
   .header {
-    @apply fixed flex flex-row justify-start items-center top-0 left-0 h-12 w-screen m-0 text-white shadow-sm;
+    @apply fixed flex flex-row justify-start items-center left-0 h-14 w-screen m-0 text-white transition-all bg-blue-light;
   }
   .header-icon {
-    @apply flex items-center justify-center h-10 w-10 mx-4 shadow-sm text-blue-dark hover:bg-blue-dark hover:text-white rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer border-[1px] border-grey hover:border-0;
+    @apply flex items-center justify-center h-10 w-10 mx-4 text-white rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer border-[2px] border-white hover:border-0;
   }
 
   .header-collapse {

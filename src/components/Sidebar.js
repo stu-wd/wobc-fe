@@ -17,17 +17,19 @@ import {
 // import { useAuth } from "../state/authContext";
 import { useLayout } from "../state/layoutContext";
 import { Link } from "react-router-dom";
+import ManageSearchIcon from "@mui/icons-material/ManageSearch";
+import { capitalize } from "../utils/capitalize";
 
 const Sidebar = () => {
   const { openSidebar, toggleSidebar } = useLayout();
 
   const MyListItem = ({ icon, text }) => {
     return (
-      <Link onClick={toggleSidebar} to={`${text.toLowerCase()}`}>
+      <Link onClick={toggleSidebar} to={`${text}`}>
         <ListItem button key={text}>
           <ListItemIcon>
             {icon}
-            <ListItemText primary={text} />
+            <ListItemText primary={capitalize(text)} />
           </ListItemIcon>
         </ListItem>
       </Link>
@@ -41,8 +43,9 @@ const Sidebar = () => {
         className="h-screen w-fit border-2 border-grey bg-white"
       >
         <List>
-          <MyListItem text="Dashboard" icon={<Edit size="20" />} />
-          <MyListItem text="Add" icon={<Add size="20" />} />
+          <MyListItem text="dashboard" icon={<Edit size="20" />} />
+          <MyListItem text="add" icon={<Add size="20" />} />
+          <MyListItem text="filter" icon={<ManageSearchIcon size="20" />} />
         </List>
       </Box>
     </>

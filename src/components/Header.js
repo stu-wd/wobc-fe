@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import { Menu, Button, Layout } from "antd";
 import { Link } from "react-router-dom";
 import {
@@ -16,10 +16,24 @@ import {
 import { Box } from "@mui/material";
 // import { useAuth } from "../state/authContext";
 import { useLayout } from "../state/layoutContext";
+import { debounce } from "../utils/debounce";
 
 const Header = () => {
   const { toggleSidebar } = useLayout();
   const [openSearchBar, setOpenSearchBar] = useState(false);
+  const [oldScroll, setOldScroll] = useState(0);
+  const [showHeader, setShowHeader] = useState(true);
+
+  const handleScroll = debounce(() => {
+    const scrollPos = window.scrollY;
+    setShowHeader(oldScroll > scrollPos || scrollPos < 50);
+    setOldScroll(scrollPos);
+  }, 25);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [oldScroll, showHeader, handleScroll]);
 
   const toggleSearchBar = () => {
     setOpenSearchBar(!openSearchBar);
@@ -38,11 +52,14 @@ const Header = () => {
   );
 
   return (
-    <Box className="header">
+    <Box
+      component="header"
+      className={`header ${showHeader ? "top-[0]" : "top-[-115px]"}`}
+    >
       <HeaderIcon onClick={toggleSidebar} icon={<MenuBars size="20" />} />
       <HeaderIcon onClick={toggleSearchBar} icon={<Search size="20" />} />
       {openSearchBar ? (
-        <HeaderSearch type="text" placeholder="Search by serial" />
+        <HeaderSearch type="text" placeholder="Maybe one day..." />
       ) : null}
     </Box>
   );

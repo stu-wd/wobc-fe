@@ -7,7 +7,6 @@ const AuthContext = createContext({});
 const AuthProvider = (props) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState();
-  const [message, setMessage] = useState();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -66,8 +65,6 @@ const AuthProvider = (props) => {
     logout,
     register,
     user,
-    message,
-    setMessage,
     loginAttempt,
     registrationAttempt,
   };
