@@ -5,7 +5,7 @@ import "./assets/styles/index.css";
 
 const App = () => {
   return (
-    <div className="app-container flex flex-col">
+    <div className="app-container px-3 flex flex-col">
       <RouteTree />
     </div>
   );
