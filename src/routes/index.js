@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "../components/Dashboard";
-import Filter from "../components/bikes/Actions/Filter";
+import Filter from "../components/bikes/actions/Filter";
 import LoginRegisterForm from "../components/auth/LoginRegisterForm";
 import Header from "../components/Header";
 import Logout from "../components/Logout";
 import Sidebar from "../components/Sidebar";
-import Add from "../components/bikes/Actions/Add";
-import Edit from "../components/bikes/Actions/Edit";
-import Search from "../components/bikes/Actions/Search";
+import Add from "../components/bikes/actions/Add";
+import Edit from "../components/bikes/actions/Edit";
+import Search from "../components/bikes/actions/Search";
 import { useAuth } from "../state/authContext";
 
 const AuthenticatedRoutes = () => (

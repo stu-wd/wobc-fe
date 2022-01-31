@@ -17,7 +17,7 @@ import { Box } from "@mui/material";
 // import { useAuth } from "../state/authContext";
 import { useLayout } from "../state/layoutContext";
 import { debounce } from "../utils/debounce";
-import Search from "./bikes/Actions/Search";
+import Search from "./bikes/actions/Search";
 
 const Header = () => {
   const { toggleSidebar } = useLayout();
