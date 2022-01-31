@@ -51,6 +51,7 @@ const MyBikeForm = ({ buttonText, startingValues, validate, onSubmit }) => {
     onInputType,
     display,
   } = useBikeForm();
+
   return (
     <>
       <Formik
@@ -58,7 +59,7 @@ const MyBikeForm = ({ buttonText, startingValues, validate, onSubmit }) => {
         // validationSchema={validate}
         onSubmit={onSubmit}
       >
-        <Form className="flex flex-col">
+        <Form>
           {fd.options.map((o, i) => {
             if (o.type === "text") {
               return <MyTextField name={o.name} key={i} />;

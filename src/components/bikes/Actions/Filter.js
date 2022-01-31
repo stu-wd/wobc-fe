@@ -14,28 +14,7 @@ import { useBikeForm } from "../../../state/Bikes/bikeFormContext";
 import { DropdownResults } from "../MyBikeForm";
 
 const Filter = () => {
-  const {
-    getBikes,
-    searchSerial,
-    searchResults,
-    searchByParamsResults,
-    searchByParams,
-  } = useBikes();
-
-  const { display, toggleDisplay, search, handleOptionSelect, onInputType } =
-    useBikeForm();
-
-  // useEffect(() => {
-  //   searchResults.value = undefined;
-  //   getBikes();
-  // }, []);
-
-  // const [search, setSearch] = useState("");
-
-  // const handleSearch = () => {
-  //   if (search === "" || undefined) return;
-  //   searchSerial(search.toUpperCase());
-  // };
+  const { searchByParamsResults, searchByParams } = useBikes();
 
   const [showChoices, setShowChoices] = useState({
     status: false,
@@ -47,6 +26,16 @@ const Filter = () => {
     received: false,
   });
 
+  // const [clickedItems, setClickedItems] = useState({
+  //   status: "",
+  //   style: "",
+  //   gender: "",
+  //   adultchild: "",
+  //   size: "",
+  //   storage: "",
+  //   received: "",
+  // });
+
   const toggleShowChoices = (category) => {
     setShowChoices({
       ...showChoices,
@@ -54,15 +43,19 @@ const Filter = () => {
     });
   };
 
+  // const handleClickItem = (e) => {
+  //   console.log(e.target);
+  //   console.log(e.target.name);
+  //   console.log(e.target.value);
+  //   setClickedItems({
+  //     ...clickedItems,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
+
+  // console.log(clickedItems);
   return (
     <>
-      {/* <input type="text" onChange={(e) => setSearch(e.target.value)} /> */}
-      {/* <div
-          onClick={handleSearch}
-          className="absolute right-1 top-2 cursor-pointer"
-        >
-          <BiSearchAlt size={28} />
-        </div> */}
       <Formik
         initialValues={{}}
         onSubmit={(values, actions) => {
@@ -99,6 +92,7 @@ const Filter = () => {
                       return (
                         <label className="m-1 flex flex-row">
                           <Field
+                            // onClick={handleClickItem}
                             type="checkbox"
                             name={option.name}
                             value={choice}
@@ -137,18 +131,7 @@ const Filter = () => {
           </button>
         </Form>
       </Formik>
-      {/* {searchResults.value && searchResults.value.length === 0 && (
-        <>No results</>
-      )} */}
-      {/* {searchResults.value &&
-        searchResults.value.map((match) => {
-          return (
-            <>
-              <BikeCard match={match} />
-            </>
-          );
-        })} */}
-      <div className="mt-4">
+      <div className="">
         {searchByParamsResults.loading === true && <Circles />}
         {searchByParamsResults.value &&
           searchByParamsResults.value.length === 0 && <div>Nothin' for ya</div>}

@@ -4,6 +4,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Divider,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
@@ -40,13 +41,15 @@ const Sidebar = () => {
     <>
       <Box
         role="presentation"
-        className="h-screen w-fit border-2 border-grey bg-white"
+        className="h-screen border-2 border-grey bg-white w-48"
       >
         <List>
           <MyListItem text="dashboard" icon={<Edit size="20" />} />
           <MyListItem text="add" icon={<Add size="20" />} />
+          <MyListItem text="search" icon={<Search size="20" />} />
           <MyListItem text="filter" icon={<ManageSearchIcon size="20" />} />
         </List>
+        <Divider />
       </Box>
     </>
   );

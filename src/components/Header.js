@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 // import { Menu, Button, Layout } from "antd";
 import { Link } from "react-router-dom";
 import {
-  BiSearchAlt as Search,
+  BiSearchAlt as SearchIcon,
   BiMessageRoundedAdd as Add,
   BiWrench as Edit,
   BiLeftArrowCircle as Collapse,
@@ -17,6 +17,7 @@ import { Box } from "@mui/material";
 // import { useAuth } from "../state/authContext";
 import { useLayout } from "../state/layoutContext";
 import { debounce } from "../utils/debounce";
+import Search from "./bikes/Actions/Search";
 
 const Header = () => {
   const { toggleSidebar } = useLayout();
@@ -46,9 +47,7 @@ const Header = () => {
   );
 
   const HeaderSearch = ({ type, placeholder }) => (
-    <div className="max-w-[40%]">
-      <input type={type} placeholder={placeholder} />
-    </div>
+    <Search type={type} placeholder={placeholder} />
   );
 
   return (
@@ -57,10 +56,8 @@ const Header = () => {
       className={`header ${showHeader ? "top-[0]" : "top-[-115px]"}`}
     >
       <HeaderIcon onClick={toggleSidebar} icon={<MenuBars size="20" />} />
-      <HeaderIcon onClick={toggleSearchBar} icon={<Search size="20" />} />
-      {openSearchBar ? (
-        <HeaderSearch type="text" placeholder="Maybe one day..." />
-      ) : null}
+      {/* <HeaderIcon onClick={toggleSearchBar} icon={<SearchIcon size="20" />} />
+      {openSearchBar ? <HeaderSearch /> : null} */}
     </Box>
   );
 };

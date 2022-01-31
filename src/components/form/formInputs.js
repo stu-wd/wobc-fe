@@ -59,7 +59,7 @@ export const MySelect = ({ children, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <FormControl fullWidth>
-      <InputLabel variant="standard" htmlFor={props.name}>
+      <InputLabel variant="filled" htmlFor={props.name}>
         {capitalize(props.name)}
       </InputLabel>
       <NativeSelect
