@@ -1,11 +1,14 @@
+import React, { useState } from "react";
 import {
   TextField,
   NativeSelect,
   FormControl,
   InputLabel,
 } from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
 import { capitalize } from "../../utils/capitalize";
-import { useField, Field } from "formik";
+import { useField, Field, setIn } from "formik";
+import { useSetState } from "react-use";
 
 export const MyTextField = ({ ...props }) => {
   const [field, meta] = useField(props);
@@ -32,7 +35,6 @@ export const MyTextField = ({ ...props }) => {
               ? "WOBC ID (optional)"
               : capitalize(props.name)
           }
-          name={props.name}
           className={`text-sm font-medium text-gray-900 ${
             meta.error || (meta.touched && meta.error)
               ? "border-2 border-red-600"
@@ -41,7 +43,7 @@ export const MyTextField = ({ ...props }) => {
           type={
             props.name === "confirmPassword" || props.name === "password"
               ? "password"
-              : "input"
+              : ""
           }
           autoComplete="off"
         />
@@ -59,7 +61,7 @@ export const MySelect = ({ children, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <FormControl fullWidth>
-      <InputLabel variant="standard" htmlFor={props.name}>
+      <InputLabel variant="filled" htmlFor={props.name}>
         {capitalize(props.name)}
       </InputLabel>
       <NativeSelect
@@ -99,99 +101,31 @@ export const MyRadio = ({ children, ...props }) => {
   );
 };
 
-// const MyTextInput = ({ label, ...props }) => {
-//   const [field, meta] = useField(props);
-//   return (
-//     <div
-//       className={`mt-2 ${
-//         meta.error || (meta.touched && meta.error)
-//           ? `border-2 border-red-600 rounded-md`
-//           : ""
-//       }`}
-//     >
-//       <MuiTextField
-//         // placeholder={props.name}
-//         required
-//         {...field}
-//         {...props}
-//         label={props.name}
-//         fullWidth
-//         // defaultValue={props.name}
-//       />
-//       {/* {meta.touched && meta.error ? (
-//         <div className="error">{meta.error}</div>
-//       ) : null} */}
-//     </div>
-//   );
-// };
-
-// const MyRadio = ({ children, ...props }) => {
-//   const [field, meta] = useField(props);
-//   return (
-//     <div className="grid grid-cols-2 justify-center justify-items-start">
-//       {children.map((choice, i) => {
-//         return (
-//           <div key={i} className="mt-2 flex justify-items-center items-center">
-//             <label key={i}>
-//               <Field type="radio" key={i} name={props.name} value={choice} />
-//               {choice}
-//             </label>
-//           </div>
-//         );
-//       })}
-
-//       {/* {meta.touched && meta.error ? (
-//         <div className="error">{meta.error}</div>
-//       ) : null} */}
-//     </div>
-//   );
-// };
-
-// const MySelect = ({ children, label, ...props }) => {
-//   const [field, meta] = useField(props);
-
-//   return (
-//     <div
-//       className={`mt-2 ${
-//         meta.error || (meta.error && meta.touched)
-//           ? `border-2 border-red-600 rounded-md`
-//           : ""
-//       }`}
-//     >
-//       <select {...field} {...props}>
-//         <option selected value="null">
-//           {label}
-//         </option>
-//         {children.map((choice, i) => {
-//           return (
-//             <option key={i} value={choice}>
-//               {choice}
-//             </option>
-//           );
-//         })}
-//       </select>
-//     </div>
-//   );
-// };
-
-// const MySearchable = ({ placeholder, children, ...props }) => {
-//   const [field, meta] = useField(props);
-//   return (
-//     <Field
-//       className="mt-2 p-0"
-//       name={props.name}
-//       component={Autocomplete}
-//       options={children}
-//       label={props.name}
-//       renderInput={(props) => (
-//         <TextField
-//           {...props}
-//           name={props.name}
-//           placeholder={placeholder}
-//           className="mt-2 p-0"
-//           variant="standard"
-//         />
-//       )}
-//     />
-//   );
-// };
+export const MySearchable = ({ setFieldValue, children, ...props }) => {
+  const [field, meta] = useField(props);
+  return (
+    <>
+      <Autocomplete
+        {...field}
+        options={children}
+        onChange={(event, newValue) => {
+          setFieldValue(props.name, newValue);
+        }}
+        autoSelect
+        freeSolo
+        className="text-sm font-medium text-gray-900 mt-2"
+        renderInput={(params) => (
+          <>
+            <MyTextField
+              {...params}
+              {...props}
+              name={props.name}
+              label={props.name}
+              fullWidth
+            />
+          </>
+        )}
+      />
+    </>
+  );
+};

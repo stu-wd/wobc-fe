@@ -8,31 +8,17 @@ const AddBike = () => {
   const { search, setSearch } = useBikeForm();
   const { postBike, postMsg } = useBikes();
   const startingValues = initialValues;
+  console.log(startingValues, initialValues);
 
   const validate = () => {};
 
   const addSubmit = (values, { resetForm, setSubmitting }) => {
     values.serial = values.serial.toUpperCase();
-    let submission = {
-      ...values,
-      status: search.status,
-      brand: search.brand,
-      size: search.size,
-      storage: search.storage,
-      received: search.storage,
-    };
-    postBike(submission)
+    postBike(values)
       .then((res) => {
         if (res.message === "Add Success") {
           resetForm({
             values: startingValues,
-          });
-          setSearch({
-            status: "",
-            brand: "",
-            size: "",
-            storage: "",
-            received: "",
           });
         }
       })
