@@ -6,11 +6,6 @@ const BikeFormContext = createContext({});
 
 const BikeFormProvider = (props) => {
   const { postBike } = useBikes();
-  const [radios, setRadios] = useState({
-    gender: false,
-    storage: false,
-    adultchild: false,
-  });
   const [display, setDisplay] = useState({
     brand: false,
     received: false,
@@ -25,12 +20,6 @@ const BikeFormProvider = (props) => {
     storage: "",
     status: "",
   });
-  const handleRadio = (event) => {
-    setRadios({
-      ...radios,
-      [event.target.name]: event.target.value,
-    });
-  };
   const handleOptionSelect = (selection, name) => {
     setSearch({
       ...search,
@@ -116,7 +105,6 @@ const BikeFormProvider = (props) => {
   };
 
   const bikeFormContextValue = {
-    handleRadio,
     handleOptionSelect,
     setSearch,
     search,

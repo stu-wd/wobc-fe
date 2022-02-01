@@ -1,11 +1,14 @@
+import React, { useState } from "react";
 import {
   TextField,
   NativeSelect,
   FormControl,
   InputLabel,
 } from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
 import { capitalize } from "../../utils/capitalize";
-import { useField, Field } from "formik";
+import { useField, Field, setIn } from "formik";
+import { useSetState } from "react-use";
 
 export const MyTextField = ({ ...props }) => {
   const [field, meta] = useField(props);
@@ -32,7 +35,6 @@ export const MyTextField = ({ ...props }) => {
               ? "WOBC ID (optional)"
               : capitalize(props.name)
           }
-          name={props.name}
           className={`text-sm font-medium text-gray-900 ${
             meta.error || (meta.touched && meta.error)
               ? "border-2 border-red-600"
@@ -41,7 +43,7 @@ export const MyTextField = ({ ...props }) => {
           type={
             props.name === "confirmPassword" || props.name === "password"
               ? "password"
-              : "input"
+              : ""
           }
           autoComplete="off"
         />
@@ -96,6 +98,50 @@ export const MyRadio = ({ children, ...props }) => {
         );
       })}
     </div>
+  );
+};
+
+export const MySearchable = ({ setFieldValue, children, ...props }) => {
+  const [field, meta] = useField(props);
+  const [searchedValue, setSearchedValue] = useState();
+  return (
+    <>
+      <Autocomplete
+        options={children}
+        onChange={(event, newValue) => {
+          // field.value = newValue;
+          // meta.value = newValue;
+          // console.log(newValue, field.value);
+          console.log(newValue);
+          // setSearchedValue(newValue);
+          setFieldValue(props.name, newValue);
+        }}
+        autoSelect
+        freeSolo
+        // isOptionEqualToValue={(something, something2) => {
+        //   console.log(something, something2);
+        // }}
+        // onInputChange={(event, newValue) => {
+        //   console.log(newValue);
+        //   setSearchedValue(newValue);
+        // }}
+        // value={searchedValue}
+        className="text-sm font-medium text-gray-900 mt-2"
+        renderInput={(params) => (
+          <>
+            <MyTextField
+              {...params}
+              {...field}
+              {...props}
+              name={props.name}
+              label={props.name}
+              // type="input"
+              fullWidth
+            />
+          </>
+        )}
+      />
+    </>
   );
 };
 
