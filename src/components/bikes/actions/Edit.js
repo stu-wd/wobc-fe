@@ -18,9 +18,14 @@ import { useBikes } from "../../../state/bikesContext";
 // };
 
 const Edit = (props) => {
-  const { openEditModal, setOpenEditModal, toggleOpenEditModal } = useLayout();
+  const {
+    isEditModalOpen,
+    setIsEditModalOpen,
+    toggleOpenEditModal,
+    editingBike,
+    closeEditModal,
+  } = useLayout();
   const { editBike } = useBikes();
-  const startingValues = {};
 
   const validate = () => {};
 
@@ -28,18 +33,16 @@ const Edit = (props) => {
     editBike(values);
   };
   return (
-    <div>
-      <Modal open={openEditModal} onClose={toggleOpenEditModal}>
-        <Box className="absolute top-[10%] left-[10%] w-[80%] border-2 border-black bg-white p-4">
-          <MyBikeForm
-            buttonText={`Save edit`}
-            startingValues={props.match}
-            validate={validate}
-            onSubmit={onEditSubmit}
-          />
-        </Box>
-      </Modal>
-    </div>
+    <Modal open={isEditModalOpen} onClose={closeEditModal}>
+      <Box className="absolute top-[10%] left-[10%] w-[80%] border-2 border-black bg-white p-4">
+        <MyBikeForm
+          buttonText={`Save edit`}
+          startingValues={editingBike}
+          validate={validate}
+          onSubmit={onEditSubmit}
+        />
+      </Box>
+    </Modal>
   );
 };
 
