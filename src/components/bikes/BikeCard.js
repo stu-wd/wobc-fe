@@ -15,7 +15,8 @@ const BikeCard = (props) => {
     adultchild,
   } = props.match;
 
-  const { setOpenEditModal, toggleOpenEditModal } = useLayout();
+  const { setIsEditModalOpen, toggleOpenEditModal, setEditingBike } =
+    useLayout();
   return (
     <div className="border-[1px] border-grey p-2 mb-2 mt-4">
       <h5>serial: {serial}</h5>
@@ -35,7 +36,10 @@ const BikeCard = (props) => {
         {/* <Link className="button mx-1 bg-red-light" to={`/delete/${serial}`}>
           <button>Delete</button>
         </Link> */}
-        <button onClick={toggleOpenEditModal} className="button mx-1">
+        <button
+          onClick={() => toggleOpenEditModal(props.match)}
+          className="button mx-1"
+        >
           Edit
         </button>
         <button className="button mx-1 bg-red-light">Delete</button>

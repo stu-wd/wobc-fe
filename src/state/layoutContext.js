@@ -9,18 +9,27 @@ const LayoutProvider = (props) => {
     setOpenSidebar(!openSidebar);
   };
 
-  const [openEditModal, setOpenEditModal] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const toggleOpenEditModal = () => {
-    setOpenEditModal(!openEditModal);
+  const toggleOpenEditModal = (bike) => {
+    setEditingBike(bike);
+    setIsEditModalOpen(!isEditModalOpen);
   };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+  };
+
+  const [editingBike, setEditingBike] = useState();
 
   const layoutContextValue = {
     toggleSidebar,
     openSidebar,
-    openEditModal,
-    setOpenEditModal,
+    isEditModalOpen,
+    setIsEditModalOpen,
     toggleOpenEditModal,
+    editingBike,
+    setEditingBike,
   };
 
   return <LayoutContext.Provider value={layoutContextValue} {...props} />;
