@@ -107,18 +107,31 @@ export const MySearchable = ({ setFieldValue, children, ...props }) => {
   return (
     <>
       <Autocomplete
-        {...field}
         options={children}
         onChange={(event, newValue) => {
+          // field.value = newValue;
+          // meta.value = newValue;
+          // console.log(newValue, field.value);
+          console.log(newValue);
+          // setSearchedValue(newValue);
           setFieldValue(props.name, newValue);
         }}
         autoSelect
         freeSolo
+        // isOptionEqualToValue={(something, something2) => {
+        //   console.log(something, something2);
+        // }}
+        // onInputChange={(event, newValue) => {
+        //   console.log(newValue);
+        //   setSearchedValue(newValue);
+        // }}
+        // value={searchedValue}
         className="text-sm font-medium text-gray-900 mt-2"
         renderInput={(params) => (
           <>
             <MyTextField
               {...params}
+              {...field}
               {...props}
               name={props.name}
               label={props.name}
