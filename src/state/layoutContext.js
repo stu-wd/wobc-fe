@@ -30,6 +30,7 @@ const LayoutProvider = (props) => {
     toggleOpenEditModal,
     editingBike,
     setEditingBike,
+    closeEditModal,
   };
 
   return <LayoutContext.Provider value={layoutContextValue} {...props} />;

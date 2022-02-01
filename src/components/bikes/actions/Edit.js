@@ -26,7 +26,6 @@ const Edit = (props) => {
     closeEditModal,
   } = useLayout();
   const { editBike } = useBikes();
-  console.log(editingBike);
 
   const validate = () => {};
 
@@ -36,7 +35,7 @@ const Edit = (props) => {
   return (
     <Modal
       open={isEditModalOpen}
-      onClose={closeEditModal}
+      // onClose={closeEditModal}
       onBackdropClick={closeEditModal}
     >
       <Box className="absolute top-[10%] left-[10%] w-[80%] border-2 border-black bg-white p-4">

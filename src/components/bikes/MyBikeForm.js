@@ -10,43 +10,6 @@ import {
 } from "../form/formInputs";
 import { Formik, Form } from "formik";
 
-// export const DropdownResults = ({
-//   choices,
-//   search,
-//   name,
-//   handleOptionSelect,
-// }) => {
-//   return (
-//     <Box>
-//       {choices
-//         .filter((value) => {
-//           if (search[name] == "" || search[name] == undefined) {
-//             return;
-//           } else if (value.toLowerCase().includes(search[name].toLowerCase())) {
-//             return value;
-//           }
-//         })
-//         .map((choice, i) => {
-//           return (
-//             <div
-//               onClick={() => handleOptionSelect(choice, name)}
-//               key={i}
-//               className="cursor-pointer border-[1px] border-neutral-800 p-1"
-//             >
-//               <span
-//                 onClick={() => handleOptionSelect(choice, name)}
-//                 className="cursor-pointer"
-//                 value={choice}
-//               >
-//                 {choice}
-//               </span>
-//             </div>
-//           );
-//         })}
-//     </Box>
-//   );
-// };
-
 const MyBikeForm = ({ buttonText, startingValues, validate, onSubmit }) => {
   const { handleOptionSelect, search, toggleDisplay, onInputType, display } =
     useBikeForm();
@@ -57,9 +20,6 @@ const MyBikeForm = ({ buttonText, startingValues, validate, onSubmit }) => {
         initialValues={{ ...startingValues }}
         // validationSchema={validate}
         onSubmit={onSubmit}
-        // onSubmit={(values, { setFieldValue }) => {
-        //   console.log(values);
-        // }}
       >
         {({ values, setFieldValue }) => (
           <Form>
@@ -78,27 +38,6 @@ const MyBikeForm = ({ buttonText, startingValues, validate, onSubmit }) => {
 
               if (o.type === "search") {
                 return (
-                  // <>
-                  //   <MyTextField
-                  //     name={o.name}
-                  //     key={i}
-                  //     onClick={() => toggleDisplay(o.name)}
-                  //     onChange={onInputType}
-                  //     value={
-                  //       search[o.name] === ""
-                  //         ? startingValues[o.name]
-                  //         : search[o.name]
-                  //     }
-                  //   />
-                  //   {display[o.name] && (
-                  //     <DropdownResults
-                  //       choices={o.choices}
-                  //       name={o.name}
-                  //       search={search}
-                  //       handleOptionSelect={handleOptionSelect}
-                  //     />
-                  //   )}
-                  // </>
                   <MySearchable
                     children={o.choices}
                     name={o.name}
