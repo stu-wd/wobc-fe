@@ -3,59 +3,25 @@ import { useBikes } from "../../../state/bikesContext";
 import BikeCard from "../BikeCard";
 import fd from "../../form/data/formData";
 import { MyCheckbox, MySearchable } from "../../form/formInputs";
-import { Form, Formik, Field } from "formik";
+import { Form, Formik } from "formik";
 import Circles from "react-loading-icons/dist/components/circles";
 import Edit from "./Edit";
 import Delete from "./Delete";
 import { useLayout } from "../../../state/layoutContext";
-import {
-  BiChevronDown as ArrowDown,
-  BiChevronUp as ArrowUp,
-} from "react-icons/bi";
-
-// const MyCheckbox = ({ children, showChoices, toggleShowChoices, ...props }) => {
-//   return (
-//     <div className="flex flex-col">
-//       <div
-//         className="flex flex-row items-center cursor-pointer border-2 border-grey p-2"
-//         onClick={() => toggleShowChoices(props.name)}
-//       >
-//         <span>{props.name}</span>
-//         <span>{showChoices[props.name] ? <ArrowUp /> : <ArrowDown />}</span>
-//       </div>
-//       <div className={`${showChoices[props.name] ? "" : "hidden"}`}>
-//         {children.map((choice) => {
-//           return (
-//             <label key={choice} className="m-1 flex flex-row">
-//               <Field
-//                 type="checkbox"
-//                 name={props.name}
-//                 value={choice}
-//                 className="m-1 border-2 border-orange-500"
-//               />
-//               {choice}
-//             </label>
-//           );
-//         })}
-//       </div>
-//     </div>
-//     // <FormControl component="fieldset">
-//     //   <FormLabel>{props.name}</FormLabel>
-//     //   <FormGroup>
-//     //     <FormControlLabel
-//     //       control={<Checkbox checked={}}
-//     //     />
-//     //   </FormGroup>
-//     // </FormControl>
-//   );
-// };
 
 const Filter = () => {
-  const { searchByParamsResults, searchByParams } = useBikes();
   const [stateParams, setStateParams] = useState();
-  const { isDeleteModalOpen, isEditModalOpen, deleteAttempt } = useLayout();
+  const { searchByParamsResults, searchByParams } = useBikes();
+  const {
+    isDeleteModalOpen,
+    isEditModalOpen,
+    deleteAttempt,
+    toggleShowChoices,
+    showChoices,
+  } = useLayout();
 
   useEffect(() => {
+    if (stateParams === undefined) return;
     if (!isEditModalOpen) {
       searchByParams(stateParams);
     }
@@ -64,24 +30,6 @@ const Filter = () => {
     }
   }, [isDeleteModalOpen, isEditModalOpen, deleteAttempt]);
 
-  const [showChoices, setShowChoices] = useState({
-    status: false,
-    style: false,
-    gender: false,
-    adultchild: false,
-    size: false,
-    storage: false,
-    received: false,
-  });
-
-  const toggleShowChoices = (category) => {
-    setShowChoices({
-      ...showChoices,
-      [category]: !showChoices[category],
-    });
-  };
-
-  const clearParams = () => {};
   return (
     <>
       <Formik
@@ -126,7 +74,7 @@ const Filter = () => {
             <button className="button" type="submit">
               Submit
             </button>
-            <button className="button mt-2" type="reset" onClick={clearParams}>
+            <button className="button mt-2" type="reset">
               Clear params
             </button>
           </Form>

@@ -35,6 +35,23 @@ const LayoutProvider = (props) => {
 
   const [editingBike, setEditingBike] = useState();
 
+  const [showChoices, setShowChoices] = useState({
+    status: false,
+    style: false,
+    gender: false,
+    adultchild: false,
+    size: false,
+    storage: false,
+    received: false,
+  });
+
+  const toggleShowChoices = (category) => {
+    setShowChoices({
+      ...showChoices,
+      [category]: !showChoices[category],
+    });
+  };
+
   const layoutContextValue = {
     toggleSidebar,
     openSidebar,
@@ -46,6 +63,8 @@ const LayoutProvider = (props) => {
     handleSelectedBike,
     isDeleteModalOpen,
     setIsDeleteModalOpen,
+    showChoices,
+    toggleShowChoices,
   };
 
   return <LayoutContext.Provider value={layoutContextValue} {...props} />;

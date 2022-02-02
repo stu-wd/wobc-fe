@@ -4,9 +4,6 @@ import {
   NativeSelect,
   FormControl,
   InputLabel,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
 } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import { capitalize } from "../../utils/capitalize";
@@ -156,13 +153,5 @@ export const MyCheckbox = ({
         })}
       </div>
     </div>
-    // <FormControl component="fieldset">
-    //   <FormLabel>{props.name}</FormLabel>
-    //   <FormGroup>
-    //     <FormControlLabel
-    //       control={<Checkbox checked={}}
-    //     />
-    //   </FormGroup>
-    // </FormControl>
   );
 };
