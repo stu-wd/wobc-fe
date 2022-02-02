@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   TextField,
   NativeSelect,
   FormControl,
   InputLabel,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import { capitalize } from "../../utils/capitalize";
-import { useField, Field, setIn } from "formik";
-import { useSetState } from "react-use";
+import { useField, Field } from "formik";
+import {
+  BiChevronDown as ArrowDown,
+  BiChevronUp as ArrowUp,
+} from "react-icons/bi";
 
 export const MyTextField = ({ ...props }) => {
   const [field, meta] = useField(props);
@@ -95,6 +101,9 @@ export const MySearchable = ({ setFieldValue, children, ...props }) => {
         {...field}
         options={children}
         onChange={(event, newValue) => {
+          if (newValue === null) {
+            newValue = undefined;
+          }
           setFieldValue(props.name, newValue);
         }}
         autoSelect
@@ -113,5 +122,47 @@ export const MySearchable = ({ setFieldValue, children, ...props }) => {
         )}
       />
     </>
+  );
+};
+
+export const MyCheckbox = ({
+  children,
+  showChoices,
+  toggleShowChoices,
+  ...props
+}) => {
+  return (
+    <div className="flex flex-col">
+      <div
+        className="flex flex-row items-center cursor-pointer border-2 border-grey p-2"
+        onClick={() => toggleShowChoices(props.name)}
+      >
+        <span>{props.name}</span>
+        <span>{showChoices[props.name] ? <ArrowUp /> : <ArrowDown />}</span>
+      </div>
+      <div className={`${showChoices[props.name] ? "" : "hidden"}`}>
+        {children.map((choice) => {
+          return (
+            <label key={choice} className="m-1 flex flex-row">
+              <Field
+                type="checkbox"
+                name={props.name}
+                value={choice}
+                className="m-1 border-2 border-orange-500"
+              />
+              {choice}
+            </label>
+          );
+        })}
+      </div>
+    </div>
+    // <FormControl component="fieldset">
+    //   <FormLabel>{props.name}</FormLabel>
+    //   <FormGroup>
+    //     <FormControlLabel
+    //       control={<Checkbox checked={}}
+    //     />
+    //   </FormGroup>
+    // </FormControl>
   );
 };

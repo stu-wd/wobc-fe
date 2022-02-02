@@ -8,8 +8,8 @@ import Delete from "./Delete";
 import { useLayout } from "../../../state/layoutContext";
 
 const Search = () => {
-  const { searchSerial, searchResults } = useBikes();
-  const { isEditModalOpen } = useLayout();
+  const { deleteAttempt, searchSerial, searchResults } = useBikes();
+  const { isDeleteModalOpen, isEditModalOpen } = useLayout();
 
   const [searchInput, setSearchInput] = useState("");
 
@@ -17,7 +17,10 @@ const Search = () => {
     if (!isEditModalOpen) {
       searchSerial(searchInput.toUpperCase());
     }
-  }, [isEditModalOpen]);
+    if (!isDeleteModalOpen) {
+      searchSerial(searchInput.toUpperCase());
+    }
+  }, [isDeleteModalOpen, isEditModalOpen, deleteAttempt]);
 
   return (
     <div>

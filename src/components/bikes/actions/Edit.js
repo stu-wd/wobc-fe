@@ -20,7 +20,7 @@ const Edit = () => {
       // onClose={closeEditModal}
       onBackdropClick={closeEditModal}
     >
-      <Box className="absolute top-[10%] left-[10%] w-[80%] border-2 border-black bg-white p-4">
+      <Box className="absolute top-[2%] left-[10%] w-[80%] border-2 border-black bg-white p-4">
         <MyBikeForm
           buttonText={`Save edit`}
           startingValues={editingBike}

@@ -36,9 +36,9 @@
   [type="week"],
   [multiple],
   textarea,
-  select {
+  /* select {
     @apply w-full rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500;
-  }
+  } */
   ,
   [type="checkbox"],
   [type="radio"] {

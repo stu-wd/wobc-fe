@@ -1,8 +1,10 @@
 import React, { createContext, useContext, useState } from "react";
+import { useBikes } from "./bikesContext";
 
 const LayoutContext = createContext({});
 
 const LayoutProvider = (props) => {
+  const { deleteAttempt } = useBikes();
   const [openSidebar, setOpenSidebar] = useState(false);
 
   const toggleSidebar = () => {
@@ -18,6 +20,10 @@ const LayoutProvider = (props) => {
   };
 
   const handleSelectedBike = (action, bike) => {
+    if (deleteAttempt && deleteAttempt.value) {
+      deleteAttempt.value = null;
+    }
+
     setEditingBike(bike);
     if (action === "Edit") {
       setIsEditModalOpen(true);
@@ -39,6 +45,7 @@ const LayoutProvider = (props) => {
     closeEditModal,
     handleSelectedBike,
     isDeleteModalOpen,
+    setIsDeleteModalOpen,
   };
 
   return <LayoutContext.Provider value={layoutContextValue} {...props} />;

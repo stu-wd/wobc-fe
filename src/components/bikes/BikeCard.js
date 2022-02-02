@@ -28,7 +28,7 @@ const BikeCard = ({ match, ...props }) => {
 
       <div className="flex flex-row mt-1">
         <button
-          onClick={(event, match) =>
+          onClick={(event) =>
             handleSelectedBike(event.target.textContent, match)
           }
           className="button mx-1"
@@ -36,7 +36,7 @@ const BikeCard = ({ match, ...props }) => {
           Edit
         </button>
         <button
-          onClick={(event, match) =>
+          onClick={(event) =>
             handleSelectedBike(event.target.textContent, match)
           }
           className="button mx-1 bg-red-light"

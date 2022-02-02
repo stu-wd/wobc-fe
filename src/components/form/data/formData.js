@@ -41,7 +41,7 @@ const FormData = {
       choices: manufacturers,
     },
     {
-      type: "select",
+      type: "search",
       name: "style",
       choices: ["Comfort", "Cruiser", "Hybrid", "Mountain", "Road"],
     },
