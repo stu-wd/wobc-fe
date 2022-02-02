@@ -17,15 +17,9 @@ import { useBikes } from "../../../state/bikesContext";
 //   p: 4,
 // };
 
-const Edit = (props) => {
-  const {
-    isEditModalOpen,
-    setIsEditModalOpen,
-    toggleOpenEditModal,
-    editingBike,
-    closeEditModal,
-  } = useLayout();
-  const { editBike } = useBikes();
+const Edit = () => {
+  const { isEditModalOpen, editingBike, closeEditModal } = useLayout();
+  const { editBike, putMsg } = useBikes();
 
   const validate = () => {};
 
@@ -45,6 +39,7 @@ const Edit = (props) => {
           validate={validate}
           onSubmit={onEditSubmit}
         />
+        {putMsg.value != undefined && putMsg.value.message}
       </Box>
     </Modal>
   );

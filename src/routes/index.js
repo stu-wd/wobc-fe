@@ -7,7 +7,6 @@ import Header from "../components/Header";
 import Logout from "../components/Logout";
 import Sidebar from "../components/Sidebar";
 import Add from "../components/bikes/actions/Add";
-import Edit from "../components/bikes/actions/Edit";
 import Search from "../components/bikes/actions/Search";
 import { useAuth } from "../state/authContext";
 
@@ -20,8 +19,8 @@ const AuthenticatedRoutes = () => (
     <div className="mt-16">
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/add" element={<Add add={true} />} />
-        <Route exact path="/edit/:serial" element={<Edit />} />
+        <Route path="/add" element={<Add />} />
+
         <Route path="/filter" element={<Filter />} />
         <Route path="/Search" element={<Search />} />
         <Route path="/logout" element={<Logout />} />

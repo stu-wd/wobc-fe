@@ -12,6 +12,7 @@ import { Form, Formik, Field } from "formik";
 import Circles from "react-loading-icons/dist/components/circles";
 import { useBikeForm } from "../../../state/Bikes/bikeFormContext";
 import { DropdownResults } from "../MyBikeForm";
+import Edit from "./Edit";
 
 const Filter = () => {
   const { searchByParamsResults, searchByParams } = useBikes();
@@ -141,6 +142,8 @@ const Filter = () => {
             return <BikeCard match={match} key={i} />;
           })}
       </div>
+
+      <Edit />
     </>
   );
 };
