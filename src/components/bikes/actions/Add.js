@@ -1,11 +1,9 @@
 import React from "react";
 import MyBikeForm from "../MyBikeForm";
-import { useBikeForm } from "../../../state/Bikes/bikeFormContext";
 import { useBikes } from "../../../state/bikesContext";
 import { initialValues } from "../../form/data/formData";
 
 const AddBike = () => {
-  const { search, setSearch } = useBikeForm();
   const { postBike, postMsg } = useBikes();
   const startingValues = initialValues;
 

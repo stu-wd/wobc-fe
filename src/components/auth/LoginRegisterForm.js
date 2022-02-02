@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Checkbox, FormControlLabel, Button } from "@mui/material";
+import { Checkbox, FormControlLabel, Button } from "@mui/material";
 import WOBCLogo from "../../assets/images/wobclogotransparent.png";
 import { useAuth } from "../../state/authContext";
 import { Circles } from "react-loading-icons";

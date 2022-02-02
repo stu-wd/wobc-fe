@@ -15,7 +15,6 @@ import {
   BiLeftArrowCircle as Collapse,
   BiRightArrowCircle as Expand,
 } from "react-icons/bi";
-// import { useAuth } from "../state/authContext";
 import { useLayout } from "../state/layoutContext";
 import { Link } from "react-router-dom";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";

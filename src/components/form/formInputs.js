@@ -14,20 +14,11 @@ export const MyTextField = ({ ...props }) => {
   const [field, meta] = useField(props);
   return (
     <>
-      <div
-        className={`mt-4 ${
-          meta.error || (meta.touched && meta.error)
-            ? `border-2 border-red-600 rounded-md`
-            : ""
-        }`}
-      >
+      <div className={`mt-4`}>
         <TextField
           {...field}
           {...props}
           fullWidth
-          // required={
-          //   props.name === "serial" || props.name === "status" ? true : false
-          // }
           label={
             props.name === "confirmPassword"
               ? capitalize("Confirm Password")
@@ -48,11 +39,6 @@ export const MyTextField = ({ ...props }) => {
           autoComplete="off"
         />
       </div>
-      {/* <div> */}
-      {/* {meta.touched && meta.error ? (
-          <div className="error">{meta.error}</div>
-        ) : null} */}
-      {/* </div> */}
     </>
   );
 };

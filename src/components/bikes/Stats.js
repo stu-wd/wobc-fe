@@ -1,12 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useBikes } from "../../state/bikesContext";
 
 const Stats = () => {
-  const { bikes, getBikes } = useBikes();
-
-  // useEffect(() => {
-  //   getBikes();
-  // }, []);
+  const { bikes } = useBikes();
 
   const donated = bikes.value.filter((bike) => {
     return bike.status === "Donated";
@@ -32,17 +28,6 @@ const Stats = () => {
     return bike.status === "Scrapped";
   });
 
-  // const something = bikes.value.filter((bike) => {
-  //   return !(
-  //     bike.status === "Donated" ||
-  //     bike.status === "Ready" ||
-  //     bike.status === "Inspection" ||
-  //     bike.status === "Repair" ||
-  //     bike.status === "Scrap" ||
-  //     bike.status === "Scrapped"
-  //   );
-  // });
-
   return (
     <div>
       {bikes.value && (
@@ -54,7 +39,6 @@ const Stats = () => {
           <h3>repair: {repair.length}</h3>
           <h3>scrap: {scrap.length}</h3>
           <h3>scrapped: {scrapped.length}</h3>
-          {/* <h3>something: {something.length}</h3> */}
         </>
       )}
     </div>

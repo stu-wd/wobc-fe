@@ -1,6 +1,4 @@
 import React from "react";
-import { Autocomplete, Box } from "@mui/material";
-import { useBikeForm } from "../../state/Bikes/bikeFormContext";
 import fd from "../form/data/formData";
 import {
   MyRadio,
@@ -11,9 +9,6 @@ import {
 import { Formik, Form } from "formik";
 
 const MyBikeForm = ({ buttonText, startingValues, validate, onSubmit }) => {
-  const { handleOptionSelect, search, toggleDisplay, onInputType, display } =
-    useBikeForm();
-
   return (
     <>
       <Formik

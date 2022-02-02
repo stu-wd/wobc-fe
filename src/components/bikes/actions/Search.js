@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useBikes } from "../../../state/bikesContext";
 import { BiSearchAlt as SearchIcon } from "react-icons/bi";
 import { TextField } from "@mui/material";
-
 import BikeCard from "../BikeCard";
 import Edit from "./Edit";
+import Delete from "./Delete";
 import { useLayout } from "../../../state/layoutContext";
 
 const Search = () => {
-  const { searchSerial, searchResults, putMsg } = useBikes();
+  const { searchSerial, searchResults } = useBikes();
   const { isEditModalOpen } = useLayout();
 
   const [searchInput, setSearchInput] = useState("");
@@ -42,6 +42,7 @@ const Search = () => {
         })}
 
       <Edit />
+      <Delete />
     </div>
   );
 };

@@ -10,14 +10,21 @@ const LayoutProvider = (props) => {
   };
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const closeEditModal = () => {
     setIsEditModalOpen(false);
+    setIsDeleteModalOpen(false);
   };
 
-  const handleSelectedBike = (bike) => {
+  const handleSelectedBike = (action, bike) => {
     setEditingBike(bike);
-    setIsEditModalOpen(true);
+    if (action === "Edit") {
+      setIsEditModalOpen(true);
+    }
+    if (action === "Delete") {
+      setIsDeleteModalOpen(true);
+    }
   };
 
   const [editingBike, setEditingBike] = useState();
@@ -31,6 +38,7 @@ const LayoutProvider = (props) => {
     setEditingBike,
     closeEditModal,
     handleSelectedBike,
+    isDeleteModalOpen,
   };
 
   return <LayoutContext.Provider value={layoutContextValue} {...props} />;

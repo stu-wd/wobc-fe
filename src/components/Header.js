@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from "react";
-// import { Menu, Button, Layout } from "antd";
-import { Link } from "react-router-dom";
-import {
-  BiSearchAlt as SearchIcon,
-  BiMessageRoundedAdd as Add,
-  BiWrench as Edit,
-  BiLeftArrowCircle as Collapse,
-  BiRightArrowCircle as Expand,
-} from "react-icons/bi";
 import {
   RiDashboardLine as Dashboard,
   RiLogoutBoxRLine as Logout,
   RiMenuLine as MenuBars,
 } from "react-icons/ri";
 import { Box } from "@mui/material";
-// import { useAuth } from "../state/authContext";
 import { useLayout } from "../state/layoutContext";
 import { debounce } from "../utils/debounce";
 import Search from "./bikes/actions/Search";

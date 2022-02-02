@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useLayout } from "../../state/layoutContext";
-import Edit from "./actions/Edit";
 const BikeCard = ({ match, ...props }) => {
   const {
     brand,
@@ -29,12 +28,21 @@ const BikeCard = ({ match, ...props }) => {
 
       <div className="flex flex-row mt-1">
         <button
-          onClick={() => handleSelectedBike(match)}
+          onClick={(event, match) =>
+            handleSelectedBike(event.target.textContent, match)
+          }
           className="button mx-1"
         >
           Edit
         </button>
-        <button className="button mx-1 bg-red-light">Delete</button>
+        <button
+          onClick={(event, match) =>
+            handleSelectedBike(event.target.textContent, match)
+          }
+          className="button mx-1 bg-red-light"
+        >
+          Delete
+        </button>
       </div>
     </div>
   );
