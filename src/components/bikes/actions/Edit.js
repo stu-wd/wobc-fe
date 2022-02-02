@@ -5,18 +5,6 @@ import { useLayout } from "../../../state/layoutContext";
 import { Box } from "@mui/system";
 import { useBikes } from "../../../state/bikesContext";
 
-// const style = {
-//   position: "absolute",
-//   top: "25%",
-//   left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   width: "80%",
-//   border: "2px solid #000",
-//   bgcolor: "white",
-//   boxShadow: 24,
-//   p: 4,
-// };
-
 const Edit = () => {
   const { isEditModalOpen, editingBike, closeEditModal } = useLayout();
   const { editBike, putMsg } = useBikes();

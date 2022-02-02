@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useBikes } from "../../../state/bikesContext";
 import { BiSearchAlt as SearchIcon } from "react-icons/bi";
 import { TextField } from "@mui/material";
 
 import BikeCard from "../BikeCard";
 import Edit from "./Edit";
+import { useLayout } from "../../../state/layoutContext";
 
 const Search = () => {
   const { searchSerial, searchResults, putMsg } = useBikes();
+  const { isEditModalOpen } = useLayout();
 
   const [searchInput, setSearchInput] = useState("");
+
+  useEffect(() => {
+    if (!isEditModalOpen) {
+      searchSerial(searchInput.toUpperCase());
+    }
+  }, [isEditModalOpen]);
 
   return (
     <div>

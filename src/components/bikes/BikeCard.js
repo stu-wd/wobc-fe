@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useLayout } from "../../state/layoutContext";
 import Edit from "./actions/Edit";
-const BikeCard = (props) => {
+const BikeCard = ({ match, ...props }) => {
   const {
     brand,
     status,
@@ -13,14 +12,9 @@ const BikeCard = (props) => {
     wobc_id,
     gender,
     adultchild,
-  } = props.match;
+  } = match;
 
-  const {
-    setIsEditModalOpen,
-    toggleOpenEditModal,
-    setEditingBike,
-    handleSelectedBike,
-  } = useLayout();
+  const { handleSelectedBike } = useLayout();
   return (
     <div className="border-[1px] border-grey p-2 mb-2 mt-4">
       <h5>serial: {serial}</h5>
@@ -35,7 +29,7 @@ const BikeCard = (props) => {
 
       <div className="flex flex-row mt-1">
         <button
-          onClick={() => handleSelectedBike(props.match)}
+          onClick={() => handleSelectedBike(match)}
           className="button mx-1"
         >
           Edit

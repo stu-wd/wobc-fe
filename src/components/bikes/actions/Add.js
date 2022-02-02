@@ -8,7 +8,6 @@ const AddBike = () => {
   const { search, setSearch } = useBikeForm();
   const { postBike, postMsg } = useBikes();
   const startingValues = initialValues;
-  console.log(startingValues, initialValues);
 
   const validate = () => {};
 
