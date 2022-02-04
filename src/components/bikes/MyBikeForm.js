@@ -1,5 +1,6 @@
 import React from "react";
 import fd from "../form/data/formData";
+import { Button } from "@mui/material";
 import {
   MyRadio,
   MySearchable,
@@ -42,9 +43,9 @@ const MyBikeForm = ({ buttonText, startingValues, validate, onSubmit }) => {
                 );
               }
             })}
-            <button className="button mt-2" type="submit">
+            <Button variant="contained" fullWidth type="submit">
               {buttonText}
-            </button>
+            </Button>{" "}
           </Form>
         )}
       </Formik>

@@ -17,7 +17,8 @@ const Delete = () => {
 
   const onDeleteSubmit = (serial) => {
     deleteBike(serial)
-      .then(() => {
+      .then((res) => {
+        console.log(res);
         setIsDeleteModalOpen(false);
       })
       .catch((err) => console.log(err));

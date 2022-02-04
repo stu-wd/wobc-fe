@@ -1,5 +1,6 @@
 import React from "react";
 import { useLayout } from "../../state/layoutContext";
+import { Button } from "@mui/material";
 const BikeCard = ({ match, ...props }) => {
   const {
     brand,
@@ -26,23 +27,28 @@ const BikeCard = ({ match, ...props }) => {
       <h5>style: {style}</h5>
       <h5>storage: {storage}</h5>
 
-      <div className="flex flex-row mt-1">
-        <button
+      <div className="flex mt-1">
+        <Button
+          variant="contained"
+          fullWidth
           onClick={(event) =>
             handleSelectedBike(event.target.textContent, match)
           }
-          className="button mx-1"
+          style={{ marginRight: "0.25rem" }}
         >
           Edit
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="contained"
+          fullWidth
+          color="error"
           onClick={(event) =>
             handleSelectedBike(event.target.textContent, match)
           }
-          className="button mx-1 bg-red-light"
+          style={{ marginLeft: "0.25rem" }}
         >
           Delete
-        </button>
+        </Button>
       </div>
     </div>
   );

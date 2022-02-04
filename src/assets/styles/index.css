@@ -7,7 +7,7 @@
     @apply fixed flex flex-row justify-start items-center left-0 h-14 w-screen m-0 text-white transition-all bg-blue-light;
   }
   .header-icon {
-    @apply flex items-center justify-center h-10 w-10 mx-4 text-white rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer border-[2px] border-white hover:border-0;
+    @apply flex items-center justify-center h-10 w-10 mx-4 text-white rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer border-[2px] border-white;
   }
 
   .header-collapse {
@@ -42,6 +42,6 @@
   ,
   [type="checkbox"],
   [type="radio"] {
-    @apply border-gray-300 rounded text-indigo-600 focus:ring-indigo-500;
+    /* @apply border-gray-300 rounded text-indigo-600 focus:ring-indigo-500; */
   }
 }

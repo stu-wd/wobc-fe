@@ -14,7 +14,6 @@ const Search = () => {
   const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
-    if (searchInput === "") return;
     if (!isEditModalOpen) {
       searchSerial(searchInput.toUpperCase());
     }

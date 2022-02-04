@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import { Navigate } from "react-router";
 import Dashboard from "../components/Dashboard";
 import Filter from "../components/bikes/actions/Filter";
 import LoginRegisterForm from "../components/auth/LoginRegisterForm";
@@ -18,11 +19,11 @@ const AuthenticatedRoutes = () => (
     </div>
     <div className="mt-16">
       <Routes>
+        {/* <Route path="/" element={<Dashboard />} /> */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/add" element={<Add />} />
-
         <Route path="/filter" element={<Filter />} />
-        <Route path="/Search" element={<Search />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/logout" element={<Logout />} />
       </Routes>
     </div>
@@ -32,6 +33,7 @@ const AuthenticatedRoutes = () => (
 const UnauthenticatedRoutes = () => (
   <Routes>
     <Route path="/" element={<LoginRegisterForm />} />
+    <Route path="*" element={<Navigate to="/" />} />
   </Routes>
 );
 

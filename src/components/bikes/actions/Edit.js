@@ -12,7 +12,14 @@ const Edit = () => {
   const validate = () => {};
 
   const onEditSubmit = (values) => {
-    editBike(values);
+    editBike(values)
+      .then((res) => {
+        if (res.message === "Edit Success") {
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <Modal
