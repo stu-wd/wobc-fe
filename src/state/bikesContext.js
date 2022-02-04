@@ -74,7 +74,7 @@ const BikesProvider = (props) => {
   // console.log(searchByParamsResults);
 
   const postBikeUrl = process.env.REACT_APP_API + "/bikes/add";
-  const [postMsg, postBike] = useAsyncFn(
+  const [postAttempt, postBike] = useAsyncFn(
     async (data) => {
       console.log(data);
       const response = await fetch(postBikeUrl, {
@@ -97,7 +97,7 @@ const BikesProvider = (props) => {
   );
 
   const putBikeUrl = process.env.REACT_APP_API + "/bikes";
-  const [putMsg, editBike] = useAsyncFn(
+  const [putAttempt, editBike] = useAsyncFn(
     async (bike) => {
       const response = await fetch(putBikeUrl + `/${bike.serial}`, {
         method: "PUT",
@@ -154,8 +154,8 @@ const BikesProvider = (props) => {
     resetMessage,
     searchSerial,
     searchResults,
-    postMsg,
-    putMsg,
+    postAttempt,
+    putAttempt,
     deleteBike,
     deleteAttempt,
     searchByParams,

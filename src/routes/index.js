@@ -19,7 +19,7 @@ const AuthenticatedRoutes = () => (
     </div>
     <div className="mt-16">
       <Routes>
-        {/* <Route path="/" element={<Dashboard />} /> */}
+        <Route path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/add" element={<Add />} />
         <Route path="/filter" element={<Filter />} />

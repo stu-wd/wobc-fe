@@ -4,7 +4,7 @@ import { useBikes } from "../../../state/bikesContext";
 import { initialValues } from "../../form/data/formData";
 
 const AddBike = () => {
-  const { postBike, postMsg } = useBikes();
+  const { postBike, postAttempt } = useBikes();
   const startingValues = initialValues;
 
   const validate = () => {};
@@ -32,7 +32,7 @@ const AddBike = () => {
         validate={validate}
         onSubmit={addSubmit}
       />
-      {postMsg.value != undefined && postMsg.value.message}
+      {postAttempt.value != undefined && postAttempt.value.message}
     </>
   );
 };

@@ -8,19 +8,28 @@ const MyModal = ({
   buttonText,
   close,
   open,
+  content,
   ...props
 }) => {
   return (
-    <Modal open={open} onClose={close} onBackdropClick={close}>
-      <Box className="absolute top-[2%] left-[10%] w-[80%] border-2 border-black bg-white p-4">
-        <Button
-          variant="contained"
-          fullWidth
-          color={buttonText === "Delete" ? "error" : ""}
-          onClick={() => onClickAction(bikeInfo)}
-        >
-          {buttonText}
-        </Button>
+    <Modal
+      open={open}
+      onClose={close}
+      onBackdropClick={close}
+      className="w-[80%] min-h-fit overflow-scroll flex justify-center m-auto"
+    >
+      <Box className="border-2 border-black bg-white h-fit p-4">
+        {content}
+        {buttonText === "Delete" && (
+          <Button
+            variant="contained"
+            fullWidth
+            color="error"
+            onClick={() => onClickAction(bikeInfo)}
+          >
+            {buttonText}
+          </Button>
+        )}
       </Box>
     </Modal>
   );

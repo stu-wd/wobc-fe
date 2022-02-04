@@ -8,6 +8,7 @@ import Circles from "react-loading-icons/dist/components/circles";
 import Edit from "./Edit";
 import Delete from "./Delete";
 import { useLayout } from "../../../state/layoutContext";
+import { Button } from "@mui/material";
 
 const Filter = () => {
   const [stateParams, setStateParams] = useState();
@@ -71,12 +72,14 @@ const Filter = () => {
                 />
               ) : null;
             })}
-            <button className="button" type="submit">
-              Submit
-            </button>
-            <button className="button mt-2" type="reset">
-              Clear params
-            </button>
+            <div className="flex mt-1">
+              <Button variant="contained" fullWidth type="submit">
+                Submit
+              </Button>
+              <Button variant="contained" fullWidth type="submit">
+                Clear Params
+              </Button>
+            </div>
           </Form>
         )}
       </Formik>
