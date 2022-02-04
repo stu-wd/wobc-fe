@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useLayout } from "../../../state/layoutContext";
 import { useBikes } from "../../../state/bikesContext";
-import MyModal from "./MyModal";
+import MyModal from "../MyModal";
 
 const Delete = () => {
   const {

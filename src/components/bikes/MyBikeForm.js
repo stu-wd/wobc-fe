@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import fd from "../form/data/formData";
 import { Button } from "@mui/material";
 import {
@@ -8,8 +8,18 @@ import {
   MyTextField,
 } from "../form/formInputs";
 import { Formik, Form } from "formik";
+import { useBikes } from "../../state/bikesContext";
 
 const MyBikeForm = ({ buttonText, startingValues, validate, onSubmit }) => {
+  const { refreshFormAttempt, refreshFormOptions } = useBikes();
+
+  // useEffect(() => {
+  //   refreshFormOptions();
+  // }, [refreshFormAttempt.value]);
+  const updatedOptions = refreshFormAttempt.value;
+
+  console.log(updatedOptions);
+
   return (
     <>
       <Formik
@@ -25,7 +35,13 @@ const MyBikeForm = ({ buttonText, startingValues, validate, onSubmit }) => {
               }
 
               if (o.type === "select") {
-                return <MySelect name={o.name} key={i} children={o.choices} />;
+                return (
+                  <MySelect
+                    name={o.name}
+                    key={i}
+                    children={updatedOptions[o.name]}
+                  />
+                );
               }
 
               if (o.type === "radio") {
@@ -35,7 +51,9 @@ const MyBikeForm = ({ buttonText, startingValues, validate, onSubmit }) => {
               if (o.type === "search") {
                 return (
                   <MySearchable
-                    children={o.choices}
+                    children={
+                      o.name === "brand" ? o.choices : updatedOptions[o.name]
+                    }
                     name={o.name}
                     key={i}
                     setFieldValue={setFieldValue}

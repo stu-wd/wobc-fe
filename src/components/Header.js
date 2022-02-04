@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   RiDashboardLine as Dashboard,
   RiLogoutBoxRLine as Logout,
@@ -6,24 +6,16 @@ import {
 } from "react-icons/ri";
 import { Box } from "@mui/material";
 import { useLayout } from "../state/layoutContext";
-import { debounce } from "../utils/debounce";
 import Search from "./bikes/actions/Search";
 
 const Header = () => {
-  const { toggleSidebar, isSidebarOpen } = useLayout();
-  const [oldScroll, setOldScroll] = useState(0);
-  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-
-  const handleScroll = debounce(() => {
-    const scrollPos = window.scrollY;
-    setIsHeaderVisible(oldScroll > scrollPos || scrollPos < 50);
-    setOldScroll(scrollPos);
-  }, 25);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [oldScroll, isHeaderVisible, handleScroll]);
+  const {
+    toggleSidebar,
+    isHeaderVisible,
+    isSidebarOpen,
+    oldScroll,
+    handleScroll,
+  } = useLayout();
 
   // const toggleSearchBar = () => {
   //   setOpenSearchBar(!openSearchBar);
@@ -32,7 +24,7 @@ const Header = () => {
   const HeaderIcon = ({ icon, onClick }) => (
     <div
       onClick={onClick}
-      className={`header-icon ${isSidebarOpen ? "rounded-xl" : ""}`}
+      className={`header-icon ${isSidebarOpen ? "rounded-xl" : "rounded-3xl"}`}
     >
       {icon}
     </div>
@@ -41,6 +33,11 @@ const Header = () => {
   const HeaderSearch = ({ type, placeholder }) => (
     <Search type={type} placeholder={placeholder} />
   );
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [oldScroll, isHeaderVisible, handleScroll]);
 
   return (
     <Box

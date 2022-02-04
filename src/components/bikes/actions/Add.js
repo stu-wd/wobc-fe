@@ -4,7 +4,7 @@ import { useBikes } from "../../../state/bikesContext";
 import { initialValues } from "../../form/data/formData";
 
 const AddBike = () => {
-  const { postBike, postAttempt } = useBikes();
+  const { postBike, postAttempt, refreshFormOptions } = useBikes();
   const startingValues = initialValues;
 
   const validate = () => {};
@@ -18,6 +18,7 @@ const AddBike = () => {
             values: startingValues,
           });
         }
+        refreshFormOptions();
       })
       .catch((err) => {
         console.log("here");

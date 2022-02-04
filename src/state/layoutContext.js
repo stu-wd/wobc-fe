@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useBikes } from "./bikesContext";
+import { debounce } from "./../utils/debounce";
 
 const LayoutContext = createContext({});
 
@@ -51,6 +52,14 @@ const LayoutProvider = (props) => {
       [category]: !showChoices[category],
     });
   };
+  const [oldScroll, setOldScroll] = useState(0);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+
+  const handleScroll = debounce(() => {
+    const scrollPos = window.scrollY;
+    setIsHeaderVisible(oldScroll > scrollPos || scrollPos < 50);
+    setOldScroll(scrollPos);
+  }, 25);
 
   const layoutContextValue = {
     toggleSidebar,
@@ -65,6 +74,9 @@ const LayoutProvider = (props) => {
     setIsDeleteModalOpen,
     showChoices,
     toggleShowChoices,
+    oldScroll,
+    isHeaderVisible,
+    handleScroll,
   };
 
   return <LayoutContext.Provider value={layoutContextValue} {...props} />;

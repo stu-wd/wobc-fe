@@ -144,6 +144,29 @@ const BikesProvider = (props) => {
     }, 2500);
   };
 
+  const refreshFormOptionsUrl =
+    process.env.REACT_APP_API + "/bikes/form/refresh";
+  const [refreshFormAttempt, refreshFormOptions] = useAsyncFn(async () => {
+    const response = await fetch(refreshFormOptionsUrl, {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+    });
+    const result = await response.json();
+    return result;
+  }, [refreshFormOptionsUrl]);
+
+  useEffect(() => {
+    refreshFormOptions();
+  }, []);
+
+  console.log(`refreshForm, ${refreshFormAttempt.value}`);
   const bikesContextValue = {
     bikes,
     isLoading,
@@ -160,6 +183,8 @@ const BikesProvider = (props) => {
     deleteAttempt,
     searchByParams,
     searchByParamsResults,
+    refreshFormOptions,
+    refreshFormAttempt,
   };
 
   return <BikesContext.Provider value={bikesContextValue} {...props} />;

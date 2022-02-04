@@ -7,7 +7,7 @@
     @apply fixed flex flex-row justify-start items-center left-0 h-14 w-screen m-0 text-white transition-all bg-blue-light z-[9999];
   }
   .header-icon {
-    @apply flex items-center justify-center h-10 w-10 mx-4 text-white rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer border-[2px] border-white;
+    @apply flex items-center justify-center h-10 w-10 mx-4 text-white cursor-pointer border-[2px] border-white;
   }
 
   [type="text"],
