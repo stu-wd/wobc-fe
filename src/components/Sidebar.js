@@ -22,7 +22,7 @@ import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import { capitalize } from "../utils/capitalize";
 
 const Sidebar = () => {
-  const { openSidebar, toggleSidebar } = useLayout();
+  const { isSidebarOpen, toggleSidebar } = useLayout();
 
   const MyListItem = ({ icon, text }) => {
     return (
@@ -41,7 +41,7 @@ const Sidebar = () => {
     <>
       <Box
         role="presentation"
-        className="h-screen border-2 border-grey bg-white w-48"
+        className="h-screen mt-14 border-[1px] border-grey bg-white w-48"
       >
         <List>
           <MyListItem text="dashboard" icon={<Edit size="20" />} />
@@ -64,7 +64,7 @@ const Sidebar = () => {
       <Drawer
         className=""
         anchor="left"
-        open={openSidebar}
+        open={isSidebarOpen}
         onClose={toggleSidebar}
       >
         {list}

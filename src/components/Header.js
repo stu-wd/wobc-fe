@@ -10,28 +10,30 @@ import { debounce } from "../utils/debounce";
 import Search from "./bikes/actions/Search";
 
 const Header = () => {
-  const { toggleSidebar } = useLayout();
-  const [openSearchBar, setOpenSearchBar] = useState(false);
+  const { toggleSidebar, isSidebarOpen } = useLayout();
   const [oldScroll, setOldScroll] = useState(0);
-  const [showHeader, setShowHeader] = useState(true);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
 
   const handleScroll = debounce(() => {
     const scrollPos = window.scrollY;
-    setShowHeader(oldScroll > scrollPos || scrollPos < 50);
+    setIsHeaderVisible(oldScroll > scrollPos || scrollPos < 50);
     setOldScroll(scrollPos);
   }, 25);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [oldScroll, showHeader, handleScroll]);
+  }, [oldScroll, isHeaderVisible, handleScroll]);
 
-  const toggleSearchBar = () => {
-    setOpenSearchBar(!openSearchBar);
-  };
+  // const toggleSearchBar = () => {
+  //   setOpenSearchBar(!openSearchBar);
+  // };
 
   const HeaderIcon = ({ icon, onClick }) => (
-    <div onClick={onClick} className={`header-icon`}>
+    <div
+      onClick={onClick}
+      className={`header-icon ${isSidebarOpen ? "rounded-xl" : ""}`}
+    >
       {icon}
     </div>
   );
@@ -43,7 +45,7 @@ const Header = () => {
   return (
     <Box
       component="header"
-      className={`header ${showHeader ? "top-[0]" : "top-[-115px]"}`}
+      className={`header ${isHeaderVisible ? "top-[0]" : "top-[-115px]"}`}
     >
       <HeaderIcon onClick={toggleSidebar} icon={<MenuBars size="20" />} />
       {/* <HeaderIcon onClick={toggleSearchBar} icon={<SearchIcon size="20" />} />

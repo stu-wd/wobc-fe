@@ -5,10 +5,10 @@ const LayoutContext = createContext({});
 
 const LayoutProvider = (props) => {
   const { deleteAttempt } = useBikes();
-  const [openSidebar, setOpenSidebar] = useState(false);
+  const [isSidebarOpen, setsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
-    setOpenSidebar(!openSidebar);
+    setsSidebarOpen(!isSidebarOpen);
   };
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -54,7 +54,7 @@ const LayoutProvider = (props) => {
 
   const layoutContextValue = {
     toggleSidebar,
-    openSidebar,
+    isSidebarOpen,
     isEditModalOpen,
     setIsEditModalOpen,
     editingBike,
