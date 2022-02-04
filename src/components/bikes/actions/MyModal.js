@@ -16,9 +16,9 @@ const MyModal = ({
       open={open}
       onClose={close}
       onBackdropClick={close}
-      className="w-[80%] min-h-fit overflow-scroll flex justify-center m-auto"
+      className="w-[80%] min-h-fit overflow-scroll flex justify-center m-auto border-4 border-green-400 p-4"
     >
-      <Box className="border-2 border-black bg-white h-fit p-4">
+      <Box className="border-2 border-black bg-white h-fit p-4 overflow-scroll">
         {content}
         {buttonText === "Delete" && (
           <Button
