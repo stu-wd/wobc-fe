@@ -166,6 +166,10 @@ const BikesProvider = (props) => {
     refreshFormOptions();
   }, []);
 
+  useEffect(() => {
+    refreshFormOptions();
+  }, [postAttempt.value, putAttempt.value, deleteAttempt.value]);
+
   console.log(`refreshForm, ${refreshFormAttempt.value}`);
   const bikesContextValue = {
     bikes,
