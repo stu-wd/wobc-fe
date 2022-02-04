@@ -16,7 +16,7 @@ const MyModal = ({
       open={open}
       onClose={close}
       onBackdropClick={close}
-      className="w-[80%] min-h-screen overflow-scroll flex justify-center m-auto p-4"
+      className="w-[80%] min-h-screen flex justify-center m-auto p-4"
     >
       <Box className="border-2 border-black bg-white p-4 overflow-scroll">
         {content}
