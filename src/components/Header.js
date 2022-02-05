@@ -15,6 +15,8 @@ const Header = () => {
     isSidebarOpen,
     oldScroll,
     handleScroll,
+    isEditModalOpen,
+    isDeleteModalOpen,
   } = useLayout();
 
   // const toggleSearchBar = () => {
@@ -42,7 +44,9 @@ const Header = () => {
   return (
     <Box
       component="header"
-      className={`header ${isHeaderVisible ? "top-[0]" : "top-[-115px]"}`}
+      className={`header ${
+        isHeaderVisible ? "top-[0]" : "top-[-115px]"
+      } z-[9999] ${(isDeleteModalOpen || isEditModalOpen) && "z-[10]"}`}
     >
       <HeaderIcon onClick={toggleSidebar} icon={<MenuBars size="20" />} />
       {/* <HeaderIcon onClick={toggleSearchBar} icon={<SearchIcon size="20" />} />

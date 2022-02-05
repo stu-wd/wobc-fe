@@ -11,14 +11,9 @@ import { Formik, Form } from "formik";
 import { useBikes } from "../../state/bikesContext";
 
 const MyBikeForm = ({ buttonText, startingValues, validate, onSubmit }) => {
-  const { refreshFormAttempt, refreshFormOptions } = useBikes();
+  const { formOptionsRefreshed } = useBikes();
 
-  // useEffect(() => {
-  //   refreshFormOptions();
-  // }, [refreshFormAttempt.value]);
-  const updatedOptions = refreshFormAttempt.value;
-
-  console.log(updatedOptions);
+  const updatedOptions = formOptionsRefreshed.value;
 
   return (
     <>

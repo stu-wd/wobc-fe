@@ -21,7 +21,6 @@ export const MyTextField = ({ ...props }) => {
         <TextField
           {...field}
           {...props}
-          fullWidth
           label={
             props.name === "confirmPassword"
               ? capitalize("Confirm Password")
@@ -49,7 +48,7 @@ export const MyTextField = ({ ...props }) => {
 export const MySelect = ({ children, ...props }) => {
   const [field, meta] = useField(props);
   return (
-    <FormControl fullWidth>
+    <FormControl>
       <InputLabel variant="filled" htmlFor={props.name}>
         {capitalize(props.name)}
       </InputLabel>
@@ -95,7 +94,8 @@ export const MySearchable = ({ setFieldValue, children, ...props }) => {
   return (
     <>
       <Autocomplete
-        {...field}
+        multiple={props.multiple}
+        filterSelectedOptions={props.filterSelectedOptions}
         options={children}
         onChange={(event, newValue) => {
           if (newValue === null) {
@@ -105,6 +105,8 @@ export const MySearchable = ({ setFieldValue, children, ...props }) => {
         }}
         autoSelect
         freeSolo
+        clearOnBlur
+        clearOnEscape
         className="text-sm font-medium text-gray-900 mt-2"
         renderInput={(params) => (
           <>
@@ -113,7 +115,6 @@ export const MySearchable = ({ setFieldValue, children, ...props }) => {
               {...props}
               name={props.name}
               label={props.name}
-              fullWidth
             />
           </>
         )}

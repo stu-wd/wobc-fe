@@ -146,7 +146,7 @@ const BikesProvider = (props) => {
 
   const refreshFormOptionsUrl =
     process.env.REACT_APP_API + "/bikes/form/refresh";
-  const [refreshFormAttempt, refreshFormOptions] = useAsyncFn(async () => {
+  const [formOptionsRefreshed, refreshFormOptions] = useAsyncFn(async () => {
     const response = await fetch(refreshFormOptionsUrl, {
       method: "GET",
       mode: "cors",
@@ -170,7 +170,6 @@ const BikesProvider = (props) => {
     refreshFormOptions();
   }, [postAttempt.value, putAttempt.value, deleteAttempt.value]);
 
-  console.log(`refreshForm, ${refreshFormAttempt.value}`);
   const bikesContextValue = {
     bikes,
     isLoading,
@@ -188,7 +187,7 @@ const BikesProvider = (props) => {
     searchByParams,
     searchByParamsResults,
     refreshFormOptions,
-    refreshFormAttempt,
+    formOptionsRefreshed,
   };
 
   return <BikesContext.Provider value={bikesContextValue} {...props} />;

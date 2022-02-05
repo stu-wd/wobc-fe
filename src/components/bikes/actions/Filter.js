@@ -9,10 +9,12 @@ import Edit from "./Edit";
 import Delete from "./Delete";
 import { useLayout } from "../../../state/layoutContext";
 import { Button } from "@mui/material";
+import { initialValues } from "../../form/data/formData";
 
 const Filter = () => {
   const [stateParams, setStateParams] = useState();
-  const { searchByParamsResults, searchByParams } = useBikes();
+  const { searchByParamsResults, searchByParams, formOptionsRefreshed } =
+    useBikes();
   const {
     isDeleteModalOpen,
     isEditModalOpen,
@@ -20,6 +22,8 @@ const Filter = () => {
     toggleShowChoices,
     showChoices,
   } = useLayout();
+
+  const updatedOptions = formOptionsRefreshed.value;
 
   useEffect(() => {
     if (stateParams === undefined) return;
@@ -30,6 +34,8 @@ const Filter = () => {
       searchByParams(stateParams);
     }
   }, [isDeleteModalOpen, isEditModalOpen, deleteAttempt]);
+
+  const clearParams = () => {};
 
   return (
     <>
@@ -54,29 +60,33 @@ const Filter = () => {
         {({ values, setFieldValue }) => (
           <Form className="grid grid-cols-2 gap-4 mb-4 items-center">
             {fd.options.map((option) => {
-              return option.choices && option.name != "brand" ? (
-                <MyCheckbox
-                  key={option.name}
-                  name={option.name}
-                  showChoices={showChoices}
-                  toggleShowChoices={toggleShowChoices}
-                  children={option.choices}
-                />
-              ) : // THIS IS HERE BECAUSE OF THE SERIAL AND WOBC. EVENTUALLY MAKE A FILTER DATA OBJECT AND LOOP THROUGH THAT INSTEAD
-              option.name === "brand" ? (
-                <MySearchable
-                  key={option.name}
-                  name={option.name}
-                  children={option.choices}
-                  setFieldValue={setFieldValue}
-                />
-              ) : null;
+              return (
+                option.type != "text" && (
+                  <MySearchable
+                    key={option.name}
+                    name={option.name}
+                    children={
+                      option.choices
+                        ? option.choices
+                        : updatedOptions[option.name]
+                    }
+                    setFieldValue={setFieldValue}
+                    multiple={true}
+                    filterSelectedOptions={true}
+                  />
+                )
+              );
             })}
             <div className="flex mt-1">
               <Button variant="contained" fullWidth type="submit">
                 Submit
               </Button>
-              <Button variant="contained" fullWidth type="submit">
+              <Button
+                variant="contained"
+                onClick={clearParams}
+                fullWidth
+                type="reset"
+              >
                 Clear Params
               </Button>
             </div>
@@ -101,3 +111,36 @@ const Filter = () => {
 };
 
 export default Filter;
+
+// return option.choices && option.name != "brand" ? (
+//   <>
+//     <MyCheckbox
+//       key={option.name}
+//       name={option.name}
+//       showChoices={showChoices}
+//       toggleShowChoices={toggleShowChoices}
+//       children={option.choices}
+//     />
+//   </>
+// ) : option.name === "brand" ? (
+//   <>
+//     <MySearchable
+//       key={option.name}
+//       name={option.name}
+//       children={option.choices}
+//       setFieldValue={setFieldValue}
+//     />
+//   </>
+// ) : !option.choices &&
+//   option.name != "brand" &&
+//   option.type != "text" ? (
+//   <>
+//     <MyCheckbox
+//       key={option.name}
+//       name={option.name}
+//       showChoices={showChoices}
+//       toggleShowChoices={toggleShowChoices}
+//       children={updatedOptions[option.name]}
+//     />
+//   </>
+// ) : null;

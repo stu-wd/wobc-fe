@@ -18,7 +18,6 @@ const AddBike = () => {
             values: startingValues,
           });
         }
-        // refreshFormOptions();
       })
       .catch((err) => {
         console.log("here");
