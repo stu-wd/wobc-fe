@@ -51,6 +51,7 @@ const MyBikeForm = ({ buttonText, startingValues, validate, onSubmit }) => {
                     }
                     name={o.name}
                     key={i}
+                    size="small"
                     setFieldValue={setFieldValue}
                   />
                 );

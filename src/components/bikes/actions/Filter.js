@@ -9,19 +9,13 @@ import Edit from "./Edit";
 import Delete from "./Delete";
 import { useLayout } from "../../../state/layoutContext";
 import { Button } from "@mui/material";
-import { initialValues } from "../../form/data/formData";
+import { initialFilterValues } from "../../form/data/formData";
 
 const Filter = () => {
   const [stateParams, setStateParams] = useState();
   const { searchByParamsResults, searchByParams, formOptionsRefreshed } =
     useBikes();
-  const {
-    isDeleteModalOpen,
-    isEditModalOpen,
-    deleteAttempt,
-    toggleShowChoices,
-    showChoices,
-  } = useLayout();
+  const { isDeleteModalOpen, isEditModalOpen, deleteAttempt } = useLayout();
 
   const updatedOptions = formOptionsRefreshed.value;
 
@@ -35,29 +29,15 @@ const Filter = () => {
     }
   }, [isDeleteModalOpen, isEditModalOpen, deleteAttempt]);
 
-  const clearParams = () => {};
-
   return (
     <>
       <Formik
-        initialValues={{}}
+        initialValues={initialFilterValues}
         onSubmit={(values, actions) => {
-          console.log(values);
-          let params = {};
-          for (let key in values) {
-            if (key === "serial" || key === "wobc_id") {
-              params[key] = values[key].toUpperCase();
-            } else if (key === "brand") {
-              params[key] = values[key];
-            } else {
-              params[key] = values[key][0];
-            }
-          }
-          setStateParams(params);
-          searchByParams(params);
+          searchByParams(values);
         }}
       >
-        {({ values, setFieldValue }) => (
+        {({ values, setFieldValue, resetForm, handleReset }) => (
           <Form className="grid grid-cols-2 gap-4 mb-4 items-center">
             {fd.options.map((option) => {
               return (
@@ -71,6 +51,7 @@ const Filter = () => {
                         : updatedOptions[option.name]
                     }
                     setFieldValue={setFieldValue}
+                    size={"small"}
                     multiple={true}
                     filterSelectedOptions={true}
                   />
@@ -81,14 +62,15 @@ const Filter = () => {
               <Button variant="contained" fullWidth type="submit">
                 Submit
               </Button>
-              <Button
+              {/* <Button
                 variant="contained"
-                onClick={clearParams}
                 fullWidth
-                type="reset"
+                // type="reset"
+                onClick={handleReset}
+                // onClick={() => resetForm(initialFilterValues)}
               >
                 Clear Params
-              </Button>
+              </Button> */}
             </div>
           </Form>
         )}

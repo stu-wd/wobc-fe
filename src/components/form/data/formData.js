@@ -13,6 +13,17 @@ export const initialValues = {
   received: "",
 };
 
+export const initialFilterValues = {
+  status: [],
+  brand: [],
+  style: [],
+  gender: [],
+  adultchild: [],
+  size: [],
+  storage: [],
+  received: [],
+};
+
 const FormData = {
   options: [
     {

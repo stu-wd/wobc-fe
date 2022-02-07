@@ -39,6 +39,7 @@ export const MyTextField = ({ ...props }) => {
               : ""
           }
           autoComplete="off"
+          size="small"
         />
       </div>
     </>
@@ -96,11 +97,10 @@ export const MySearchable = ({ setFieldValue, children, ...props }) => {
       <Autocomplete
         multiple={props.multiple}
         filterSelectedOptions={props.filterSelectedOptions}
+        size={props.size}
         options={children}
         onChange={(event, newValue) => {
-          if (newValue === null) {
-            newValue = undefined;
-          }
+          console.log(newValue);
           setFieldValue(props.name, newValue);
         }}
         autoSelect

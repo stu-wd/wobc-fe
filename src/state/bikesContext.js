@@ -60,6 +60,7 @@ const BikesProvider = (props) => {
         body: JSON.stringify(params),
       });
       const result = await response.json();
+      console.log(result);
       return result;
     },
     [searchByParamsUrl]
