@@ -59,7 +59,7 @@ const MyBikeForm = ({ buttonText, startingValues, validate, onSubmit }) => {
             })}
             <Button variant="contained" fullWidth type="submit">
               {buttonText}
-            </Button>{" "}
+            </Button>
           </Form>
         )}
       </Formik>

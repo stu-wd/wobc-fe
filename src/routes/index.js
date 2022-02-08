@@ -3,13 +3,13 @@ import { Route, Routes } from "react-router-dom";
 import { Navigate } from "react-router";
 import Dashboard from "../components/Dashboard";
 import Filter from "../components/bikes/actions/Filter";
-import LoginRegisterForm from "../components/auth/LoginRegisterForm";
 import Header from "../components/Header";
-import Logout from "../components/Logout";
+import Logout from "../components/auth/Logout";
 import Sidebar from "../components/Sidebar";
 import Add from "../components/bikes/actions/Add";
 import Search from "../components/bikes/actions/Search";
 import { useAuth } from "../state/authContext";
+import LandingPage from "../components/bikes/LandingPage";
 
 const AuthenticatedRoutes = () => (
   <div className="">
@@ -32,7 +32,7 @@ const AuthenticatedRoutes = () => (
 
 const UnauthenticatedRoutes = () => (
   <Routes>
-    <Route path="/" element={<LoginRegisterForm />} />
+    <Route path="/" element={<LandingPage />} />
     <Route path="/*" element={<Navigate to="/" />} />
   </Routes>
 );

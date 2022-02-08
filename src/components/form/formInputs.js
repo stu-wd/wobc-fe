@@ -12,37 +12,33 @@ import {
   BiChevronDown as ArrowDown,
   BiChevronUp as ArrowUp,
 } from "react-icons/bi";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 export const MyTextField = ({ ...props }) => {
   const [field, meta] = useField(props);
   return (
-    <>
-      <div className={`mt-4`}>
-        <TextField
-          {...field}
-          {...props}
-          label={
-            props.name === "confirmPassword"
-              ? capitalize("Confirm Password")
-              : props.name === "wobc_id"
-              ? "WOBC ID (optional)"
-              : capitalize(props.name)
-          }
-          className={`text-sm font-medium text-gray-900 ${
-            meta.error || (meta.touched && meta.error)
-              ? "border-2 border-red-600"
-              : ""
-          }`}
-          type={
-            props.name === "confirmPassword" || props.name === "password"
-              ? "password"
-              : ""
-          }
-          autoComplete="off"
-          size="small"
-        />
-      </div>
-    </>
+    <div className={`mt-4`}>
+      <TextField
+        {...field}
+        {...props}
+        label={
+          props.name === "wobc_id"
+            ? "WOBC ID (optional)"
+            : capitalize(props.name)
+        }
+        className={`text-sm font-medium text-gray-900 ${
+          meta.error || (meta.touched && meta.error)
+            ? "border-2 border-red-600"
+            : ""
+        }`}
+        type="input"
+        autoComplete="off"
+        size="small"
+      />
+    </div>
   );
 };
 
@@ -100,7 +96,6 @@ export const MySearchable = ({ setFieldValue, children, ...props }) => {
         size={props.size}
         options={children}
         onChange={(event, newValue) => {
-          console.log(newValue);
           setFieldValue(props.name, newValue);
         }}
         autoSelect
@@ -153,6 +148,44 @@ export const MyCheckbox = ({
           );
         })}
       </div>
+    </div>
+  );
+};
+
+export const MyPassword = ({
+  handleClickShowPassword,
+  handleMouseDownPassword,
+  label,
+  showPassword,
+  onChange,
+  ...props
+}) => {
+  const [field, meta] = useField(props);
+  return (
+    <div className="mt-4">
+      <TextField
+        {...field}
+        {...props}
+        label={label}
+        type={showPassword ? "input" : "password"}
+        onChange={onChange}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                edge="end"
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+        autoComplete="off"
+        size="small"
+      />
     </div>
   );
 };

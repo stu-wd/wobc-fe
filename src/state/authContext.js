@@ -7,6 +7,7 @@ const AuthContext = createContext({});
 const AuthProvider = (props) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState();
+  const [authAction, setAuthAction] = useState("login");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -67,6 +68,8 @@ const AuthProvider = (props) => {
     user,
     loginAttempt,
     registrationAttempt,
+    authAction,
+    setAuthAction,
   };
 
   return <AuthContext.Provider value={authContextValue} {...props} />;

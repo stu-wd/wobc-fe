@@ -34,6 +34,7 @@ const Filter = () => {
       <Formik
         initialValues={initialFilterValues}
         onSubmit={(values, actions) => {
+          console.log(values);
           searchByParams(values);
         }}
       >
@@ -72,6 +73,8 @@ const Filter = () => {
                 Clear Params
               </Button> */}
             </div>
+            {/* {console.log("values: "} */}
+            {`Showing results for ${JSON.stringify(values)}`}
           </Form>
         )}
       </Formik>
