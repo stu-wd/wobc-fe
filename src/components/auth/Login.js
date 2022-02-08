@@ -72,7 +72,7 @@ const Login = () => {
         }}
         userReinforcementMsg={
           loginAttempt.loading ? (
-            <Circles />
+            <Circles height={"2rem"} speed={"0.5"} />
           ) : loginAttempt.value != undefined ? (
             loginAttempt.value.message
           ) : null
